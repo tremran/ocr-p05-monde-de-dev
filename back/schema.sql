@@ -1,6 +1,4 @@
 -- MySQL schema matching the provided Mermaid ER diagram
-CREATE DATABASE IF NOT EXISTS p05_mdd CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE p05_mdd;
 
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -8,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     pseudo VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uk_users_email (email),
     UNIQUE KEY uk_users_pseudo (pseudo)
@@ -18,6 +17,7 @@ CREATE TABLE IF NOT EXISTS topics (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uk_topics_name (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
     user_id BIGINT UNSIGNED NOT NULL,
     topic_id BIGINT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uk_subscriptions_user_topic (user_id, topic_id),
     CONSTRAINT fk_subscriptions_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
@@ -35,16 +36,17 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 CREATE TABLE IF NOT EXISTS posts (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    user_id BIGINT UNSIGNED NOT NULL,
+    author_id BIGINT UNSIGNED NOT NULL,
     topic_id BIGINT UNSIGNED NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     published_at DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT fk_posts_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_posts_user FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_posts_topic FOREIGN KEY (topic_id) REFERENCES topics (id) ON DELETE CASCADE,
-    KEY idx_posts_user_id (user_id),
+    KEY idx_posts_user_id (author_id),
     KEY idx_posts_topic_id (topic_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -54,6 +56,7 @@ CREATE TABLE IF NOT EXISTS comments (
     user_id BIGINT UNSIGNED NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     CONSTRAINT fk_comments_post FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
     CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
