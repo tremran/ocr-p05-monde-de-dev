@@ -1,13 +1,13 @@
-package com.openclassrooms.mddapi;
+package com.tremran.mdd;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MddApiApplication {
+public class MddApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MddApiApplication.class, args);
+		SpringApplication.run(MddApplication.class, args);
 	}
 
 }
