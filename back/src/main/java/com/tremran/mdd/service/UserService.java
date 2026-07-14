@@ -1,4 +1,4 @@
-package com.tremran.mdd.user;
+package com.tremran.mdd.service;
 
 import java.util.Optional;
 
@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tremran.mdd.model.UserEntity;
+import com.tremran.mdd.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {

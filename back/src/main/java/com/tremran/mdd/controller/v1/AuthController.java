@@ -1,4 +1,4 @@
-package com.tremran.mdd.controller;
+package com.tremran.mdd.controller.v1;
 
 import java.util.Map;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tremran.mdd.auth.JwtService;
 import com.tremran.mdd.model.UserEntity;
-import com.tremran.mdd.user.UserService;
+import com.tremran.mdd.service.JwtService;
+import com.tremran.mdd.service.UserService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -21,7 +21,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;

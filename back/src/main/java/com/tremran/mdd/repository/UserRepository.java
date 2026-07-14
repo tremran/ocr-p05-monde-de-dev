@@ -1,4 +1,4 @@
-package com.tremran.mdd.user;
+package com.tremran.mdd.repository;
 
 import java.util.Optional;
 

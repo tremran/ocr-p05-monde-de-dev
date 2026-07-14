@@ -1,4 +1,4 @@
-package com.tremran.mdd.auth;
+package com.tremran.mdd.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

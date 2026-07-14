@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.http.HttpStatus;
 
-import com.tremran.mdd.controller.AuthController;
+import com.tremran.mdd.controller.v1.AuthController;
+
+import org.springframework.http.HttpStatus;
 
 @SpringBootTest
 @ActiveProfiles("test")
