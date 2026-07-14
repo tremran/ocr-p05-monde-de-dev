@@ -1,4 +1,4 @@
-package com.tremran.mdd.auth;
+package com.tremran.mdd.config;
 
 import java.io.IOException;
 
