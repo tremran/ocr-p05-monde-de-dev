@@ -1,6 +1,6 @@
 INSERT INTO users (email, pseudo, password) VALUES
-('alice@example.com', 'alice', '$2a$10$7u7u7u7u7u7u7u7u7u7u.u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7'),
-('bob@example.com', 'bob', '$2a$10$8v8v8v8v8v8v8v8v8v8v.v8v8v8v8v8v8v8v8v8v8v8v8v8v8v8v8v8v8');
+('alice@example.com', 'alice', '$2a$10$cm2NIg777PDZ51VBAYMkT.VRvBbPTbcpkmIAhKwMNUD8x0QExnFwO'), -- password value is password
+('bob@example.com', 'bob', '$2a$10$cm2NIg777PDZ51VBAYMkT.VRvBbPTbcpkmIAhKwMNUD8x0QExnFwO');
 
 INSERT INTO topics (name, description) VALUES
 ('Spring', 'Spring Boot and Spring Framework topics'),

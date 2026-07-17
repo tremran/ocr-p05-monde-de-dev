@@ -1,0 +1,13 @@
+@apiurl=http://localhost:3001/api/v1
+@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4NDI3MDE3NCwiZXhwIjoxNzg0MzA2MTc0fQ.BVpiNV6vjpJi9Zldxj8witgk1UkKY4YUZDi3LVOjFGSGp_Lsm6XMWR5HDBiE2RFAq7VRsrIoMN5PxqLh-lYp7w
+
+### CREATE POST
+POST {{apiurl}}/post
+Authorization: Bearer {{jwtToken}}
+
+{
+
+}
+### POST endpoints
+GET {{apiurl}}/post/2
+Authorization: Bearer {{jwtToken}}

@@ -1,4 +1,9 @@
 -- MySQL schema matching the provided Mermaid ER diagram
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS subscriptions;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS topics;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
