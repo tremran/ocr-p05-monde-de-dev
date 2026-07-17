@@ -19,7 +19,7 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
 ### Diagramme UC
 
 - fonctionnels
-    - s'enregistrer
+    - ✅ s'enregistrer
     - se connecter
     - se déconnecter
 - gestion du profil
@@ -60,6 +60,38 @@ Ajouter des tests automatisés pour valider ces points
 
 ## Choix d'Architecture
 
+### Git 
+
+Une branche 
+
+- `main` pour le code en production
+- `dev` pour les tests
+- `back` pour les dev back
+- `front` pour les dev front
+
+```mermaid
+---
+title: workflow git
+---
+gitGraph
+    commit
+    commit
+    branch dev
+    checkout dev
+    branch back
+    branch front
+    checkout back
+    commit
+    checkout front
+    commit
+    checkout dev
+    merge back
+    merge front
+    checkout main
+    merge dev
+```
+
+gitGraph
 Contraintes recensées
 
 - Design responsive
@@ -170,19 +202,18 @@ Seules les routes login et register ne sont pas protégés
 
 | url | verbe http | description | remarques |
 | --- | --- | --- | --- |
-| auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
-| auth/register | POST | enregistre un utilisateur | NA |
-| logout | GET | déconnecte l'utilisateur | NA |
-| me | GET | récupère les informations de l'utilisateur connecté | NA |
+| ✅ auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
+| ✅ auth/register | POST | enregistre un utilisateur | NA |
+| ✅ me | GET | récupère les informations de l'utilisateur connecté | NA |
 | me | PUT | modifie les informations de l'utilisateur connecté | NA |
 | topic | GET | récupère la liste des thèmes | chaque topic contient un champ  |
 | subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
 | subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
-| feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
-| post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
-| post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
+| ✅ feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
+| ✅ post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
+| ✅ post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
 | post/{post_id}/comment | GET | récupère la liste des commentaires pour l'article dont l'id est fourni  | NA |
-| post/{post_id}/comment | POST | ajoute un commentaire sur  | NA |
+| post/{post_id}/comment | POST | ajoute un commentaire sur l'article dont l'id est fourni | NA |
 
 ### Front
 
@@ -190,9 +221,9 @@ Seules les routes login et register ne sont pas protégés
 
 | url | description | données affichées | endpoints utilisées | remarques |
 | --- | --- | --- | --- | --- |
-| /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
+| ✅ /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
 | /login | page de connexion | affiche le formulaire | les données sont envoyées sur `login` | --- |
-| /logout | page de déconnexion | NA | `logout` | l'utilisateur est redirigé sur la page de `login` |
+| /logout | page de déconnexion | NA | NA | l'utilisateur est redirigé sur la page de `login` |
 | / | page d'accueil | affiche le fil d'actualité | `feed` | l'utilisateur peut trier le fil par date |
 | /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | l'utilisateur peut s'abonner / désabonner à un thème depuis cette page |
 | /me | infos utilisateurs | affiche les infos de l'utilisateur connecté dans un formulaire ainsi que les thèmes auxquels il est abonné | `me` | l'utilisateur peut modifier son profil les données sont envoyées en POST sur le endpoint `me`, il peut également se désabonner aux thèmes |

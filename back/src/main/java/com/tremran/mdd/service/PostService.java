@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.tremran.mdd.exception.ResourceNotFoundException;
 import com.tremran.mdd.model.PostEntity;
 import com.tremran.mdd.model.TopicEntity;
 import com.tremran.mdd.model.UserEntity;
@@ -26,10 +27,10 @@ public class PostService {
 
     public PostEntity createPost(String authorEmail, Long topicId, String title, String content, String publishedAt) {
         UserEntity author = userRepository.findByEmail(authorEmail)
-                .orElseThrow(() -> new IllegalArgumentException("Authenticated user not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Authenticated user not found"));
 
         TopicEntity topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new IllegalArgumentException("Topic not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
 
         PostEntity post = new PostEntity();
         post.setAuthor(author);
