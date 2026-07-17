@@ -13,7 +13,8 @@ INSERT INTO subscriptions (user_id, topic_id) VALUES
 
 INSERT INTO posts (user_id, topic_id, title, content, published_at) VALUES
 (1, 1, 'Welcome to Spring', 'This is a welcome post for Spring.', '2026-07-14'),
-(2, 1, 'Spring and H2', 'Using H2 for Spring Boot tests.', '2026-07-14');
+(2, 1, 'Spring and H2', 'Using H2 for Spring Boot tests.', '2026-07-14'),
+(2, 2, 'H2 Tutorial', 'Install and configure H2', '2026-07-14');
 
 INSERT INTO comments (post_id, user_id, content) VALUES
 (1, 2, 'Nice introduction!'),

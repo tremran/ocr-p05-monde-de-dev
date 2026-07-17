@@ -1,5 +1,5 @@
 @apiurl=http://localhost:3001/api/v1
-@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4NDI3MDE3NCwiZXhwIjoxNzg0MzA2MTc0fQ.BVpiNV6vjpJi9Zldxj8witgk1UkKY4YUZDi3LVOjFGSGp_Lsm6XMWR5HDBiE2RFAq7VRsrIoMN5PxqLh-lYp7w
+@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODQyNzkwNTUsImV4cCI6MTc4NDMxNTA1NX0.lszmEnextYHuV5uT8mBkuPLUazxClLXeuiS62yDLMx0k6tTkPrxkcLOFi6-HlMFFTQT-tfT40x7ONSCwsy_VVg
 
 ### Register
 POST {{apiurl}}/auth/register
@@ -16,6 +16,6 @@ POST {{apiurl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "alice@example.com",
+    "email": "bob@example.com",
     "password": "password"
 }

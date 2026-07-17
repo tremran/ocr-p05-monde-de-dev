@@ -43,4 +43,8 @@ public class PostService {
     public Optional<PostEntity> findPostById(Long postId) {
         return postRepository.findById(postId);
     }
+    
+    public Iterable<PostEntity> findFeedForUser(String email) {
+        return postRepository.findFeedForUser(email);
+    }
 }

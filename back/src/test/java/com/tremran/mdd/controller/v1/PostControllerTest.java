@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -114,4 +113,5 @@ class PostControllerTest {
         assertThat(authorMap).containsEntry("pseudo", "author");
         assertThat(body).containsEntry("topicId", 5L);
     }
+
 }

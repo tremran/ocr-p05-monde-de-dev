@@ -8,6 +8,12 @@ Authorization: Bearer {{jwtToken}}
 {
 
 }
+
 ### POST endpoints
 GET {{apiurl}}/post/2
+Authorization: Bearer {{jwtToken}}
+
+
+### User feed
+GET {{apiurl}}/feed
 Authorization: Bearer {{jwtToken}}

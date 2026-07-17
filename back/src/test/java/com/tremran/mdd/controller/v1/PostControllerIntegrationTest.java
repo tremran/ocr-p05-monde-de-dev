@@ -51,6 +51,24 @@ class PostControllerIntegrationTest {
     @Autowired
     private JwtService jwtService;
 
+
+    UserEntity createITUser() {
+        UserEntity user = new UserEntity();
+        user.setEmail("integration@test.com");
+        user.setPseudo("integration");
+        user.setPassword("password");
+        user = userRepository.save(user);
+        return user;
+    }
+
+    TopicEntity createITTopic() {
+        TopicEntity topic = new TopicEntity();
+        topic.setName("Integration Topic");
+        topic.setDescription("Topic for integration test");
+        topic = topicRepository.save(topic);
+        return topic;
+    }
+
     @BeforeEach
     void setUp() {
         postRepository.deleteAll();
@@ -63,16 +81,8 @@ class PostControllerIntegrationTest {
 
     @Test
     void createPost_withValidJwt_shouldReturnCreatedPost() throws Exception {
-        UserEntity user = new UserEntity();
-        user.setEmail("integration@test.com");
-        user.setPseudo("integration");
-        user.setPassword("password");
-        user = userRepository.save(user);
-
-        TopicEntity topic = new TopicEntity();
-        topic.setName("Integration Topic");
-        topic.setDescription("Topic for integration test");
-        topic = topicRepository.save(topic);
+        UserEntity user = createITUser();
+        TopicEntity topic = createITTopic();
 
         UserDetails userDetails = User.withUsername(user.getEmail())
                 .password(user.getPassword())
