@@ -1,32 +1,41 @@
 <div class="register-page">
-  <div class="register-card">
-    <h1>Create your account</h1>
+  <header class="desktop-navbar" aria-hidden="true">
+    <img class="desktop-logo" src="/assets/logo_p6.png" alt="" />
+  </header>
+
+  <div class="register-content">
+    <a class="back-link" routerLink="/" aria-label="Retour a l'accueil">
+      <span aria-hidden="true">&#8592;</span>
+    </a>
+
+    <img class="register-logo mobile-logo" src="/assets/logo_p6.png" alt="Logo MDD" />
+    <h1>Inscription</h1>
 
     <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
-      <label for="name">Name</label>
-      <input id="name" type="text" formControlName="name" placeholder="Jane Doe" />
+      <label for="name">Nom d'utilisateur</label>
+      <input id="name" type="text" formControlName="name" />
       <p class="error" *ngIf="registerForm.controls.name.touched && registerForm.controls.name.invalid">
-        Name is required (min 3 characters).
+        Le nom est requis (3 caracteres minimum).
       </p>
 
-      <label for="email">Email</label>
-      <input id="email" type="email" formControlName="email" placeholder="jane@example.com" />
+      <label for="email">Adresse e-mail</label>
+      <input id="email" type="email" formControlName="email" />
       <p class="error" *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
-        A valid email is required.
+        Une adresse e-mail valide est requise.
       </p>
 
-      <label for="password">Password</label>
-      <input id="password" type="password" formControlName="password" placeholder="At least 6 characters" />
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" formControlName="password" />
       <p class="error" *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
-        Password is required (min 8 characters).
+        Le mot de passe est requis (8 caracteres minimum).
       </p>
 
       <button type="submit" [disabled]="loading">
-        {{ loading ? 'Creating account...' : 'Register' }}
+        {{ loading ? 'Inscription...' : "S'inscrire" }}
       </button>
     </form>
 
-    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="feedback success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="feedback error" *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 </div>
