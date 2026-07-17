@@ -141,22 +141,32 @@ class PostControllerIntegrationTest {
     }
 
     @Test
+    void getPost_withMissingPost_shouldReturnNotFoundError() throws Exception {
+    UserEntity user = new UserEntity();
+    user.setEmail("missing@test.com");
+    user.setPseudo("missing");
+    user.setPassword("password");
+    user = userRepository.save(user);
+
+    UserDetails userDetails = User.withUsername(user.getEmail())
+        .password(user.getPassword())
+        .roles("USER")
+        .build();
+    String token = jwtService.generateToken(userDetails);
+
+    mockMvc.perform(get("/api/v1/post/{postId}", 999L)
+        .header("Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Not Found"))
+        .andExpect(jsonPath("$.message").value("Post not found"));
+    }
+
+    @Test
     void requestWithoutAuthorizationHeader_shouldReturnForbidden() throws Exception {
         mockMvc.perform(get("/api/v1/post/1"))
                 .andExpect(status().isForbidden());
     }
 
-    private static class CreatePostPayload {
-        public Long topicId;
-        public String title;
-        public String content;
-        public String publishedAt;
-
-        public CreatePostPayload(Long topicId, String title, String content, String publishedAt) {
-            this.topicId = topicId;
-            this.title = title;
-            this.content = content;
-            this.publishedAt = publishedAt;
-        }
+    private record CreatePostPayload(Long topicId, String title, String content, String publishedAt) {
     }
 }

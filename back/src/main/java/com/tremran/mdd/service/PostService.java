@@ -1,7 +1,5 @@
 package com.tremran.mdd.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.tremran.mdd.exception.ResourceNotFoundException;
@@ -41,8 +39,9 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Optional<PostEntity> findPostById(Long postId) {
-        return postRepository.findById(postId);
+    public PostEntity getPostById(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
     
     public Iterable<PostEntity> findFeedForUser(String email) {

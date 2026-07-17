@@ -1,11 +1,11 @@
 package com.tremran.mdd.controller.v1;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.tremran.mdd.exception.ResourceNotFoundException;
 import com.tremran.mdd.model.PostEntity;
 import com.tremran.mdd.model.TopicEntity;
 import com.tremran.mdd.model.UserEntity;
@@ -61,25 +62,23 @@ class PostControllerTest {
         assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getBody()).isInstanceOf(Map.class);
 
-        Map<String, Object> body = (Map<String, Object>) response.getBody();
-        assertThat(body).containsEntry("id", 1L);
-        assertThat(body).containsEntry("title", "Hello World");
-        assertThat(body).containsEntry("content", "This is a test post.");
-        @SuppressWarnings("unchecked")
-        Map<String, Object> authorMap = (Map<String, Object>) body.get("author");
-        assertThat(authorMap).containsEntry("email", "tester@example.com");
-        assertThat(body).containsEntry("topicId", 2L);
-        assertThat(body).containsEntry("publishedAt", LocalDate.of(2026, 7, 14));
+        Map<?, ?> body = (Map<?, ?>) response.getBody();
+        assertThat(body.get("id")).isEqualTo(1L);
+        assertThat(body.get("title")).isEqualTo("Hello World");
+        assertThat(body.get("content")).isEqualTo("This is a test post.");
+        Map<?, ?> authorMap = (Map<?, ?>) body.get("author");
+        assertThat(authorMap.get("email")).isEqualTo("tester@example.com");
+        assertThat(body.get("topicId")).isEqualTo(2L);
+        assertThat(body.get("publishedAt")).isEqualTo(LocalDate.of(2026, 7, 14));
     }
 
     @Test
     void getPostReturnsNotFoundWhenPostMissing() {
-        when(postService.findPostById(999L)).thenReturn(Optional.empty());
+        when(postService.getPostById(999L)).thenThrow(new ResourceNotFoundException("Post not found"));
 
-        ResponseEntity<?> response = postController.getPost(999L);
-
-        assertThat(response.getStatusCode().value()).isEqualTo(404);
-        assertThat(response.getBody()).isNull();
+        assertThatThrownBy(() -> postController.getPost(999L))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Post not found");
     }
 
     @Test
@@ -97,21 +96,20 @@ class PostControllerTest {
         post.setContent("Found post content.");
         post.setPublishedAt(LocalDate.of(2026, 7, 14));
 
-        when(postService.findPostById(3L)).thenReturn(Optional.of(post));
+        when(postService.getPostById(3L)).thenReturn(post);
 
         ResponseEntity<?> response = postController.getPost(3L);
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getBody()).isInstanceOf(Map.class);
 
-        Map<String, Object> body = (Map<String, Object>) response.getBody();
-        assertThat(body).containsEntry("id", 3L);
-        assertThat(body).containsEntry("title", "Found Post");
-        assertThat(body).containsEntry("content", "Found post content.");
-        @SuppressWarnings("unchecked")
-        Map<String, Object> authorMap = (Map<String, Object>) body.get("author");
-        assertThat(authorMap).containsEntry("pseudo", "author");
-        assertThat(body).containsEntry("topicId", 5L);
+        Map<?, ?> body = (Map<?, ?>) response.getBody();
+        assertThat(body.get("id")).isEqualTo(3L);
+        assertThat(body.get("title")).isEqualTo("Found Post");
+        assertThat(body.get("content")).isEqualTo("Found post content.");
+        Map<?, ?> authorMap = (Map<?, ?>) body.get("author");
+        assertThat(authorMap.get("pseudo")).isEqualTo("author");
+        assertThat(body.get("topicId")).isEqualTo(5L);
     }
 
 }

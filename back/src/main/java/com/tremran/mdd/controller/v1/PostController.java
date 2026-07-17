@@ -61,25 +61,23 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<?> getPost(@PathVariable Long postId) {
-        return postService.findPostById(postId)
-                .map(post -> {
-                    Map<String, Object> authorMap = new HashMap<>();
-                    authorMap.put("email", post.getAuthor().getEmail());
-                    authorMap.put("pseudo", post.getAuthor().getPseudo());
+        PostEntity post = postService.getPostById(postId);
 
-                    Map<String, Object> responseBody = new HashMap<>();
-                    responseBody.put("id", post.getId());
-                    responseBody.put("title", post.getTitle());
-                    responseBody.put("content", post.getContent());
-                    responseBody.put("author", authorMap);
-                    responseBody.put("topicId", post.getTopic().getId());
-                    responseBody.put("publishedAt", post.getPublishedAt());
-                    responseBody.put("createdAt", post.getCreatedAt());
-                    responseBody.put("updatedAt", post.getUpdatedAt());
+        Map<String, Object> authorMap = new HashMap<>();
+        authorMap.put("email", post.getAuthor().getEmail());
+        authorMap.put("pseudo", post.getAuthor().getPseudo());
 
-                    return ResponseEntity.ok(responseBody);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("id", post.getId());
+        responseBody.put("title", post.getTitle());
+        responseBody.put("content", post.getContent());
+        responseBody.put("author", authorMap);
+        responseBody.put("topicId", post.getTopic().getId());
+        responseBody.put("publishedAt", post.getPublishedAt());
+        responseBody.put("createdAt", post.getCreatedAt());
+        responseBody.put("updatedAt", post.getUpdatedAt());
+
+        return ResponseEntity.ok(responseBody);
     }
 
     public record CreatePostRequest(
