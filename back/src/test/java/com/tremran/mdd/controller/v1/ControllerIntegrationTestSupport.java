@@ -1,5 +1,7 @@
 package com.tremran.mdd.controller.v1;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,9 +10,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.tremran.mdd.model.CommentEntity;
+import com.tremran.mdd.model.PostEntity;
 import com.tremran.mdd.model.SubscriptionEntity;
 import com.tremran.mdd.model.TopicEntity;
 import com.tremran.mdd.model.UserEntity;
+import com.tremran.mdd.repository.CommentRepository;
+import com.tremran.mdd.repository.PostRepository;
 import com.tremran.mdd.repository.SubscriptionRepository;
 import com.tremran.mdd.repository.TopicRepository;
 import com.tremran.mdd.repository.UserRepository;
@@ -29,6 +35,12 @@ abstract class ControllerIntegrationTestSupport {
 
     @Autowired
     protected SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    protected CommentRepository commentRepository;
+
+    @Autowired
+    protected PostRepository postRepository;
 
     @Autowired
     protected JwtService jwtService;
@@ -63,6 +75,24 @@ abstract class ControllerIntegrationTestSupport {
         subscription.setUser(user);
         subscription.setTopic(topic);
         return subscriptionRepository.save(subscription);
+    }
+
+    protected PostEntity createPost(UserEntity author, TopicEntity topic, String title, String content, LocalDate publishedAt) {
+        PostEntity post = new PostEntity();
+        post.setAuthor(author);
+        post.setTopic(topic);
+        post.setTitle(title);
+        post.setContent(content);
+        post.setPublishedAt(publishedAt);
+        return postRepository.save(post);
+    }
+
+    protected CommentEntity createComment(PostEntity post, UserEntity user, String content) {
+        CommentEntity comment = new CommentEntity();
+        comment.setPost(post);
+        comment.setUser(user);
+        comment.setContent(content);
+        return commentRepository.save(comment);
     }
 
     protected String createToken(UserEntity user) {

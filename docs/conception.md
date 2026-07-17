@@ -212,8 +212,8 @@ Seules les routes login et register ne sont pas protégés
 | ✅ feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
 | ✅ post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
 | ✅ post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
-| post/{post_id}/comment | GET | récupère la liste des commentaires pour l'article dont l'id est fourni  | NA |
-| post/{post_id}/comment | POST | ajoute un commentaire sur l'article dont l'id est fourni | NA |
+| ✅ post/{post_id}/comment | GET | récupère la liste des commentaires pour l'article dont l'id est fourni  | NA |
+| ✅ post/{post_id}/comment | POST | ajoute un commentaire sur l'article dont l'id est fourni. l'utilisateur du commentaire est l'utilisateur connecté | NA |
 
 ### Front
 
