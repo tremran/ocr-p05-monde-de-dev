@@ -22,3 +22,8 @@ mysql -u mdd_user -p p05_mdd < ./schema.sql
 
 - run app `mvn spring-boot:run`
 - run tests ` ./mvnw test`
+
+## TODO
+
+- add DTO
+    - remove password from user DTO
