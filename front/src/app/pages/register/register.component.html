@@ -1,0 +1,32 @@
+<div class="register-page">
+  <div class="register-card">
+    <h1>Create your account</h1>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" placeholder="Jane Doe" />
+      <p class="error" *ngIf="registerForm.controls.name.touched && registerForm.controls.name.invalid">
+        Name is required (min 3 characters).
+      </p>
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="jane@example.com" />
+      <p class="error" *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+        A valid email is required.
+      </p>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" placeholder="At least 6 characters" />
+      <p class="error" *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
+        Password is required (min 8 characters).
+      </p>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+</div>
