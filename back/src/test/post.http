@@ -17,3 +17,14 @@ Authorization: Bearer {{jwtToken}}
 ### User feed
 GET {{apiurl}}/feed
 Authorization: Bearer {{jwtToken}}
+
+
+
+### subscribe to a topic
+POST {{apiurl}}/subscription/1
+Authorization: Bearer {{jwtToken}}
+
+
+### unsubscribe to a topic
+DELETE {{apiurl}}/subscription/1
+Authorization: Bearer {{jwtToken}}
