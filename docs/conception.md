@@ -170,14 +170,14 @@ Seules les routes login et register ne sont pas protégés
 
 | url | verbe http | description | remarques |
 | --- | --- | --- | --- |
-| login | POST | log un utilisateur | un token d'authentification est renvoyé |
-| register | POST | enregistre un utilisateur | NA |
+| auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
+| auth/register | POST | enregistre un utilisateur | NA |
 | logout | GET | déconnecte l'utilisateur | NA |
 | me | GET | récupère les informations de l'utilisateur connecté | NA |
 | me | PUT | modifie les informations de l'utilisateur connecté | NA |
 | topic | GET | récupère la liste des thèmes | chaque topic contient un champ  |
-| topic/{topic_id} | POST | abonne l'utilisateur connecté à la liste dont l'id est fourni | NA |
-| topic/{topic_id} | DELETE | désabonne l'utilisateur connecté à la liste dont l'id est fourni | NA |
+| subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
+| subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
 | feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
 | post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
 | post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
@@ -208,6 +208,15 @@ Seules les routes login et register ne sont pas protégés
 - Commentaire
 
 ## Utilisations de l'IA
+
+### Back
+
+- génération de la configuration à mysql
+    - `connect this app to the mysql database mdd_user:mdd_pwd@p05_mdd`
+    - màj de `application.properties`
+- génération du script du schema de BDD
+    - `generate mysql script to match the mermaid diagram`
+    - génération de `schema.sql`
 
 ## Amélioration envisagées
 
