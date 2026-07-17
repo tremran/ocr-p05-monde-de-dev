@@ -23,7 +23,7 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
     }
 
-    @PostMapping({"/{topicId}", "/subscription/{topicId}/"})
+    @PostMapping({"/{topicId}", "/{topicId}/"})
     public ResponseEntity<?> subscribe(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Long topicId) {
@@ -33,7 +33,7 @@ public class SubscriptionController {
                 "subscribed", true));
     }
 
-    @DeleteMapping({"/{topicId}", "/subscription/{topicId}/"})
+    @DeleteMapping({"/{topicId}", "/{topicId}/"})
     public ResponseEntity<?> unsubscribe(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Long topicId) {

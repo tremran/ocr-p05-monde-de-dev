@@ -205,10 +205,10 @@ Seules les routes login et register ne sont pas protégés
 | ✅ auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
 | ✅ auth/register | POST | enregistre un utilisateur | NA |
 | ✅ me | GET | récupère les informations de l'utilisateur connecté | NA |
-| me | PUT | modifie les informations de l'utilisateur connecté | NA |
-| topic | GET | récupère la liste des thèmes | chaque topic contient un champ  |
-| subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
-| subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
+| ✅ me | PUT | modifie les informations de l'utilisateur connecté | NA |
+| ✅ topic | GET | récupère la liste des thèmes | chaque topic contient un champ registered qui vaut true si l'utilisateur connecté est inscrit à ce topic |
+| ✅ subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
+| ✅ subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
 | ✅ feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
 | ✅ post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
 | ✅ post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |

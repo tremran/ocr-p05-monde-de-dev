@@ -28,3 +28,8 @@ Authorization: Bearer {{jwtToken}}
 ### unsubscribe to a topic
 DELETE {{apiurl}}/subscription/1
 Authorization: Bearer {{jwtToken}}
+
+
+### get topic list
+GET {{apiurl}}/topic
+Authorization: Bearer {{jwtToken}}

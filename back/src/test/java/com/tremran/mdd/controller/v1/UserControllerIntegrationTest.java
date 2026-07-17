@@ -7,34 +7,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tremran.mdd.model.UserEntity;
-import com.tremran.mdd.repository.UserRepository;
-import com.tremran.mdd.service.JwtService;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class UserControllerIntegrationTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private JwtService jwtService;
+class UserControllerIntegrationTest extends ControllerIntegrationTestSupport {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -43,9 +26,7 @@ class UserControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(SecurityMockMvcConfigurers.springSecurity())
-                .build();
+        mockMvc = createMockMvc();
     }
 
     @Test
@@ -75,22 +56,6 @@ class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$.id").value(user.getId()))
                 .andExpect(jsonPath("$.email").value("after@test.com"))
                 .andExpect(jsonPath("$.pseudo").value("after"));
-    }
-
-    private UserEntity createUser(String email, String pseudo, String password) {
-        UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPseudo(pseudo);
-        user.setPassword(password);
-        return userRepository.save(user);
-    }
-
-    private String createToken(UserEntity user) {
-        UserDetails userDetails = User.withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
-        return jwtService.generateToken(userDetails);
     }
 
     private record UpdateMePayload(String email, String pseudo, String password) {

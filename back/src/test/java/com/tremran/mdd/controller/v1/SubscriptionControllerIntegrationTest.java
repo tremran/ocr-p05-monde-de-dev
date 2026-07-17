@@ -8,42 +8,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.tremran.mdd.model.SubscriptionEntity;
 import com.tremran.mdd.model.TopicEntity;
 import com.tremran.mdd.model.UserEntity;
-import com.tremran.mdd.repository.SubscriptionRepository;
-import com.tremran.mdd.repository.TopicRepository;
-import com.tremran.mdd.repository.UserRepository;
-import com.tremran.mdd.service.JwtService;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class SubscriptionControllerIntegrationTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
-
-    @Autowired
-    private JwtService jwtService;
+class SubscriptionControllerIntegrationTest extends ControllerIntegrationTestSupport {
 
     private MockMvc mockMvc;
 
@@ -52,9 +25,7 @@ class SubscriptionControllerIntegrationTest {
         subscriptionRepository.deleteAll();
         userRepository.deleteAll();
         topicRepository.deleteAll();
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(SecurityMockMvcConfigurers.springSecurity())
-                .build();
+        mockMvc = createMockMvc();
     }
 
     @Test
@@ -113,35 +84,5 @@ class SubscriptionControllerIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Not Found"))
                 .andExpect(jsonPath("$.message").value("Subscription not found"));
-    }
-
-    private UserEntity createUser(String email, String pseudo) {
-        UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPseudo(pseudo);
-        user.setPassword("password");
-        return userRepository.save(user);
-    }
-
-    private TopicEntity createTopic(String name, String description) {
-        TopicEntity topic = new TopicEntity();
-        topic.setName(name);
-        topic.setDescription(description);
-        return topicRepository.save(topic);
-    }
-
-    private SubscriptionEntity createSubscription(UserEntity user, TopicEntity topic) {
-        SubscriptionEntity subscription = new SubscriptionEntity();
-        subscription.setUser(user);
-        subscription.setTopic(topic);
-        return subscriptionRepository.save(subscription);
-    }
-
-    private String createToken(UserEntity user) {
-        UserDetails userDetails = User.withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
-        return jwtService.generateToken(userDetails);
     }
 }
