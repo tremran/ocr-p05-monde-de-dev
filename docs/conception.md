@@ -28,7 +28,7 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
 - gestion des thèmes
     - ✅ consulter les thèmes
     - ✅ s'abonner à un thème
-    - se désabonner d'un thème ( sur la page de profil)
+    - ✅ se désabonner d'un thème ( sur la page de profil)
 - fil d'actualité
     - ✅ consulter son fil d'actualité ( page d'accueil )
     - ✅ trier le fil d'actualité
