@@ -92,6 +92,36 @@
   color: purple;
 }
 
+.profile-link {
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.profile-link svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  background: #e2e2e2;
+  border-radius: 50%;
+  color: #7763c5;
+  border: 0.2rem solid #7763c5;
+}
+
+.profile-link:hover,
+.profile-link.active {
+  background: #d8d8d8;
+  color: #5f49ad;
+}
+
 @media (min-width: 768px) {
   .app-nav {
     height: 5.25rem;
@@ -106,6 +136,7 @@
     position: static;
     display: flex;
     flex-direction: row;
+    align-items: center;
     min-width: auto;
     padding: 0;
     border: 0;

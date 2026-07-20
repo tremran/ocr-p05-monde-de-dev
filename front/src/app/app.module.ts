@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { FeedComponent } from './pages/feed/feed.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { MeComponent } from './pages/me/me.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ThemesComponent } from './pages/themes/themes.component';
 import { ButtonComponent } from './shared/components/button/button.component';
@@ -21,6 +22,7 @@ import { PostComponent } from './shared/components/post/post.component';
     HomeComponent,
     FeedComponent,
     LoginComponent,
+    MeComponent,
     RegisterComponent,
     ThemesComponent,
     ButtonComponent,

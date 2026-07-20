@@ -1,0 +1,66 @@
+.me-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #1b1b1b;
+}
+
+.me-content {
+  width: min(100%, 36rem);
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2rem;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+input {
+  height: 2.6rem;
+  border: 0.15rem solid purple;
+  border-radius: 0.35rem;
+  padding: 0 0.8rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.status {
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+
+.error {
+  color: #b42318;
+  margin-top: -0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.me-submit {
+  align-self: center;
+  margin-top: 0.5rem;
+//   --app-button-font-size: 1.1rem;
+}
+
+.retry {
+  margin-top: 1rem;
+}
+
+@media (min-width: 760px) {
+  .me-content {
+    padding: 1.5rem 2rem 2.5rem;
+  }
+}

@@ -19,5 +19,18 @@
       <button class="logout-link" type="button" (click)="logout()">Se déconnecter</button>
     <a routerLink="/feed" routerLinkActive="active" (click)="closeMenu()">Articles</a>
     <a routerLink="/themes" routerLinkActive="active" (click)="closeMenu()">Thèmes</a>
+    <a
+      class="profile-link"
+      routerLink="/me"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+      aria-label="Profil"
+      title="Profil"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="8" r="3.4"></circle>
+        <path d="M5.5 19a6.5 6.5 0 0 1 13 0"></path>
+      </svg>
+    </a>
   </nav>
 </header>
