@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.getToken()) {
+      this.router.navigate(['/feed']);
+    }
+  }
 
   login() {
     this.router.navigate(['/login']);

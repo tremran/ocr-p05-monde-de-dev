@@ -66,17 +66,25 @@
   display: flex;
 }
 
-.nav-links a {
+.nav-links a,
+.logout-link {
   text-decoration: none;
   color: #1b1b1b;
   font-size: 1.5rem;
   font-weight: 600;
   padding: 0.7rem 0.85rem;
   border-radius: 0.5rem;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.logout-link {
+    color: darkred;
 }
 
 .nav-links a:hover,
-.nav-links a.active {
+.nav-links a.active{
   background: #ece7ff;
 }
 
