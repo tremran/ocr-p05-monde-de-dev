@@ -41,6 +41,11 @@ export class TopicService {
     return this.http.post(`${this.subscriptionUrl}/${topicId}`, {}, options);
   }
 
+  unsubscribeFromTopic(topicId: number | string): Observable<unknown> {
+    const options = this.buildAuthOptions();
+    return this.http.delete(`${this.subscriptionUrl}/${topicId}`, options);
+  }
+
   private buildAuthOptions(): { headers?: HttpHeaders } {
     const token = this.authService.getToken();
 

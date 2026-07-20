@@ -35,6 +35,41 @@
 
     <p class="status success" *ngIf="successMessage">{{ successMessage }}</p>
 
+    <section class="subscribed-topics">
+      <h2>Abonnements</h2>
+
+      <p class="status" *ngIf="loadingSubscribedTopics">Chargement de vos themes...</p>
+      <p class="status error" *ngIf="!loadingSubscribedTopics && subscribedTopicsErrorMessage">
+        {{ subscribedTopicsErrorMessage }}
+      </p>
+
+      <ul
+        class="topics-list"
+        *ngIf="!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length > 0"
+      >
+        <li *ngFor="let topic of subscribedTopics; trackBy: trackByTopic" class="topic-item">
+          <h2>{{ topic.name || 'Thème sans titre' }}</h2>
+          <p>{{ topic.description || 'Aucune description disponible.' }}</p>
+
+          <app-button
+            class="unsubscribe-button"
+            [disabled]="isUnsubscribing(topic)"
+            (click)="unsubscribe(topic)"
+          >
+            {{ isUnsubscribing(topic) ? 'Désabonnement...' : 'Se désabonner' }}
+          </app-button>
+        </li>
+      </ul>
+
+      <p class="status" *ngIf="!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length === 0">
+        Vous n'êtes abonné a aucun thème pour le moment.
+      </p>
+
+      <div class="retry" *ngIf="!loadingSubscribedTopics && subscribedTopicsErrorMessage">
+        <app-button (click)="loadSubscribedTopics()">Recharger les thèmes</app-button>
+      </div>
+    </section>
+
     <div class="retry" *ngIf="!loadingProfile && errorMessage">
       <app-button (click)="loadMe()">Recharger</app-button>
     </div>
