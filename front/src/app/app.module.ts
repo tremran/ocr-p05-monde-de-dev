@@ -8,9 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ButtonComponent } from './shared/components/button/button.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, RegisterComponent, ButtonComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

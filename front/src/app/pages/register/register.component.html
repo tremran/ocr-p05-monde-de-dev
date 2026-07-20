@@ -30,9 +30,9 @@
         Le mot de passe est requis (8 caracteres minimum).
       </p>
 
-      <button type="submit" [disabled]="loading">
+      <app-button class="register-submit" type="submit" [disabled]="loading">
         {{ loading ? 'Inscription...' : "S'inscrire" }}
-      </button>
+      </app-button>
     </form>
 
     <p class="feedback success" *ngIf="successMessage">{{ successMessage }}</p>

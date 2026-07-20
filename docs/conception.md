@@ -190,7 +190,7 @@ Seules les routes login et register ne sont pas protégés
 
 | url | description | données affichées | endpoints utilisées | remarques |
 | --- | --- | --- | --- | --- |
-| /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
+| ✅ /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
 | /login | page de connexion | affiche le formulaire | les données sont envoyées sur `login` | --- |
 | /logout | page de déconnexion | NA | `logout` | l'utilisateur est redirigé sur la page de `login` |
 | / | page d'accueil | affiche le fil d'actualité | `feed` | l'utilisateur peut trier le fil par date |
@@ -202,7 +202,7 @@ Seules les routes login et register ne sont pas protégés
 
 - Header
 - Menu
-- Bouton
+- ✅ Bouton
 - Article
 - Thème
 - Commentaire
