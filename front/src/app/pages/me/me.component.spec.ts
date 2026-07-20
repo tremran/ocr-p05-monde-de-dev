@@ -71,7 +71,7 @@ describe('MeComponent', () => {
     component.meForm.patchValue({
       pseudo: 'after',
       email: 'after@test.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
 
     component.submit();
@@ -79,7 +79,7 @@ describe('MeComponent', () => {
     expect(meServiceSpy.updateMe).toHaveBeenCalledOnceWith({
       pseudo: 'after',
       email: 'after@test.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
     expect(authServiceSpy.saveToken).toHaveBeenCalledOnceWith('new-token');
     expect(component.savingProfile).toBeFalse();
@@ -118,7 +118,7 @@ describe('MeComponent', () => {
     component.meForm.patchValue({
       pseudo: 'after',
       email: 'after@test.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
 
     component.submit();
@@ -173,5 +173,33 @@ describe('MeComponent', () => {
     expect(component.subscribedTopicsErrorMessage).toBe(
       'Impossible de vous désabonner pour le moment.',
     );
+  });
+
+  it('should reject weak password format in profile form', () => {
+    fixture.detectChanges();
+
+    component.meForm.patchValue({
+      pseudo: 'after',
+      email: 'after@test.com',
+      password: 'StrongPass123',
+    });
+
+    expect(component.meForm.controls.password.invalid).toBeTrue();
+
+    component.submit();
+
+    expect(meServiceSpy.updateMe).not.toHaveBeenCalled();
+  });
+
+  it('should accept strong password format in profile form', () => {
+    fixture.detectChanges();
+
+    component.meForm.patchValue({
+      pseudo: 'after',
+      email: 'after@test.com',
+      password: 'StrongPass123!',
+    });
+
+    expect(component.meForm.controls.password.valid).toBeTrue();
   });
 });

@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.containsString;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -48,7 +49,7 @@ class UserControllerIntegrationTest extends ControllerIntegrationTestSupport {
     void updateCurrentUser_withValidJwt_shouldReturnUpdatedUser() throws Exception {
         UserEntity user = createUser("before@test.com", "before", "password");
         String token = createToken(user);
-        String body = objectMapper.writeValueAsString(new UpdateMePayload("after@test.com", "after", "StrongPass123"));
+        String body = objectMapper.writeValueAsString(new UpdateMePayload("after@test.com", "after", "StrongPass123!"));
 
         mockMvc.perform(put("/api/v1/me")
                 .header("Authorization", "Bearer " + token)
@@ -60,6 +61,21 @@ class UserControllerIntegrationTest extends ControllerIntegrationTestSupport {
             .andExpect(jsonPath("$.pseudo").value("after"))
             .andExpect(jsonPath("$.token").isNotEmpty());
     }
+
+            @Test
+            void updateCurrentUser_withWeakPassword_shouldReturnBadRequest() throws Exception {
+            UserEntity user = createUser("before-weak@test.com", "before-weak", "password");
+            String token = createToken(user);
+            String body = objectMapper.writeValueAsString(new UpdateMePayload("after-weak@test.com", "after-weak", "StrongPass123"));
+
+            mockMvc.perform(put("/api/v1/me")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message", containsString("password")));
+            }
 
     @Test
     void updateCurrentUser_withoutPassword_shouldKeepExistingPassword() throws Exception {

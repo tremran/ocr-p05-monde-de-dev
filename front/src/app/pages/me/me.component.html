@@ -19,10 +19,22 @@
           Une adresse e-mail valide est requise.
         </p>
 
-        <label for="password">Mot de passe</label>
+        <label for="password">
+          Mot de passe
+          <details class="password-help">
+            <summary aria-label="Afficher les règles du mot de passe">
+              <span class="info-icon" aria-hidden="true">i</span>
+              <span class="sr-only">Afficher les règles du mot de passe</span>
+            </summary>
+            <p class="password-help-text">
+              Laissez vide pour ne pas le modifier. Sinon: plus de 8 caractères, avec au moins un chiffre,
+              une minuscule, une majuscule et un caractère spécial parmi =+_-$#!?.
+            </p>
+          </details>
+        </label>
         <input id="password" type="password" formControlName="password" />
         <p class="error" *ngIf="meForm.controls.password.touched && meForm.controls.password.invalid">
-          Le mot de passe doit contenir au moins 8 caractères si vous le modifiez.
+          Le format du mot de passe est invalide.
         </p>
 
         <app-button

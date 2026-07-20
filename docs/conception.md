@@ -41,7 +41,7 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
 
 Ajouter des tests automatisés pour valider ces points
 
-- mots de passe
+- ✅ mots de passe
     - plus de 8 caractères
     - contient au moins
         - un chiffre

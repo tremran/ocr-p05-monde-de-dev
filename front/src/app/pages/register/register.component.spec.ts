@@ -37,7 +37,7 @@ describe('RegisterComponent', () => {
     component.registerForm.setValue({
       name: 'tester',
       email: 'tester@example.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
 
     component.submit();
@@ -45,7 +45,7 @@ describe('RegisterComponent', () => {
     expect(authServiceSpy.register).toHaveBeenCalledOnceWith({
       pseudo: 'tester',
       email: 'tester@example.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
     expect(component.loading).toBeFalse();
     expect(component.successMessage).toBe('Registration successful.');
@@ -65,7 +65,7 @@ describe('RegisterComponent', () => {
     component.registerForm.setValue({
       name: 'tester',
       email: 'tester@example.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
 
     component.submit();
@@ -73,7 +73,7 @@ describe('RegisterComponent', () => {
     expect(authServiceSpy.register).toHaveBeenCalledOnceWith({
       pseudo: 'tester',
       email: 'tester@example.com',
-      password: 'StrongPass123',
+      password: 'StrongPass123!',
     });
     expect(component.loading).toBeFalse();
     expect(component.successMessage).toBe('');
@@ -89,5 +89,39 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.controls.name.touched).toBeTrue();
     expect(component.registerForm.controls.email.touched).toBeTrue();
     expect(component.registerForm.controls.password.touched).toBeTrue();
+  });
+
+  it('should reject passwords that do not match complexity rules', () => {
+    component.registerForm.setValue({
+      name: 'tester',
+      email: 'tester@example.com',
+      password: 'StrongPass123',
+    });
+
+    expect(component.registerForm.controls.password.invalid).toBeTrue();
+
+    component.submit();
+
+    expect(authServiceSpy.register).not.toHaveBeenCalled();
+  });
+
+  it('should accept passwords matching complexity rules', () => {
+    authServiceSpy.register.and.returnValue(of({ token: 'fake-token' }));
+
+    component.registerForm.setValue({
+      name: 'tester',
+      email: 'tester@example.com',
+      password: 'StrongPass123!',
+    });
+
+    expect(component.registerForm.valid).toBeTrue();
+
+    component.submit();
+
+    expect(authServiceSpy.register).toHaveBeenCalledOnceWith({
+      pseudo: 'tester',
+      email: 'tester@example.com',
+      password: 'StrongPass123!',
+    });
   });
 });

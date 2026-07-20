@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { MeService } from '../../services/me.service';
 import { Topic, TopicService } from '../../services/topic.service';
 
+const OPTIONAL_PASSWORD_RULES = /^$|(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\-$#!?]).{9,}$/;
+
 @Component({
   selector: 'app-me',
   templateUrl: './me.component.html',
@@ -13,7 +15,7 @@ export class MeComponent implements OnInit {
   readonly meForm = this.fb.nonNullable.group({
     pseudo: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.minLength(8)]],
+    password: ['', [Validators.pattern(OPTIONAL_PASSWORD_RULES)]],
   });
 
   loadingProfile = false;

@@ -18,10 +18,14 @@ import com.tremran.mdd.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
+
+    private static final String OPTIONAL_PASSWORD_RULES =
+            "^$|(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\\-$#!?]).{9,}$";
 
     private final UserService userService;
     private final JwtService jwtService;
@@ -73,6 +77,8 @@ public class UserController {
     public record UpdateMeRequest(
             @NotBlank @Email String email,
             @NotBlank String pseudo,
+            @Pattern(regexp = OPTIONAL_PASSWORD_RULES,
+                message = "must be longer than 8 characters and include at least one digit, one lowercase letter, one uppercase letter and one special character (=+_-$#!?)")
             String password) {
     }
 }

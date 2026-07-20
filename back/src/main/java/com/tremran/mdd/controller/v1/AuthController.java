@@ -18,11 +18,15 @@ import com.tremran.mdd.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
+
+    private static final String PASSWORD_RULES =
+            "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\\-$#!?]).{9,}$";
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
@@ -56,7 +60,10 @@ public class AuthController {
     public record RegisterRequest(
             @NotBlank @Email String email,
             @NotBlank @Size(min = 3, max = 100) String pseudo,
-            @NotBlank @Size(min = 8) String password) {
+            @NotBlank
+            @Pattern(regexp = PASSWORD_RULES,
+                message = "must be longer than 8 characters and include at least one digit, one lowercase letter, one uppercase letter and one special character (=+_-$#!?)")
+            String password) {
     }
 
     public record LoginRequest(
