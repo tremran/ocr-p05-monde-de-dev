@@ -15,6 +15,13 @@ import com.tremran.mdd.model.UserEntity;
 import com.tremran.mdd.service.JwtService;
 import com.tremran.mdd.service.UserService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +30,7 @@ import jakarta.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Auth", description = "Endpoints d'authentification")
 public class AuthController {
 
     private static final String PASSWORD_RULES =
@@ -39,6 +47,64 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @Operation(
+        summary = "Créer un compte utilisateur",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = RegisterRequest.class),
+                examples = @ExampleObject(
+                    name = "registerRequest",
+                    value = """
+                        {
+                            "email": "john.doe@example.com",
+                            "pseudo": "johndoe",
+                            "password": "StrongPass123!"
+                        }
+                        """
+                )
+            )
+        )
+    )
+    @ApiResponses({
+        @ApiResponse(
+            responseCode = "200",
+            description = "Compte créé avec succès",
+            content = @Content(
+                mediaType = "application/json",
+                examples = @ExampleObject(
+                    name = "registerSuccess",
+                    value = """
+                        {
+                            "token": "eyJhbGciOiJIUzI1NiJ9...",
+                            "user": {
+                        "email": "john.doe@example.com",
+                        "pseudo": "johndoe"
+                            }
+                        }
+                        """
+                )
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Données invalides",
+            content = @Content(
+                mediaType = "application/json",
+                examples = @ExampleObject(
+                    name = "registerValidationError",
+                    value = """
+                        {
+                            "error": "Bad Request",
+                            "message": "password must be longer than 8 characters and include at least one digit, one lowercase letter, one uppercase letter and one special character (=+_-$#!?)"
+                        }
+                        """
+                )
+            )
+        ),
+        @ApiResponse(responseCode = "409", description = "Email ou pseudo déjà existant")
+    })
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         UserEntity entity = userService.register(request.email(), request.pseudo(), request.password());
         String token = jwtService.generateToken(org.springframework.security.core.userdetails.User.withUsername(entity.getEmail())
@@ -49,6 +115,58 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(
+        summary = "Se connecter et obtenir un JWT",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = LoginRequest.class),
+                examples = @ExampleObject(
+                    name = "loginRequest",
+                    value = """
+                        {
+                            "email": "john.doe@example.com",
+                            "password": "StrongPass123!"
+                        }
+                        """
+                )
+            )
+        )
+    )
+    @ApiResponses({
+        @ApiResponse(
+            responseCode = "200",
+            description = "Connexion réussie",
+            content = @Content(
+                mediaType = "application/json",
+                examples = @ExampleObject(
+                    name = "loginSuccess",
+                    value = """
+                        {
+                            "token": "eyJhbGciOiJIUzI1NiJ9..."
+                        }
+                        """
+                )
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Identifiants invalides",
+            content = @Content(
+                mediaType = "application/json",
+                examples = @ExampleObject(
+                    name = "loginUnauthorized",
+                    value = """
+                        {
+                            "error": "Unauthorized",
+                            "message": "Invalid credentials"
+                        }
+                        """
+                )
+            )
+        )
+    })
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
@@ -58,16 +176,21 @@ public class AuthController {
     }
 
     public record RegisterRequest(
-            @NotBlank @Email String email,
-            @NotBlank @Size(min = 3, max = 100) String pseudo,
-            @NotBlank
-            @Pattern(regexp = PASSWORD_RULES,
-                message = "must be longer than 8 characters and include at least one digit, one lowercase letter, one uppercase letter and one special character (=+_-$#!?)")
-            String password) {
+        @Schema(description = "Adresse email", example = "john.doe@example.com")
+        @NotBlank @Email String email,
+        @Schema(description = "Pseudo utilisateur", example = "johndoe")
+        @NotBlank @Size(min = 3, max = 100) String pseudo,
+        @Schema(description = "Mot de passe fort", example = "StrongPass123!")
+        @NotBlank
+        @Pattern(regexp = PASSWORD_RULES,
+            message = "must be longer than 8 characters and include at least one digit, one lowercase letter, one uppercase letter and one special character (=+_-$#!?)")
+        String password) {
     }
 
     public record LoginRequest(
-            @NotBlank @Email String email,
-            @NotBlank String password) {
+        @Schema(description = "Adresse email", example = "john.doe@example.com")
+        @NotBlank @Email String email,
+        @Schema(description = "Mot de passe", example = "StrongPass123!")
+        @NotBlank String password) {
     }
 }

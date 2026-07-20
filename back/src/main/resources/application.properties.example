@@ -20,5 +20,7 @@ security.jwt.secret-key=3cfa76ef14937c1c0ea519f8fc079a80fcd04a7420f8e8bcd0a7567c
 security.jwt.expiration-time=36000000
 
 springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.tagsSorter=alpha
+springdoc.swagger-ui.operationsSorter=alpha
 
 app.cors.allowed-origins=http://localhost:4200,http://127.0.0.1:4200

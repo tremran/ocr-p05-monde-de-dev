@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tremran.mdd.service.SubscriptionService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/subscription")
+@Tag(name = "Subscription", description = "Abonnements aux thèmes")
+@SecurityRequirement(name = "bearerAuth")
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
@@ -24,6 +30,7 @@ public class SubscriptionController {
     }
 
     @PostMapping({"/{topicId}", "/{topicId}/"})
+    @Operation(summary = "S'abonner à un thème")
     public ResponseEntity<?> subscribe(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Long topicId) {
@@ -34,6 +41,7 @@ public class SubscriptionController {
     }
 
     @DeleteMapping({"/{topicId}", "/{topicId}/"})
+    @Operation(summary = "Se désabonner d'un thème")
     public ResponseEntity<?> unsubscribe(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Long topicId) {
