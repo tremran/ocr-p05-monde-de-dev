@@ -1,0 +1,84 @@
+.themes-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #1b1b1b;
+}
+
+.themes-content {
+  width: min(100%, 64rem);
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2rem;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: 1.75rem;
+}
+
+.status {
+  margin: 1.5rem 0;
+  font-size: 1.125rem;
+}
+
+.error {
+  color: #b42318;
+}
+
+.empty {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  border: 0.0625rem solid #e5e5e5;
+}
+
+.empty h2,
+.empty p {
+  margin: 0;
+}
+
+.empty p {
+  margin-top: 0.5rem;
+}
+
+.topics-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.topic-card {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #f6f6f6;
+}
+
+.topic-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.topic-card p {
+  margin: 0;
+  color: #4a4a4a;
+  line-height: 1.4;
+}
+
+.topic-actions {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.retry {
+  margin-top: 1rem;
+}
+
+@media (min-width: 760px) {
+  .themes-content {
+    padding: 1.5rem 2rem 2.5rem;
+  }
+
+  .topics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

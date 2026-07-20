@@ -71,7 +71,7 @@
   text-decoration: none;
   color: #1b1b1b;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: normal;
   padding: 0.7rem 0.85rem;
   border-radius: 0.5rem;
   border: 0;
@@ -79,13 +79,17 @@
   text-align: left;
   cursor: pointer;
 }
+
+.nav-links *:hover {
+  font-weight: bold;
+}
 .logout-link {
     color: darkred;
 }
 
 .nav-links a:hover,
 .nav-links a.active{
-  background: #ece7ff;
+  color: purple;
 }
 
 @media (min-width: 768px) {

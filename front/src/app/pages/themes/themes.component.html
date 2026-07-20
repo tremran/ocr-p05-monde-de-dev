@@ -1,0 +1,41 @@
+<div class="themes-page">
+  <main class="themes-content">
+    <h1>Thèmes</h1>
+
+    <p class="status" *ngIf="loading">Chargement des thèmes...</p>
+    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+    <p class="status error" *ngIf="!loading && !errorMessage && subscribeErrorMessage">
+      {{ subscribeErrorMessage }}
+    </p>
+
+    <section class="empty" *ngIf="!loading && !errorMessage && topics.length === 0">
+      <h2>Aucun theme</h2>
+      <p>La liste des thèmes est vide pour le moment.</p>
+    </section>
+
+    <div class="topics-grid" *ngIf="!loading && !errorMessage && topics.length > 0">
+      <article class="topic-card" *ngFor="let topic of topics; trackBy: trackByTopic">
+        <h2>{{ topic.name || 'Theme sans titre' }}</h2>
+        <p>{{ topic.description || 'Aucune description disponible.' }}</p>
+
+        <div class="topic-actions">
+          <app-button
+            *ngIf="!topic.registered"
+            (click)="subscribe(topic)"
+            [disabled]="isSubscribing(topic)"
+          >
+            {{ isSubscribing(topic) ? 'Abonnement...' : "S'abonner" }}
+          </app-button>
+
+          <app-button *ngIf="topic.registered" [disabled]="true" variant="secondary">
+            Déjà abonné
+          </app-button>
+        </div>
+      </article>
+    </div>
+
+    <div class="retry" *ngIf="!loading && errorMessage">
+      <app-button (click)="loadTopics()">Recharger</app-button>
+    </div>
+  </main>
+</div>

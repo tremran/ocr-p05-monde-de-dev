@@ -10,6 +10,7 @@ import { FeedComponent } from './pages/feed/feed.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ThemesComponent } from './pages/themes/themes.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { PostComponent } from './shared/components/post/post.component';
@@ -21,6 +22,7 @@ import { PostComponent } from './shared/components/post/post.component';
     FeedComponent,
     LoginComponent,
     RegisterComponent,
+    ThemesComponent,
     ButtonComponent,
     NavbarComponent,
     PostComponent,

@@ -18,19 +18,19 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
 
 ### Diagramme UC
 
-- fonctionnels
-    - s'enregistrer
-    - se connecter
-    - se déconnecter
+- ✅ fonctionnels
+    - ✅ s'enregistrer
+    - ✅ se connecter
+    - ✅ se déconnecter
 - gestion du profil
     - consulter son profil
     - modifier son profil
 - gestion des thèmes
-    - consulter les thèmes
-    - s'abonner à un thème
+    - ✅ consulter les thèmes
+    - ✅ s'abonner à un thème
     - se désabonner d'un thème ( sur la page de profil)
 - fil d'actualité
-    - consulter son fil d'actualité ( page d'accueil )
+    - ✅ consulter son fil d'actualité ( page d'accueil )
     - trier le fil d'actualité
 - articles
     - ajouter un article
@@ -56,11 +56,11 @@ Ajouter des tests automatisés pour valider ces points
     - la date est définie
 - 1 commentaire correspond à un article
     - pas de réponses à un commentaire
-- après le clic sur le bouton `S'abonner` le bouton devient inactif et le texte devient `Déjà abonné`
+- ✅ après le clic sur le bouton `S'abonner` le bouton devient inactif et le texte devient `Déjà abonné`
 
 ## Choix d'Architecture
 
-Contraintes recensées
+### Contraintes recensées
 
 - Design responsive
 - Client / Serveur
@@ -190,11 +190,12 @@ Seules les routes login et register ne sont pas protégés
 
 | url | description | données affichées | endpoints utilisées | remarques |
 | --- | --- | --- | --- | --- |
+| ✅ / | page d'accueil | affiche des boutons `se connecter` et `s'inscrire` | NA | Si l'utilisateur est connecté, redirige vers `/feed` |
 | ✅ /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
 | ✅ /login | page de connexion | affiche le formulaire | les données sont envoyées sur `login` | --- |
 | ✅ /logout | bouton de déconnexion | NA | NA | l'utilisateur est redirigé sur la page de `home` |
 | ✅ /feed | page d'accueil | affiche le fil d'actualité | `feed` | l'utilisateur peut trier le fil par date |
-| /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | l'utilisateur peut s'abonner / désabonner à un thème depuis cette page |
+| ✅ /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | l'utilisateur peut s'abonner  à un thème depuis cette page |
 | /me | infos utilisateurs | affiche les infos de l'utilisateur connecté dans un formulaire ainsi que les thèmes auxquels il est abonné | `me` | l'utilisateur peut modifier son profil les données sont envoyées en POST sur le endpoint `me`, il peut également se désabonner aux thèmes |
 | /article/{id_article} | details d'un article | affiche les infos de l'article dont l'id est fourni dans l'url, affiche également le formulaire d'ajout de commentaires | `post/{post_id}`, `post/{post_id}/comment` le formulaire est envoyé en POST sur `post/{post_id}/comment` |  |
 
@@ -205,6 +206,7 @@ Seules les routes login et register ne sont pas protégés
 - ✅ Bouton
 - ✅ Article
 - Thème
+    - Le thème n'étant afficher qu'à un endroit, aucun composant n'a été créé pour le moment
 - Commentaire
 
 ## Utilisations de l'IA
