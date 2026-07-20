@@ -1,25 +1,50 @@
-# P6-Full-Stack-reseau-dev
+# MDD project
+
+This project contains 2 main folders :
+
+- `front` : contains the angular front project
+- `back` : contains the java api
+
+## Conception
+
+check the [conception file](./docs/conception.md) for detailed informations about the structure
+
+## Back
+
+### Installation
+
+```bash
+# get in back folder
+cd back
+# launch dev server
+mvn spring-boot:run
+
+# run tests
+./mvnw test
+# check code coverage
+./mvnw verify 
+# afficher le code coverage
+xdg-open target/site/jacoco/index.html
+```
 
 ## Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+### Installation
 
-Don't forget to install your node_modules before starting (`npm install`).
+```bash
+# get in the front folder
+cd front
+# install dependencies
+npm install
+# run application in dev mode
+npm run start
+# open your browser on http://localhost:4200
 
-### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# run tests with code coverage
+npm run test
+```
 
-### Build
+## Tests e2e
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-### Where to start
-
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
-
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
-
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
-
-Good luck!
+Sur un environnement dédié il est possible de lancer les tests e2e depuis le front avec la commande `npm run test:e2e` après avoir lancé le front sur le port 4200 et le back sur le port 3001

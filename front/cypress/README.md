@@ -3,13 +3,15 @@
 ## Prérequis
 
 - API backend lancée (par défaut `http://localhost:3001`)
-- Front Angular lancé (par défaut `http://localhost:4200`)
+- Le front est réutilisé s'il tourne déjà sur `127.0.0.1:4200`, sinon il est lancé automatiquement
 
 ## Lancer les tests
 
 ```bash
 npm run test:e2e
 ```
+
+Cette commande exécute Cypress directement si le front répond déjà sur `127.0.0.1:4200`. Sinon, elle démarre `ng serve --host 127.0.0.1 --port 4200`, attend que le front soit disponible, puis exécute Cypress.
 
 ## Ouvrir Cypress
 

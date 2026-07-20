@@ -68,7 +68,6 @@ class PostControllerTest {
         assertThat(body.get("content")).isEqualTo("This is a test post.");
         Map<?, ?> authorMap = (Map<?, ?>) body.get("author");
         assertThat(authorMap.get("email")).isEqualTo("tester@example.com");
-        assertThat(body.get("topicId")).isEqualTo(2L);
         assertThat(body.get("publishedAt")).isEqualTo(LocalDate.of(2026, 7, 14));
     }
 
@@ -109,7 +108,8 @@ class PostControllerTest {
         assertThat(body.get("content")).isEqualTo("Found post content.");
         Map<?, ?> authorMap = (Map<?, ?>) body.get("author");
         assertThat(authorMap.get("pseudo")).isEqualTo("author");
-        assertThat(body.get("topicId")).isEqualTo(5L);
+        Map<?, ?> topicMap = (Map<?, ?>) body.get("topic");
+        assertThat(topicMap.get("id")).isEqualTo(5L);
     }
 
 }

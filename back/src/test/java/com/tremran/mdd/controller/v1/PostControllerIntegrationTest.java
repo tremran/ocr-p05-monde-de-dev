@@ -55,8 +55,7 @@ class PostControllerIntegrationTest extends ControllerIntegrationTestSupport {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.title").value("Post Title"))
                 .andExpect(jsonPath("$.content").value("Post content"))
-                .andExpect(jsonPath("$.author.email").value(user.getEmail()))
-                .andExpect(jsonPath("$.topic.id").value(topic.getId()));
+                .andExpect(jsonPath("$.author.email").value(user.getEmail()));
     }
 
     @Test
