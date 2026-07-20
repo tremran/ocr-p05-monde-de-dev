@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PostArticle, PostComment, PostService } from '../../services/post.service';
 
@@ -13,12 +14,18 @@ export class ArticleComponent implements OnInit {
   comments: PostComment[] = [];
   loading = false;
   commentsLoading = false;
+  commentSubmitting = false;
   errorMessage = '';
   commentsErrorMessage = '';
+  commentSubmitErrorMessage = '';
+  readonly commentForm = this.formBuilder.group({
+    content: ['', [Validators.required]],
+  });
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly postService: PostService,
+    private readonly formBuilder: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +75,36 @@ export class ArticleComponent implements OnInit {
 
   trackByComment(index: number, comment: PostComment): string | number {
     return comment.id ?? `${comment.content ?? 'comment'}-${index}`;
+  }
+
+  submitComment(): void {
+    if (!this.articleId || this.commentSubmitting) {
+      return;
+    }
+
+    const rawContent = this.commentForm.controls.content.value ?? '';
+    const content = rawContent.trim();
+
+    if (!content) {
+      this.commentForm.controls.content.setErrors({ required: true });
+      this.commentForm.controls.content.markAsTouched();
+      return;
+    }
+
+    this.commentSubmitting = true;
+    this.commentSubmitErrorMessage = '';
+
+    this.postService.addComment(this.articleId, content).subscribe({
+      next: (comment) => {
+        this.commentSubmitting = false;
+        this.comments = [...this.comments, comment];
+        this.commentForm.reset();
+      },
+      error: () => {
+        this.commentSubmitting = false;
+        this.commentSubmitErrorMessage = 'Impossible d\'ajouter le commentaire pour le moment.';
+      },
+    });
   }
 
   reload(): void {

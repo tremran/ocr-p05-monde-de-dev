@@ -41,6 +41,27 @@
             <p class="comment-content">{{ comment.content || 'Commentaire vide.' }}</p>
           </article>
         </div>
+
+
+
+        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+          <label class="comment-label" for="comment-content">Ajouter un commentaire</label>
+          <textarea
+            id="comment-content"
+            class="comment-textarea"
+            formControlName="content"
+            rows="4"
+            placeholder="Écrivez votre commentaire..."
+          ></textarea>
+
+          <p class="status error" *ngIf="commentForm.controls.content.touched && commentForm.controls.content.invalid">
+            Le commentaire ne peut pas être vide.
+          </p>
+
+          <p class="status error" *ngIf="commentSubmitErrorMessage">{{ commentSubmitErrorMessage }}</p>
+
+          <app-button type="submit" [disabled]="commentSubmitting">{{ commentSubmitting ? 'Envoi...' : 'Commenter' }}</app-button>
+        </form>
       </section>
     </div>
 

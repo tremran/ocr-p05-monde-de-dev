@@ -65,6 +65,12 @@ export class PostService {
     return this.http.get<PostComment[]>(`${this.postUrl}/${postId}/comment`, options);
   }
 
+  addComment(postId: number | string, content: string): Observable<PostComment> {
+    const options = this.buildAuthOptions();
+
+    return this.http.post<PostComment>(`${this.postUrl}/${postId}/comment`, { content }, options);
+  }
+
   private buildAuthOptions(): { headers?: HttpHeaders } {
     const token = this.authService.getToken();
 

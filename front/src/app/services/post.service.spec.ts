@@ -87,4 +87,24 @@ describe('PostService', () => {
       },
     ]);
   });
+
+  it('should call POST /post/{postId}/comment with payload and bearer token', (done) => {
+    authServiceSpy.getToken.and.returnValue('fake-token');
+
+    service.addComment(12, 'Nouveau commentaire').subscribe((comment) => {
+      expect(comment.content).toBe('Nouveau commentaire');
+      done();
+    });
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}post/12/comment`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.headers.get('Authorization')).toBe('Bearer fake-token');
+    expect(req.request.body).toEqual({ content: 'Nouveau commentaire' });
+
+    req.flush({
+      id: 10,
+      content: 'Nouveau commentaire',
+      author: { email: 'commenter@test.com', pseudo: 'commenter' },
+    });
+  });
 });

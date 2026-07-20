@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
 import { PostService } from '../../services/post.service';
@@ -12,7 +13,7 @@ describe('ArticleComponent', () => {
   let postServiceSpy: jasmine.SpyObj<PostService>;
 
   beforeEach(async () => {
-    postServiceSpy = jasmine.createSpyObj<PostService>('PostService', ['getPost', 'getComments']);
+    postServiceSpy = jasmine.createSpyObj<PostService>('PostService', ['getPost', 'getComments', 'addComment']);
     postServiceSpy.getPost.and.returnValue(
       of([
         {
@@ -35,9 +36,17 @@ describe('ArticleComponent', () => {
         },
       ]),
     );
+    postServiceSpy.addComment.and.returnValue(
+      of({
+        id: 100,
+        content: 'Commentaire ajouté',
+        author: { email: 'author@test.com', pseudo: 'author' },
+      }),
+    );
 
     await TestBed.configureTestingModule({
       declarations: [ArticleComponent],
+      imports: [ReactiveFormsModule],
       providers: [
         { provide: PostService, useValue: postServiceSpy },
         {
@@ -100,5 +109,40 @@ describe('ArticleComponent', () => {
     expect(component.commentsLoading).toBeFalse();
     expect(component.comments).toEqual([]);
     expect(component.commentsErrorMessage).toBe('Impossible de charger les commentaires pour le moment.');
+  });
+
+  it('should submit a new comment and append it to the list', () => {
+    fixture.detectChanges();
+    component.commentForm.controls.content.setValue('Commentaire ajouté');
+
+    component.submitComment();
+
+    expect(postServiceSpy.addComment).toHaveBeenCalledOnceWith('12', 'Commentaire ajouté');
+    expect(component.commentSubmitting).toBeFalse();
+    expect(component.commentSubmitErrorMessage).toBe('');
+    expect(component.comments[component.comments.length - 1].content).toBe('Commentaire ajouté');
+    expect(component.commentForm.controls.content.value).toBeNull();
+  });
+
+  it('should not submit when comment content is empty', () => {
+    fixture.detectChanges();
+    component.commentForm.controls.content.setValue('   ');
+
+    component.submitComment();
+
+    expect(postServiceSpy.addComment).not.toHaveBeenCalled();
+    expect(component.commentForm.controls.content.invalid).toBeTrue();
+  });
+
+  it('should expose an error when comment creation fails', () => {
+    postServiceSpy.addComment.and.returnValue(throwError(() => new Error('create comment failed')));
+    fixture.detectChanges();
+    component.commentForm.controls.content.setValue('Un commentaire');
+
+    component.submitComment();
+
+    expect(postServiceSpy.addComment).toHaveBeenCalledOnceWith('12', 'Un commentaire');
+    expect(component.commentSubmitting).toBeFalse();
+    expect(component.commentSubmitErrorMessage).toBe('Impossible d\'ajouter le commentaire pour le moment.');
   });
 });
