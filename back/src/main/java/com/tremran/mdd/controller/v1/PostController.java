@@ -51,7 +51,6 @@ public class PostController {
         responseBody.put("title", post.getTitle());
         responseBody.put("content", post.getContent());
         responseBody.put("author", authorMap);
-        responseBody.put("topicId", post.getTopic().getId());
         responseBody.put("publishedAt", post.getPublishedAt());
         responseBody.put("createdAt", post.getCreatedAt());
         responseBody.put("updatedAt", post.getUpdatedAt());
@@ -67,12 +66,17 @@ public class PostController {
         authorMap.put("email", post.getAuthor().getEmail());
         authorMap.put("pseudo", post.getAuthor().getPseudo());
 
+        Map<String, Object> topicMap = new HashMap<>();
+        topicMap.put("id", post.getTopic().getId());
+        topicMap.put("name", post.getTopic().getName());
+        topicMap.put("description", post.getTopic().getDescription());
+
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("id", post.getId());
         responseBody.put("title", post.getTitle());
         responseBody.put("content", post.getContent());
         responseBody.put("author", authorMap);
-        responseBody.put("topicId", post.getTopic().getId());
+        responseBody.put("topic", topicMap);
         responseBody.put("publishedAt", post.getPublishedAt());
         responseBody.put("createdAt", post.getCreatedAt());
         responseBody.put("updatedAt", post.getUpdatedAt());
