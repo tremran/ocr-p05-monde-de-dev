@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostArticle, PostService } from '../../services/post.service';
+import { PostArticle, PostComment, PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-article',
@@ -10,8 +10,11 @@ import { PostArticle, PostService } from '../../services/post.service';
 export class ArticleComponent implements OnInit {
   articleId = '';
   articles: PostArticle[] = [];
+  comments: PostComment[] = [];
   loading = false;
+  commentsLoading = false;
   errorMessage = '';
+  commentsErrorMessage = '';
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -33,6 +36,8 @@ export class ArticleComponent implements OnInit {
   loadArticle(articleId: string): void {
     this.loading = true;
     this.errorMessage = '';
+    this.commentsLoading = true;
+    this.commentsErrorMessage = '';
 
     this.postService.getPost(articleId).subscribe({
       next: (articles) => {
@@ -44,10 +49,25 @@ export class ArticleComponent implements OnInit {
         this.errorMessage = 'Impossible de charger l\'article pour le moment.';
       },
     });
+
+    this.postService.getComments(articleId).subscribe({
+      next: (comments) => {
+        this.commentsLoading = false;
+        this.comments = comments;
+      },
+      error: () => {
+        this.commentsLoading = false;
+        this.commentsErrorMessage = 'Impossible de charger les commentaires pour le moment.';
+      },
+    });
   }
 
   trackByArticle(index: number, article: PostArticle): string | number {
     return article.id ?? `${article.title ?? 'article'}-${index}`;
+  }
+
+  trackByComment(index: number, comment: PostComment): string | number {
+    return comment.id ?? `${comment.content ?? 'comment'}-${index}`;
   }
 
   reload(): void {

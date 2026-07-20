@@ -5,7 +5,7 @@
 }
 
 .me-content {
-  width: min(100%, 36rem);
+  width: min(100%, 600px);
   margin: 0 auto;
   padding: 1rem 1.25rem 2rem;
   box-sizing: border-box;
@@ -21,7 +21,7 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 60%;
   margin: auto;
 }
 
@@ -40,6 +40,12 @@ input {
   margin-bottom: 1rem;
 }
 
+.profile-section {
+  padding-bottom: 1em;
+  border-bottom: 1px solid black;
+  width: 90%;
+  margin: auto;
+}
 .status {
   margin: 1rem 0;
   font-size: 1rem;
@@ -59,7 +65,6 @@ input {
 
 .subscribed-topics {
   margin-top: 2rem;
-  border-top: 1px solid black;
 }
 
 .subscribed-topics h2 {

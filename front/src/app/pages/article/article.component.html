@@ -22,6 +22,26 @@
         </p>
         <p class="content">{{ article.content || 'Aucun contenu disponible.' }}</p>
       </article>
+
+      <section class="comments-section">
+        <h2>Commentaires</h2>
+
+        <p class="status" *ngIf="commentsLoading">Chargement des commentaires...</p>
+        <p class="status error" *ngIf="!commentsLoading && commentsErrorMessage">{{ commentsErrorMessage }}</p>
+
+        <p class="empty-comments" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length === 0">
+          Aucun commentaire pour le moment.
+        </p>
+
+        <div class="comments-list" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0">
+          <article class="comment-card" *ngFor="let comment of comments; trackBy: trackByComment">
+            <p class="comment-meta">
+              <strong>{{ comment.author?.pseudo || 'Auteur inconnu' }}</strong>
+            </p>
+            <p class="comment-content">{{ comment.content || 'Commentaire vide.' }}</p>
+          </article>
+        </div>
+      </section>
     </div>
 
     <div class="retry" *ngIf="!loading && errorMessage">

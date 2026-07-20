@@ -12,7 +12,7 @@ describe('ArticleComponent', () => {
   let postServiceSpy: jasmine.SpyObj<PostService>;
 
   beforeEach(async () => {
-    postServiceSpy = jasmine.createSpyObj<PostService>('PostService', ['getPost']);
+    postServiceSpy = jasmine.createSpyObj<PostService>('PostService', ['getPost', 'getComments']);
     postServiceSpy.getPost.and.returnValue(
       of([
         {
@@ -22,6 +22,16 @@ describe('ArticleComponent', () => {
           publishedAt: '2026-07-20',
           topic: { id: 7, name: 'Angular', description: 'Angular topic' },
           author: { email: 'author@test.com', pseudo: 'author' },
+        },
+      ]),
+    );
+    postServiceSpy.getComments.and.returnValue(
+      of([
+        {
+          id: 99,
+          content: 'Premier commentaire',
+          createdAt: '2026-07-20',
+          author: { email: 'commenter@test.com', pseudo: 'commenter' },
         },
       ]),
     );
@@ -56,16 +66,22 @@ describe('ArticleComponent', () => {
     fixture.detectChanges();
 
     expect(postServiceSpy.getPost).toHaveBeenCalledOnceWith('12');
+    expect(postServiceSpy.getComments).toHaveBeenCalledOnceWith('12');
     expect(component.loading).toBeFalse();
+    expect(component.commentsLoading).toBeFalse();
     expect(component.errorMessage).toBe('');
+    expect(component.commentsErrorMessage).toBe('');
     expect(component.articleId).toBe('12');
     expect(component.articles.length).toBe(1);
     expect(component.articles[0].title).toBe('Post Title');
     expect(component.articles[0].topic?.name).toBe('Angular');
+    expect(component.comments.length).toBe(1);
+    expect(component.comments[0].content).toBe('Premier commentaire');
   });
 
   it('should show an error when article loading fails', () => {
     postServiceSpy.getPost.and.returnValue(throwError(() => new Error('load failed')));
+    postServiceSpy.getComments.and.returnValue(of([]));
 
     fixture.detectChanges();
 
@@ -73,5 +89,16 @@ describe('ArticleComponent', () => {
     expect(component.loading).toBeFalse();
     expect(component.articles).toEqual([]);
     expect(component.errorMessage).toBe('Impossible de charger l\'article pour le moment.');
+  });
+
+  it('should show an error when comments loading fails', () => {
+    postServiceSpy.getComments.and.returnValue(throwError(() => new Error('load comments failed')));
+
+    fixture.detectChanges();
+
+    expect(postServiceSpy.getComments).toHaveBeenCalledOnceWith('12');
+    expect(component.commentsLoading).toBeFalse();
+    expect(component.comments).toEqual([]);
+    expect(component.commentsErrorMessage).toBe('Impossible de charger les commentaires pour le moment.');
   });
 });

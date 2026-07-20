@@ -65,4 +65,26 @@ describe('PostService', () => {
       topic: { id: 7, name: 'Angular', description: 'Angular topic' },
     });
   });
+
+  it('should call GET /post/{postId}/comment with bearer token when a token exists', (done) => {
+    authServiceSpy.getToken.and.returnValue('fake-token');
+
+    service.getComments(12).subscribe((comments) => {
+      expect(comments.length).toBe(1);
+      expect(comments[0].content).toBe('Nice article');
+      done();
+    });
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}post/12/comment`);
+    expect(req.request.method).toBe('GET');
+    expect(req.request.headers.get('Authorization')).toBe('Bearer fake-token');
+
+    req.flush([
+      {
+        id: 3,
+        content: 'Nice article',
+        author: { email: 'commenter@test.com', pseudo: 'commenter' },
+      },
+    ]);
+  });
 });

@@ -5,33 +5,35 @@
     <p class="status" *ngIf="loadingProfile">Chargement de vos informations...</p>
     <p class="status error" *ngIf="!loadingProfile && errorMessage">{{ errorMessage }}</p>
 
-    <form [formGroup]="meForm" (ngSubmit)="submit()" novalidate *ngIf="!loadingProfile && !errorMessage">
-      <label for="pseudo">Pseudo</label>
-      <input id="pseudo" type="text" formControlName="pseudo" />
-      <p class="error" *ngIf="meForm.controls.pseudo.touched && meForm.controls.pseudo.invalid">
-        Le pseudo est requis (3 caracteres minimum).
-      </p>
+    <section class="profile-section">
+      <form [formGroup]="meForm" (ngSubmit)="submit()" novalidate *ngIf="!loadingProfile && !errorMessage">
+        <label for="pseudo">Pseudo</label>
+        <input id="pseudo" type="text" formControlName="pseudo" />
+        <p class="error" *ngIf="meForm.controls.pseudo.touched && meForm.controls.pseudo.invalid">
+          Le pseudo est requis (3 caracteres minimum).
+        </p>
 
-      <label for="email">Adresse e-mail</label>
-      <input id="email" type="email" formControlName="email" />
-      <p class="error" *ngIf="meForm.controls.email.touched && meForm.controls.email.invalid">
-        Une adresse e-mail valide est requise.
-      </p>
+        <label for="email">Adresse e-mail</label>
+        <input id="email" type="email" formControlName="email" />
+        <p class="error" *ngIf="meForm.controls.email.touched && meForm.controls.email.invalid">
+          Une adresse e-mail valide est requise.
+        </p>
 
-      <label for="password">Mot de passe</label>
-      <input id="password" type="password" formControlName="password" />
-      <p class="error" *ngIf="meForm.controls.password.touched && meForm.controls.password.invalid">
-        Le mot de passe doit contenir au moins 8 caractères si vous le modifiez.
-      </p>
+        <label for="password">Mot de passe</label>
+        <input id="password" type="password" formControlName="password" />
+        <p class="error" *ngIf="meForm.controls.password.touched && meForm.controls.password.invalid">
+          Le mot de passe doit contenir au moins 8 caractères si vous le modifiez.
+        </p>
 
-      <app-button
-        class="me-submit"
-        type="submit"
-        [disabled]="loadingProfile || savingProfile || meForm.pristine || meForm.invalid"
-      >
-        {{ savingProfile ? 'Sauvegarde...' : 'Sauvegarder' }}
-      </app-button>
-    </form>
+        <app-button
+          class="me-submit"
+          type="submit"
+          [disabled]="loadingProfile || savingProfile || meForm.pristine || meForm.invalid"
+        >
+          {{ savingProfile ? 'Sauvegarde...' : 'Sauvegarder' }}
+        </app-button>
+      </form>
+    </section>
 
     <p class="status success" *ngIf="successMessage">{{ successMessage }}</p>
 

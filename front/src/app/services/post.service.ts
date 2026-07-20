@@ -22,6 +22,17 @@ export interface PostArticle {
   };
 }
 
+export interface PostComment {
+  id?: number | string;
+  content?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  author?: {
+    email?: string;
+    pseudo?: string;
+  };
+}
+
 interface PostApiResponse {
   data?: PostArticle;
   article?: PostArticle;
@@ -46,6 +57,12 @@ export class PostService {
     return this.http
       .get<PostArticle | PostArticle[] | PostApiResponse>(`${this.postUrl}/${postId}`, options)
       .pipe(map((response) => this.normalizeResponse(response)));
+  }
+
+  getComments(postId: number | string): Observable<PostComment[]> {
+    const options = this.buildAuthOptions();
+
+    return this.http.get<PostComment[]>(`${this.postUrl}/${postId}/comment`, options);
   }
 
   private buildAuthOptions(): { headers?: HttpHeaders } {

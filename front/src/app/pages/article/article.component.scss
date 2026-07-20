@@ -5,7 +5,7 @@
 }
 
 .article-content {
-  width: min(100%, 54rem);
+  width: min(100%, 600px);
   margin: 0 auto;
   padding: 1rem 1.25rem 2rem;
   box-sizing: border-box;
@@ -18,12 +18,10 @@
   justify-content: center;
   color: #000000;
   text-decoration: none;
-  font-size: 3.25rem;
+  font-size: 2.5rem;
   line-height: 1;
   position: relative;
-  left: 1.2rem;
-
-//   margin-bottom: 0.625rem;
+  left: 1rem;
 
 }
 
@@ -55,10 +53,62 @@ h1 {
 .articles-list {
   display: grid;
   gap: 1rem;
+  width: 90%;
+}
+
+.comments-section {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid black;
+}
+
+.comments-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.comments-list {
+  display: grid;
+  gap: 0.75rem;
+  width: 90%;
+  margin: auto;
+}
+
+.comment-card {
+    display: flex;
+
+}
+
+.comment-meta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin: 0 0 0.5rem;
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.comment-content {
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+
+  padding: 1rem 1.1rem;
+  background: #f8f8f8;
+  border-radius: 0.75rem;
+  width: 100%;
+  margin-left: 1em;
+}
+
+.empty-comments {
+  margin: 0;
+  color: #666666;
 }
 
 .article-card {
   padding: 1.2rem;
+  padding-top: 0;
   background: #ffffff;
 }
 
@@ -95,8 +145,8 @@ h1 {
 
   .back-link {
     position: absolute;
-    left: -0.4em;
-    padding-top: 1.2rem;
+    left: 0;
+    padding-top: 0.2rem;
     margin-bottom: 0;
   }
 }
