@@ -3,6 +3,12 @@
   <main class="feed-content">
     <div class="feed-actions">
       <app-button (click)="goToNewArticle()">Créer un article</app-button>
+
+      <div class="sort-block">
+        <button class="sort-toggle" type="button" (click)="toggleSortByPublishedAt()" aria-label="Trier le feed par date de publication">
+          Trier par <span class="sort-arrow" aria-hidden="true">{{ sortArrow }}</span>
+        </button>
+      </div>
     </div>
 
     <p class="status" *ngIf="loading">Chargement des articles...</p>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,6 +9,7 @@ export interface FeedArticle {
   title?: string;
   content?: string;
   description?: string;
+  publishedAt?: string;
   createdAt?: string;
   updatedAt?: string;
   author?: {
@@ -18,6 +19,8 @@ export interface FeedArticle {
   };
   authorName?: string;
 }
+
+export type FeedSort = 'ASC' | 'DESC';
 
 interface FeedApiResponse {
   data?: FeedArticle[];
@@ -36,11 +39,12 @@ export class FeedService {
     private readonly authService: AuthService,
   ) {}
 
-  getFeed(): Observable<FeedArticle[]> {
+  getFeed(sort: FeedSort = 'DESC'): Observable<FeedArticle[]> {
     const token = this.authService.getToken();
+    const params = new HttpParams().set('sort', sort);
     const options = token
-      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
-      : {};
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }), params }
+      : { params };
 
     return this.http
       .get<FeedArticle[] | FeedApiResponse>(this.feedUrl, options)

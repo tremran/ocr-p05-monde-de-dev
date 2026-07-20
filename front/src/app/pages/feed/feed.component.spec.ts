@@ -48,7 +48,7 @@ describe('FeedComponent', () => {
 
     component.loadFeed();
 
-    expect(feedServiceSpy.getFeed).toHaveBeenCalled();
+    expect(feedServiceSpy.getFeed).toHaveBeenCalledWith('DESC');
     expect(component.loading).toBeFalse();
     expect(component.errorMessage).toBe('');
     expect(component.articles.length).toBe(1);
@@ -61,7 +61,7 @@ describe('FeedComponent', () => {
 
     component.loadFeed();
 
-    expect(feedServiceSpy.getFeed).toHaveBeenCalled();
+    expect(feedServiceSpy.getFeed).toHaveBeenCalledWith('DESC');
     expect(component.loading).toBeFalse();
     expect(component.errorMessage).toBe(
       'Impossible de charger le feed pour le moment.',
@@ -72,5 +72,24 @@ describe('FeedComponent', () => {
     component.goToNewArticle();
 
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/article/nouveau']);
+  });
+
+  it('should toggle sort and reload feed with ASC sort', () => {
+    component.toggleSortByPublishedAt();
+
+    expect(component.selectedSort).toBe('ASC');
+    expect(feedServiceSpy.getFeed).toHaveBeenCalledWith('ASC');
+  });
+
+  it('should expose down arrow when current sort is DESC', () => {
+    component.selectedSort = 'DESC';
+
+    expect(component.sortArrow).toBe('↓');
+  });
+
+  it('should expose up arrow when current sort is ASC', () => {
+    component.selectedSort = 'ASC';
+
+    expect(component.sortArrow).toBe('↑');
   });
 });
