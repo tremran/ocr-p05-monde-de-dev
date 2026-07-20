@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ArticleComponent } from './pages/article/article.component';
+import { ArticleNewComponent } from './pages/article-new/article-new.component';
 import { FeedComponent } from './pages/feed/feed.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -20,6 +22,8 @@ import { PostComponent } from './shared/components/post/post.component';
   declarations: [
     AppComponent,
     HomeComponent,
+    ArticleComponent,
+    ArticleNewComponent,
     FeedComponent,
     LoginComponent,
     MeComponent,

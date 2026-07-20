@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { FeedComponent } from './feed.component';
@@ -9,14 +10,19 @@ describe('FeedComponent', () => {
   let component: FeedComponent;
   let fixture: ComponentFixture<FeedComponent>;
   let feedServiceSpy: jasmine.SpyObj<FeedService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     feedServiceSpy = jasmine.createSpyObj<FeedService>('FeedService', ['getFeed']);
     feedServiceSpy.getFeed.and.returnValue(of([]));
+    routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       declarations: [FeedComponent],
-      providers: [{ provide: FeedService, useValue: feedServiceSpy }],
+      providers: [
+        { provide: FeedService, useValue: feedServiceSpy },
+        { provide: Router, useValue: routerSpy },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
@@ -60,5 +66,11 @@ describe('FeedComponent', () => {
     expect(component.errorMessage).toBe(
       'Impossible de charger le feed pour le moment.',
     );
+  });
+
+  it('should navigate to /article/nouveau', () => {
+    component.goToNewArticle();
+
+    expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/article/nouveau']);
   });
 });

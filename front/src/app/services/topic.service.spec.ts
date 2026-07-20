@@ -74,4 +74,16 @@ describe('TopicService', () => {
 
     req.flush({ topicId: 42, subscribed: true });
   });
+
+  it('should call DELETE /subscription/{topicId} with bearer token when unsubscribing', () => {
+    authServiceSpy.getToken.and.returnValue('fake-token');
+
+    service.unsubscribeFromTopic(42).subscribe();
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}subscription/42`);
+    expect(req.request.method).toBe('DELETE');
+    expect(req.request.headers.get('Authorization')).toBe('Bearer fake-token');
+
+    req.flush({ topicId: 42, subscribed: false });
+  });
 });

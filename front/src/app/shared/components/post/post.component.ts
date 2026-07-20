@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { FeedArticle } from '../../../services/feed.service';
 
 @Component({
@@ -8,6 +9,8 @@ import { FeedArticle } from '../../../services/feed.service';
 })
 export class PostComponent {
   @Input() article: FeedArticle | null = null;
+
+  constructor(private readonly router: Router) {}
 
   get author(): string {
     if (!this.article) {
@@ -34,5 +37,13 @@ export class PostComponent {
     }
 
     return this.article.content || '';
+  }
+
+  openArticle(): void {
+    if (this.article?.id === undefined || this.article?.id === null) {
+      return;
+    }
+
+    this.router.navigate(['/article', this.article.id]);
   }
 }

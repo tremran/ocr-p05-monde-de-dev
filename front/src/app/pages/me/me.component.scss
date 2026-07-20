@@ -5,7 +5,7 @@
 }
 
 .me-content {
-  width: min(100%, 36rem);
+  width: min(100%, 600px);
   margin: 0 auto;
   padding: 1rem 1.25rem 2rem;
   box-sizing: border-box;
@@ -21,6 +21,8 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
+  width: 60%;
+  margin: auto;
 }
 
 label {
@@ -38,6 +40,12 @@ input {
   margin-bottom: 1rem;
 }
 
+.profile-section {
+  padding-bottom: 1em;
+  border-bottom: 1px solid black;
+  width: 90%;
+  margin: auto;
+}
 .status {
   margin: 1rem 0;
   font-size: 1rem;
@@ -55,11 +63,51 @@ input {
 //   --app-button-font-size: 1.1rem;
 }
 
+.subscribed-topics {
+  margin-top: 2rem;
+}
+
+.subscribed-topics h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.topics-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.topic-item {
+  border-radius: 0.6rem;
+  padding: 0.9rem;
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-item h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.topic-item p {
+  margin: 0;
+  color: #4a4a4a;
+}
+
+.unsubscribe-button {
+  margin-top: 0.8rem;
+  align-self: center;
+}
+
 .retry {
   margin-top: 1rem;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 600px) {
   .me-content {
     padding: 1.5rem 2rem 2.5rem;
   }

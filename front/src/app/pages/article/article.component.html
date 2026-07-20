@@ -1,0 +1,72 @@
+<div class="article-page">
+  <main class="article-content">
+    <a class="back-link" routerLink="/feed" aria-label="Retour aux articles">
+      <span aria-hidden="true">&#8592;</span>
+    </a>
+
+    <p class="status" *ngIf="loading">Chargement de l'article...</p>
+    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+    <section class="empty" *ngIf="!loading && !errorMessage && articles.length === 0">
+      <h1>Aucun article</h1>
+      <p>L'article demandé est vide ou introuvable.</p>
+    </section>
+
+    <div class="articles-list" *ngIf="!loading && !errorMessage && articles.length > 0">
+      <article class="article-card" *ngFor="let article of articles; trackBy: trackByArticle">
+        <h1>{{ article.title || 'Sans titre' }}</h1>
+        <p class="meta">
+          <span *ngIf="article.publishedAt">{{ article.publishedAt }}</span>
+          <span>{{ article.author?.pseudo || 'Auteur inconnu' }}</span>
+          <span *ngIf="article.topic as topic">{{ topic.name }}</span>
+        </p>
+        <p class="content">{{ article.content || 'Aucun contenu disponible.' }}</p>
+      </article>
+
+      <section class="comments-section">
+        <h2>Commentaires</h2>
+
+        <p class="status" *ngIf="commentsLoading">Chargement des commentaires...</p>
+        <p class="status error" *ngIf="!commentsLoading && commentsErrorMessage">{{ commentsErrorMessage }}</p>
+
+        <p class="empty-comments" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length === 0">
+          Aucun commentaire pour le moment.
+        </p>
+
+        <div class="comments-list" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0">
+          <article class="comment-card" *ngFor="let comment of comments; trackBy: trackByComment">
+            <p class="comment-meta">
+              <strong>{{ comment.author?.pseudo || 'Auteur inconnu' }}</strong>
+            </p>
+            <p class="comment-content">{{ comment.content || 'Commentaire vide.' }}</p>
+          </article>
+        </div>
+
+
+
+        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+          <label class="comment-label" for="comment-content">Ajouter un commentaire</label>
+          <textarea
+            id="comment-content"
+            class="comment-textarea"
+            formControlName="content"
+            rows="4"
+            placeholder="Écrivez votre commentaire..."
+          ></textarea>
+
+          <p class="status error" *ngIf="commentForm.controls.content.touched && commentForm.controls.content.invalid">
+            Le commentaire ne peut pas être vide.
+          </p>
+
+          <p class="status error" *ngIf="commentSubmitErrorMessage">{{ commentSubmitErrorMessage }}</p>
+
+          <app-button type="submit" [disabled]="commentSubmitting">{{ commentSubmitting ? 'Envoi...' : 'Commenter' }}</app-button>
+        </form>
+      </section>
+    </div>
+
+    <div class="retry" *ngIf="!loading && errorMessage">
+      <app-button (click)="reload()">Recharger</app-button>
+    </div>
+  </main>
+</div>
