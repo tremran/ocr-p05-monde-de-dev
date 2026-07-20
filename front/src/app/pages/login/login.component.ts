@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class LoginComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
+    private readonly router: Router,
   ) {}
 
   submit(): void {
@@ -50,6 +52,7 @@ export class LoginComponent {
 
           this.successMessage = 'Login successful.';
           this.loginForm.reset();
+          this.router.navigate(['/feed']);
         },
         error: () => {
           this.loading = false;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 
@@ -11,6 +12,8 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let router: Router;
+  let navigateSpy: jasmine.Spy;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', [
@@ -25,6 +28,9 @@ describe('LoginComponent', () => {
       providers: [{ provide: AuthService, useValue: authServiceSpy }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
+
+    router = TestBed.inject(Router);
+    navigateSpy = spyOn(router, 'navigate').and.resolveTo(true);
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -55,6 +61,7 @@ describe('LoginComponent', () => {
     expect(component.loading).toBeFalse();
     expect(component.successMessage).toBe('Login successful.');
     expect(component.errorMessage).toBe('');
+    expect(navigateSpy).toHaveBeenCalledOnceWith(['/feed']);
     expect(component.loginForm.getRawValue()).toEqual({
       email: '',
       password: '',
@@ -80,6 +87,7 @@ describe('LoginComponent', () => {
     expect(authServiceSpy.saveTokenFromLoginResponse).not.toHaveBeenCalled();
     expect(component.loading).toBeFalse();
     expect(component.successMessage).toBe('');
+    expect(navigateSpy).not.toHaveBeenCalled();
     expect(component.errorMessage).toBe(
       'Login failed. Please verify your data and try again.',
     );
@@ -99,6 +107,7 @@ describe('LoginComponent', () => {
     expect(authServiceSpy.saveTokenFromLoginResponse).toHaveBeenCalledOnceWith({});
     expect(component.loading).toBeFalse();
     expect(component.successMessage).toBe('');
+    expect(navigateSpy).not.toHaveBeenCalled();
     expect(component.errorMessage).toBe('Login response did not include a token.');
   });
 
