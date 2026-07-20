@@ -1,5 +1,5 @@
 @apiurl=http://localhost:3001/api/v1
-@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODQyOTQ1NzYsImV4cCI6MTc4NDMzMDU3Nn0.u9bwsxZGDmGGawsmV3y0Rs17ivZHsb2M8-s5GoP8tWDlZ_KS4Br0b8vYK3NEP7hTQRwgAfvrxe-2bmeIO6w5mg
+@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODQ1NjAwODUsImV4cCI6MTc4NDU5NjA4NX0.swOu5dHfN05nQkIz44RIppKFr0Zmct0GBLqqWdXk_aF6167OEsrlcG3VE6WqO1mFrdqiI9j1YwvsLqW1f6KdRg
 
 ### Register
 POST {{apiurl}}/auth/register

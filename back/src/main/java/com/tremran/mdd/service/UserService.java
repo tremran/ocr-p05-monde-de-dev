@@ -58,9 +58,15 @@ public class UserService implements UserDetailsService {
                     throw new ConflictException("Pseudo already exists");
                 });
 
+        if (password != null && !password.isBlank() && password.length() < 8) {
+            throw new IllegalArgumentException("Password must contain at least 8 characters");
+        }
+
         user.setEmail(email);
         user.setPseudo(pseudo);
-        user.setPassword(passwordEncoder.encode(password));
+        if (password != null && !password.isBlank()) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
         return userRepository.save(user);
     }
 
