@@ -1,0 +1,9 @@
+<button
+  class="app-button"
+  [attr.type]="type"
+  [disabled]="disabled"
+  [class.secondary]="variant === 'secondary'"
+  [class.full-width]="fullWidth"
+>
+  <ng-content></ng-content>
+</button>

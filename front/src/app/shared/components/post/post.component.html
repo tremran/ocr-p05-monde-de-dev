@@ -1,0 +1,8 @@
+<article class="post-card">
+  <h2>{{ article?.title || 'Sans titre' }}</h2>
+  <p class="meta">
+    <span *ngIf="article?.createdAt">{{ article?.createdAt | date: 'dd/MM/yyyy' }}</span>
+    <span>{{ author }}</span>
+  </p>
+  <p class="summary">{{ summary }}</p>
+</article>

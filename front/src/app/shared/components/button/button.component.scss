@@ -1,0 +1,29 @@
+:host {
+  display: inline-block;
+}
+
+.app-button {
+  min-width: var(--app-button-min-width, 7.25em);
+  border: 0;
+  border-radius: var(--app-button-radius, 0.292em);
+  padding: var(--app-button-padding, 0.458em 1em);
+  font-size: var(--app-button-font-size, 1.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  background: #7763c5;
+  cursor: pointer;
+}
+
+.app-button.secondary {
+  color: #000000;
+  background: #d9d9d9;
+}
+
+.app-button.full-width {
+  width: 100%;
+}
+
+.app-button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}

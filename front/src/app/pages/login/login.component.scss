@@ -1,4 +1,4 @@
-.register-page {
+.login-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -15,16 +15,9 @@
   display: block;
 }
 
-.register-content {
+.login-content {
   width: 100%;
   max-width: 22.5rem;
-}
-
-.register-logo {
-  display: block;
-  width: 11.75rem;
-  max-width: 70%;
-  margin: 0 auto 0.625rem;
 }
 
 .back-link {
@@ -36,6 +29,13 @@
   font-size: 3.25rem;
   line-height: 1;
   margin-bottom: 0.625rem;
+}
+
+.login-logo {
+  display: block;
+  width: 11.75rem;
+  max-width: 70%;
+  margin: 0 auto 0.625rem;
 }
 
 h1 {
@@ -65,7 +65,7 @@ input {
   margin-bottom: 1.083em;
 }
 
-.register-submit {
+.login-submit {
   align-self: center;
   --app-button-min-width: 7.25em;
   --app-button-radius: 0.292em;
@@ -88,7 +88,7 @@ input {
 }
 
 @media (min-width: 600px) {
-  .register-page {
+  .login-page {
     justify-content: flex-start;
     padding: 0;
   }
@@ -111,7 +111,7 @@ input {
     display: none;
   }
 
-  .register-content {
+  .login-content {
     max-width: 26.25rem;
     margin-top: 2rem;
   }
@@ -122,7 +122,7 @@ input {
     margin-bottom: 0;
   }
 
-  .register-logo {
+  .login-logo {
     width: 13.75rem;
     max-width: none;
   }

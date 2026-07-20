@@ -1,7 +1,43 @@
 .center {
-  height: 100vh;
+  min-height: 100vh;
+  padding: 1.5rem;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
+}
+
+.home-logo {
+  width: clamp(11rem, 48vw, 18rem);
+  height: auto;
+}
+
+.actions {
+  width: min(100%, 22rem);
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.actions app-button {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .center {
+    padding: 2rem;
+  }
+
+  .actions {
+    width: auto;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(10rem, 1fr);
+    gap: 1rem;
+  }
+
+  .actions app-button {
+    width: auto;
+  }
 }

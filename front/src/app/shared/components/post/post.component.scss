@@ -1,0 +1,28 @@
+.post-card {
+  background: #f6f6f6;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.post-card h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.meta {
+  margin: 0.5rem 0 0;
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+  font-size: 0.925rem;
+  color: #666666;
+}
+
+.meta span {
+    flex-grow: 1;
+}
+
+.summary {
+  margin: 0.875rem 0 0;
+  line-height: 1.45;
+}

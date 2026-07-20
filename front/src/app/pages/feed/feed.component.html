@@ -1,0 +1,23 @@
+<div class="feed-page">
+
+  <main class="feed-content">
+    <p class="status" *ngIf="loading">Chargement des articles...</p>
+    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+    <section class="empty" *ngIf="!loading && !errorMessage && articles.length === 0">
+      <h2>Aucun article</h2>
+      <p>Le feed est vide pour le moment.</p>
+    </section>
+
+    <div class="feed-grid" *ngIf="!loading && !errorMessage && articles.length > 0">
+      <app-post
+        *ngFor="let article of articles; trackBy: trackByArticle"
+        [article]="article"
+      ></app-post>
+    </div>
+
+    <div class="retry" *ngIf="!loading && errorMessage">
+      <app-button (click)="loadFeed()">Réessayer</app-button>
+    </div>
+  </main>
+</div>
