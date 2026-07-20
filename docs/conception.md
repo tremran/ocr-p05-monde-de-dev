@@ -218,6 +218,10 @@ Seules les routes login et register ne sont pas protégés
     - `generate mysql script to match the mermaid diagram`
     - génération de `schema.sql`
 
+## TODO
+
+- permettre de se connecter avec l'email OU le pseudo
+
 ## Amélioration envisagées
 
 - pagination du fil d'actualité et de la liste des commentaires
