@@ -1,0 +1,31 @@
+<div class="article-page">
+  <main class="article-content">
+    <a class="back-link" routerLink="/feed" aria-label="Retour aux articles">
+      <span aria-hidden="true">&#8592;</span>
+    </a>
+
+    <p class="status" *ngIf="loading">Chargement de l'article...</p>
+    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+    <section class="empty" *ngIf="!loading && !errorMessage && articles.length === 0">
+      <h1>Aucun article</h1>
+      <p>L'article demandé est vide ou introuvable.</p>
+    </section>
+
+    <div class="articles-list" *ngIf="!loading && !errorMessage && articles.length > 0">
+      <article class="article-card" *ngFor="let article of articles; trackBy: trackByArticle">
+        <h1>{{ article.title || 'Sans titre' }}</h1>
+        <p class="meta">
+          <span *ngIf="article.publishedAt">{{ article.publishedAt }}</span>
+          <span>{{ article.author?.pseudo || 'Auteur inconnu' }}</span>
+          <span *ngIf="article.topic as topic">{{ topic.name }}</span>
+        </p>
+        <p class="content">{{ article.content || 'Aucun contenu disponible.' }}</p>
+      </article>
+    </div>
+
+    <div class="retry" *ngIf="!loading && errorMessage">
+      <app-button (click)="reload()">Recharger</app-button>
+    </div>
+  </main>
+</div>

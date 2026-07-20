@@ -1,4 +1,11 @@
-<article class="post-card">
+<article
+  class="post-card"
+  [class.clickable]="article?.id !== undefined && article?.id !== null"
+  [attr.tabindex]="article?.id !== undefined && article?.id !== null ? 0 : null"
+  [attr.role]="article?.id !== undefined && article?.id !== null ? 'link' : null"
+  (click)="openArticle()"
+  (keyup.enter)="openArticle()"
+>
   <h2>{{ article?.title || 'Sans titre' }}</h2>
   <p class="meta">
     <span *ngIf="article?.createdAt">{{ article?.createdAt | date: 'dd/MM/yyyy' }}</span>

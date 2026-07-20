@@ -4,6 +4,14 @@
   padding: 1rem;
 }
 
+.post-card.clickable {
+  cursor: pointer;
+}
+
+.post-card.clickable:hover {
+  background: #efefef;
+}
+
 .post-card h2 {
   margin: 0;
   font-size: 1.25rem;
@@ -25,4 +33,16 @@
 .summary {
   margin: 0.875rem 0 0;
   line-height: 1.45;
+}
+
+.article-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: #7763c5;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.post-card.clickable:hover .article-link {
+  text-decoration: underline;
 }
