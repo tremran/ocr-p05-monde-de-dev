@@ -201,7 +201,7 @@ Seules les routes login et register ne sont pas protégés
 #### Liste des composants
 
 - Header
-- Menu
+- ✅ Menu
 - ✅ Bouton
 - ✅ Article
 - Thème

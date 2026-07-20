@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ButtonComponent } from './shared/components/button/button.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { PostComponent } from './shared/components/post/post.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PostComponent } from './shared/components/post/post.component';
     LoginComponent,
     RegisterComponent,
     ButtonComponent,
+    NavbarComponent,
     PostComponent,
   ],
   imports: [
