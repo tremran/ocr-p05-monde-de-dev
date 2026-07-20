@@ -1,5 +1,6 @@
 package com.tremran.mdd.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.User;
@@ -9,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tremran.mdd.exception.ConflictException;
+import com.tremran.mdd.exception.ResourceNotFoundException;
 import com.tremran.mdd.model.UserEntity;
 import com.tremran.mdd.repository.UserRepository;
 
@@ -25,7 +28,7 @@ public class UserService implements UserDetailsService {
 
     public UserEntity register(String email, String pseudo, String password) {
         if (userRepository.findByEmail(email).isPresent() || userRepository.findByPseudo(pseudo).isPresent()) {
-            throw new IllegalArgumentException("Email or pseudo already exists");
+            throw new ConflictException("Email or pseudo already exists");
         }
 
         UserEntity entity = new UserEntity();
@@ -33,6 +36,32 @@ public class UserService implements UserDetailsService {
         entity.setPseudo(pseudo);
         entity.setPassword(passwordEncoder.encode(password));
         return userRepository.save(entity);
+    }
+
+    public UserEntity getCurrentUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    public UserEntity updateCurrentUser(String currentEmail, String email, String pseudo, String password) {
+        UserEntity user = getCurrentUser(currentEmail);
+
+        userRepository.findByEmail(email)
+                .filter(existingUser -> !Objects.equals(existingUser.getId(), user.getId()))
+                .ifPresent(existingUser -> {
+                    throw new ConflictException("Email already exists");
+                });
+
+        userRepository.findByPseudo(pseudo)
+                .filter(existingUser -> !Objects.equals(existingUser.getId(), user.getId()))
+                .ifPresent(existingUser -> {
+                    throw new ConflictException("Pseudo already exists");
+                });
+
+        user.setEmail(email);
+        user.setPseudo(pseudo);
+        user.setPassword(passwordEncoder.encode(password));
+        return userRepository.save(user);
     }
 
     @Override

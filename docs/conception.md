@@ -60,6 +60,37 @@ Ajouter des tests automatisés pour valider ces points
 
 ## Choix d'Architecture
 
+### Git 
+
+Une branche 
+
+- `main` pour le code en production
+- `dev` pour les tests
+- `back` pour les dev back
+- `front` pour les dev front
+
+```mermaid
+---
+title: workflow git
+---
+gitGraph
+    commit
+    commit
+    branch dev
+    checkout dev
+    branch back
+    branch front
+    checkout back
+    commit
+    checkout front
+    commit
+    checkout dev
+    merge back
+    merge front
+    checkout main
+    merge dev
+```
+
 ### Contraintes recensées
 
 - Design responsive
@@ -170,19 +201,18 @@ Seules les routes login et register ne sont pas protégés
 
 | url | verbe http | description | remarques |
 | --- | --- | --- | --- |
-| auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
-| auth/register | POST | enregistre un utilisateur | NA |
-| logout | GET | déconnecte l'utilisateur | NA |
-| me | GET | récupère les informations de l'utilisateur connecté | NA |
-| me | PUT | modifie les informations de l'utilisateur connecté | NA |
-| topic | GET | récupère la liste des thèmes | chaque topic contient un champ  |
-| subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
-| subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
-| feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
-| post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
-| post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
-| post/{post_id}/comment | GET | récupère la liste des commentaires pour l'article dont l'id est fourni  | NA |
-| post/{post_id}/comment | POST | ajoute un commentaire sur  | NA |
+| ✅ auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
+| ✅ auth/register | POST | enregistre un utilisateur | NA |
+| ✅ me | GET | récupère les informations de l'utilisateur connecté | NA |
+| ✅ me | PUT | modifie les informations de l'utilisateur connecté | NA |
+| ✅ topic | GET | récupère la liste des thèmes | chaque topic contient un champ registered qui vaut true si l'utilisateur connecté est inscrit à ce topic |
+| ✅ subscription/{topic_id}/ | POST | abonne l'utilisateur connecté au topic dont l'id est fourni | NA |
+| ✅ subscription/{topic_id} | DELETE | désabonne l'utilisateur connecté au topic dont l'id est fourni | NA |
+| ✅ feed?sort=ASC | GET | récupère les articles correspondant aux thèmes du profil | réponse triable en ajoutant le paramètre sort (DESC par défaut) |
+| ✅ post | POST | ajoute un article | l'auteur est l'utilisateur connecté |
+| ✅ post/{post_id} | GET | récupère les informations de l'article dont l'id est fourni | les commentaires sont à récupérés sur une autre route  |
+| ✅ post/{post_id}/comment | GET | récupère la liste des commentaires pour l'article dont l'id est fourni  | NA |
+| ✅ post/{post_id}/comment | POST | ajoute un commentaire sur l'article dont l'id est fourni. l'utilisateur du commentaire est l'utilisateur connecté | NA |
 
 ### Front
 
