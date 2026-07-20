@@ -39,8 +39,15 @@ export class LoginComponent {
         password: formValue.password,
       })
       .subscribe({
-        next: () => {
+        next: (response) => {
+          const hasToken = this.authService.saveTokenFromLoginResponse(response);
           this.loading = false;
+
+          if (!hasToken) {
+            this.errorMessage = 'Login response did not include a token.';
+            return;
+          }
+
           this.successMessage = 'Login successful.';
           this.loginForm.reset();
         },

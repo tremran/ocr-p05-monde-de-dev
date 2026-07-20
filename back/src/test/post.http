@@ -1,5 +1,5 @@
 @apiurl=http://localhost:3001/api/v1
-@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4NDI3MDE3NCwiZXhwIjoxNzg0MzA2MTc0fQ.BVpiNV6vjpJi9Zldxj8witgk1UkKY4YUZDi3LVOjFGSGp_Lsm6XMWR5HDBiE2RFAq7VRsrIoMN5PxqLh-lYp7w
+@jwtToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAZXhhbXBsZS5jb20iLCJpYXQiOjE3ODQ1NDA5NTksImV4cCI6MTc4NDU3Njk1OX0.29GHc8hkisjasAykXZMSKVMub562cPpRTq_MOXRUakbMhMFZg_dV6hD674sEnOmnsazhCf3gZIxpbjpUZgGq4g
 
 ### CREATE POST
 POST {{apiurl}}/post

@@ -6,13 +6,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FeedComponent } from './pages/feed/feed.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, ButtonComponent],
+  declarations: [AppComponent, HomeComponent, FeedComponent, LoginComponent, RegisterComponent, ButtonComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

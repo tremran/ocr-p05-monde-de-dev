@@ -14,10 +14,18 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface LoginResponse {
+  token?: string;
+  data?: {
+    token?: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly tokenStorageKey = 'auth_token';
   private readonly registerUrl = `${environment.apiBaseUrl}auth/register`;
   private readonly loginUrl = `${environment.apiBaseUrl}auth/login`;
 
@@ -27,7 +35,30 @@ export class AuthService {
     return this.http.post(this.registerUrl, payload);
   }
 
-  login(payload: LoginPayload): Observable<unknown> {
+  login(payload: LoginPayload): Observable<LoginResponse> {
     return this.http.post(this.loginUrl, payload);
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem(this.tokenStorageKey, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenStorageKey);
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(this.tokenStorageKey);
+  }
+
+  saveTokenFromLoginResponse(response: LoginResponse): boolean {
+    const token = response.token ?? response.data?.token;
+
+    if (!token) {
+      return false;
+    }
+
+    this.saveToken(token);
+    return true;
   }
 }

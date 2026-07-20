@@ -1,0 +1,31 @@
+<div class="feed-page">
+  <header class="feed-header">
+    <img class="feed-logo" src="/assets/logo_p6.png" alt="Logo MDD" />
+    <h1>Feed</h1>
+  </header>
+
+  <main class="feed-content">
+    <p class="status" *ngIf="loading">Chargement des articles...</p>
+    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+    <section class="empty" *ngIf="!loading && !errorMessage && articles.length === 0">
+      <h2>Aucun article</h2>
+      <p>Le feed est vide pour le moment.</p>
+    </section>
+
+    <div class="feed-grid" *ngIf="!loading && !errorMessage && articles.length > 0">
+      <article class="feed-card" *ngFor="let article of articles; trackBy: trackByArticle">
+        <h2>{{ article.title || 'Sans titre' }}</h2>
+        <p class="meta">
+          <span>{{ getAuthor(article) }}</span>
+          <span *ngIf="article.createdAt">{{ article.createdAt | date: 'dd/MM/yyyy' }}</span>
+        </p>
+        <p class="summary">{{ getSummary(article) }}</p>
+      </article>
+    </div>
+
+    <div class="retry" *ngIf="!loading && errorMessage">
+      <app-button (click)="loadFeed()">Réessayer</app-button>
+    </div>
+  </main>
+</div>
