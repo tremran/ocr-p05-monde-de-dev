@@ -203,7 +203,7 @@ Seules les routes login et register ne sont pas protégés
 - Header
 - Menu
 - ✅ Bouton
-- Article
+- ✅ Article
 - Thème
 - Commentaire
 

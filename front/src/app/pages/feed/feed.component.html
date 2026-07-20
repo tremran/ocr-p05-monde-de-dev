@@ -14,14 +14,10 @@
     </section>
 
     <div class="feed-grid" *ngIf="!loading && !errorMessage && articles.length > 0">
-      <article class="feed-card" *ngFor="let article of articles; trackBy: trackByArticle">
-        <h2>{{ article.title || 'Sans titre' }}</h2>
-        <p class="meta">
-          <span>{{ getAuthor(article) }}</span>
-          <span *ngIf="article.createdAt">{{ article.createdAt | date: 'dd/MM/yyyy' }}</span>
-        </p>
-        <p class="summary">{{ getSummary(article) }}</p>
-      </article>
+      <app-post
+        *ngFor="let article of articles; trackBy: trackByArticle"
+        [article]="article"
+      ></app-post>
     </div>
 
     <div class="retry" *ngIf="!loading && errorMessage">

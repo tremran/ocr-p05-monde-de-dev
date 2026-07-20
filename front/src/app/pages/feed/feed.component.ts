@@ -36,14 +36,4 @@ export class FeedComponent implements OnInit {
   trackByArticle(index: number, article: FeedArticle): string | number {
     return article.id ?? `${article.title ?? 'article'}-${index}`;
   }
-
-  getAuthor(article: FeedArticle): string {
-    return (
-      article.authorName || article.author?.pseudo || article.author?.name || article.author?.username || 'Auteur inconnu'
-    );
-  }
-
-  getSummary(article: FeedArticle): string {
-    return article.description || article.content || '';
-  }
 }

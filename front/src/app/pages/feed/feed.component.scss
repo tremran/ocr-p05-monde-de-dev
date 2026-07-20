@@ -1,6 +1,6 @@
 .feed-page {
   min-height: 100vh;
-  background: #f6f6f6;
+  background: #ffffff;
   color: #1b1b1b;
 }
 
@@ -10,7 +10,7 @@
   gap: 1rem;
   padding: 1rem 1.25rem;
   background: #ffffff;
-  border-bottom: 0.0625rem solid #dddddd;
+  border-bottom: 0.0625rem solid #000;
 }
 
 .feed-logo {
@@ -59,32 +59,6 @@ h1 {
 .feed-grid {
   display: grid;
   gap: 1rem;
-}
-
-.feed-card {
-  background: #ffffff;
-  border: 0.0625rem solid #e5e5e5;
-  border-radius: 0.75rem;
-  padding: 1rem;
-}
-
-.feed-card h2 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-.meta {
-  margin: 0.5rem 0 0;
-  display: flex;
-  gap: 0.875rem;
-  flex-wrap: wrap;
-  font-size: 0.925rem;
-  color: #666666;
-}
-
-.summary {
-  margin: 0.875rem 0 0;
-  line-height: 1.45;
 }
 
 .retry {
