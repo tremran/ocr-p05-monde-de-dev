@@ -107,4 +107,32 @@ describe('PostService', () => {
       author: { email: 'commenter@test.com', pseudo: 'commenter' },
     });
   });
+
+  it('should call POST /post with payload and bearer token', (done) => {
+    authServiceSpy.getToken.and.returnValue('fake-token');
+
+    const payload = {
+      topicId: 7,
+      title: 'Nouveau post',
+      content: 'Contenu du post',
+      publishedAt: '2026-07-20',
+    };
+
+    service.createPost(payload).subscribe((post) => {
+      expect(post.title).toBe('Nouveau post');
+      done();
+    });
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}post`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.headers.get('Authorization')).toBe('Bearer fake-token');
+    expect(req.request.body).toEqual(payload);
+
+    req.flush({
+      id: 42,
+      title: 'Nouveau post',
+      content: 'Contenu du post',
+      author: { email: 'author@test.com', pseudo: 'author' },
+    });
+  });
 });

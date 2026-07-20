@@ -33,6 +33,13 @@ export interface PostComment {
   };
 }
 
+export interface CreatePostPayload {
+  topicId: number | string;
+  title: string;
+  content: string;
+  publishedAt: string;
+}
+
 interface PostApiResponse {
   data?: PostArticle;
   article?: PostArticle;
@@ -69,6 +76,12 @@ export class PostService {
     const options = this.buildAuthOptions();
 
     return this.http.post<PostComment>(`${this.postUrl}/${postId}/comment`, { content }, options);
+  }
+
+  createPost(payload: CreatePostPayload): Observable<PostArticle> {
+    const options = this.buildAuthOptions();
+
+    return this.http.post<PostArticle>(this.postUrl, payload, options);
   }
 
   private buildAuthOptions(): { headers?: HttpHeaders } {

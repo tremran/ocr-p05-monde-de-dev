@@ -1,6 +1,10 @@
 <div class="feed-page">
 
   <main class="feed-content">
+    <div class="feed-actions">
+      <app-button (click)="goToNewArticle()">Créer un article</app-button>
+    </div>
+
     <p class="status" *ngIf="loading">Chargement des articles...</p>
     <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
 

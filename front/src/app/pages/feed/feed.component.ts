@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FeedArticle, FeedService } from '../../services/feed.service';
 
 @Component({
@@ -11,7 +12,10 @@ export class FeedComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  constructor(private readonly feedService: FeedService) {}
+  constructor(
+    private readonly feedService: FeedService,
+    private readonly router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.loadFeed();
@@ -35,5 +39,9 @@ export class FeedComponent implements OnInit {
 
   trackByArticle(index: number, article: FeedArticle): string | number {
     return article.id ?? `${article.title ?? 'article'}-${index}`;
+  }
+
+  goToNewArticle(): void {
+    this.router.navigate(['/article/nouveau']);
   }
 }

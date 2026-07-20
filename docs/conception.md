@@ -228,6 +228,7 @@ Seules les routes login et register ne sont pas protégés
 | ✅ /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | l'utilisateur peut s'abonner  à un thème depuis cette page |
 | ✅ /me | infos utilisateurs | affiche les infos de l'utilisateur connecté dans un formulaire ainsi que les thèmes auxquels il est abonné | `me` | l'utilisateur peut modifier son profil les données sont envoyées en POST sur le endpoint `me`, il peut également se désabonner aux thèmes |
 | ✅ /article/{id_article} | details d'un article | affiche les infos de l'article dont l'id est fourni dans l'url, affiche également le formulaire d'ajout de commentaires | `post/{post_id}`, `post/{post_id}/comment` le formulaire est envoyé en POST sur `post/{post_id}/comment` |  |
+| ✅ /article/nouveau | page de création d'un article | affiche un formulaire de création d'article | le formulaire est envoyé en POST sur `/post` |  |
 
 #### Liste des composants
 

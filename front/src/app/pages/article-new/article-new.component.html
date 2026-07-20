@@ -1,0 +1,40 @@
+<div class="article-new-page">
+  <main class="article-new-content">
+    <h1>Créer un nouvel article</h1>
+
+    <p class="status" *ngIf="loadingTopics">Chargement des thèmes...</p>
+    <p class="status error" *ngIf="!loadingTopics && topicErrorMessage">{{ topicErrorMessage }}</p>
+
+    <form [formGroup]="articleForm" (ngSubmit)="submit()" *ngIf="!loadingTopics" novalidate>
+      <label for="topicId">Thème</label>
+      <select id="topicId" formControlName="topicId">
+        <option value="">Sélectionnez un thème</option>
+        <option *ngFor="let topic of topics; trackBy: trackByTopic" [value]="topic.id">
+          {{ topic.name }}
+        </option>
+      </select>
+      <p class="error" *ngIf="articleForm.controls.topicId.touched && articleForm.controls.topicId.invalid">
+        Le thème est requis.
+      </p>
+
+      <label for="title">Titre</label>
+      <input id="title" type="text" formControlName="title" />
+      <p class="error" *ngIf="articleForm.controls.title.touched && articleForm.controls.title.invalid">
+        Le titre est requis (3 caractères minimum).
+      </p>
+
+      <label for="content">Contenu</label>
+      <textarea id="content" rows="8" formControlName="content"></textarea>
+      <p class="error" *ngIf="articleForm.controls.content.touched && articleForm.controls.content.invalid">
+        Le contenu est requis.
+      </p>
+
+      <app-button type="submit" [disabled]="savingArticle || articleForm.invalid">
+        {{ savingArticle ? 'Création...' : 'Créer' }}
+      </app-button>    
+    </form>
+
+    <p class="status success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="status error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </main>
+</div>

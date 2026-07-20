@@ -24,6 +24,12 @@ h1 {
   box-sizing: border-box;
 }
 
+.feed-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
 .status {
   margin: 1.5rem 0;
   font-size: 1.125rem;
