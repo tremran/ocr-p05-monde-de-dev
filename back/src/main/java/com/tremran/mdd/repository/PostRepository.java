@@ -14,5 +14,15 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             )
             order by p.publishedAt desc, p.createdAt desc
             """)
-    Iterable<PostEntity> findFeedForUser(String email);
+    Iterable<PostEntity> findFeedForUserOrderByPublishedAtDesc(String email);
+
+    @Query("""
+            select p from PostEntity p
+            where p.topic in (
+                select s.topic from SubscriptionEntity s
+                where s.user.email = ?1
+            )
+            order by p.publishedAt asc, p.createdAt asc
+            """)
+    Iterable<PostEntity> findFeedForUserOrderByPublishedAtAsc(String email);
 }

@@ -44,7 +44,11 @@ public class PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
     
-    public Iterable<PostEntity> findFeedForUser(String email) {
-        return postRepository.findFeedForUser(email);
+    public Iterable<PostEntity> findFeedForUser(String email, String sort) {
+        if ("ASC".equalsIgnoreCase(sort)) {
+            return postRepository.findFeedForUserOrderByPublishedAtAsc(email);
+        }
+
+        return postRepository.findFeedForUserOrderByPublishedAtDesc(email);
     }
 }
