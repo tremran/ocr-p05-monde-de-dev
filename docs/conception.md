@@ -23,19 +23,19 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
     - ✅ se connecter
     - ✅ se déconnecter
 - gestion du profil
-    - consulter son profil
-    - modifier son profil
+    - ✅ consulter son profil
+    - ✅ modifier son profil
 - gestion des thèmes
     - ✅ consulter les thèmes
     - ✅ s'abonner à un thème
     - se désabonner d'un thème ( sur la page de profil)
 - fil d'actualité
     - ✅ consulter son fil d'actualité ( page d'accueil )
-    - trier le fil d'actualité
+    - ✅ trier le fil d'actualité
 - articles
-    - ajouter un article
-    - consulter un article
-    - commenter un article
+    - ✅ ajouter un article
+    - ✅ consulter un article
+    - ✅ commenter un article
 
 ## Règles de gestions
 
@@ -48,14 +48,14 @@ Ajouter des tests automatisés pour valider ces points
         - une lettre minuscule
         - une lettre majuscule
         - un caractère spécial `=+_-$#!?`
-- ajout d'un article
-    - l'auteur est défini
-    - la date est définie
-- ajout d'un commentaire
-    - l'auteur est défini
-    - la date est définie
-- 1 commentaire correspond à un article
-    - pas de réponses à un commentaire
+- ✅ ajout d'un article
+    - ✅ l'auteur est défini
+    - ✅ la date est définie
+- ✅ ajout d'un commentaire
+    - ✅ l'auteur est défini
+    - ✅ la date est définie
+- ✅ 1 commentaire correspond à un article
+    - ✅ pas de réponses à un commentaire
 - ✅ après le clic sur le bouton `S'abonner` le bouton devient inactif et le texte devient `Déjà abonné`
 
 ## Choix d'Architecture
@@ -93,14 +93,14 @@ gitGraph
 
 ### Contraintes recensées
 
-- Design responsive
-- Client / Serveur
-    - Back java / spring
-        - préférer les modules spring
-    - front typescript / angular
-        - angular cli
-- Interaction front / back sécurisé
-- Respect des principes SOLID
+- ✅ Design responsive
+- ✅ Client / Serveur
+    - ✅ Back java / spring
+        - ✅ préférer les modules spring
+    - ✅ front typescript / angular
+        - ✅ angular cli
+- ✅ Interaction front / back sécurisé
+- ✅ Respect des principes SOLID
 - ✅ 1 seul repo pour tout le projet
 - ✅ utiliser git et github
 
@@ -232,13 +232,9 @@ Seules les routes login et register ne sont pas protégés
 
 #### Liste des composants
 
-- Header
 - ✅ Menu
 - ✅ Bouton
 - ✅ Article
-- Thème
-    - Le thème n'étant afficher qu'à un endroit, aucun composant n'a été créé pour le moment
-- Commentaire
 
 ## Utilisations de l'IA
 
@@ -254,7 +250,7 @@ Seules les routes login et register ne sont pas protégés
 ## TODO
 
 - permettre de se connecter avec l'email OU le pseudo
-- filtrer les articles du feed par date croissante ou décroissante
+- ✅ filtrer les articles du feed par date croissante ou décroissante
 
 ## Amélioration envisagées
 

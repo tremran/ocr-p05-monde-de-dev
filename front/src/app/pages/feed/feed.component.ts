@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeedArticle, FeedService } from '../../services/feed.service';
+import { FeedArticle, FeedService, FeedSort } from '../../services/feed.service';
 
 @Component({
   selector: 'app-feed',
@@ -9,6 +9,7 @@ import { FeedArticle, FeedService } from '../../services/feed.service';
 })
 export class FeedComponent implements OnInit {
   articles: FeedArticle[] = [];
+  selectedSort: FeedSort = 'DESC';
   loading = false;
   errorMessage = '';
 
@@ -25,7 +26,7 @@ export class FeedComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.feedService.getFeed().subscribe({
+    this.feedService.getFeed(this.selectedSort).subscribe({
       next: (articles) => {
         this.loading = false;
         this.articles = articles;
@@ -43,5 +44,14 @@ export class FeedComponent implements OnInit {
 
   goToNewArticle(): void {
     this.router.navigate(['/article/nouveau']);
+  }
+
+  toggleSortByPublishedAt(): void {
+    this.selectedSort = this.selectedSort === 'DESC' ? 'ASC' : 'DESC';
+    this.loadFeed();
+  }
+
+  get sortArrow(): string {
+    return this.selectedSort === 'ASC' ? '↑' : '↓';
   }
 }

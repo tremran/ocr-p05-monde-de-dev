@@ -18,7 +18,7 @@ h1 {
 }
 
 .feed-content {
-  width: min(100%, 64rem);
+  width: min(100%, 600px);
   margin: 0 auto;
   padding: 1rem 1.25rem 2rem;
   box-sizing: border-box;
@@ -26,8 +26,30 @@ h1 {
 
 .feed-actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.sort-block {
+  display: flex;
+  align-items: center;
+}
+
+.sort-toggle {
+  border: none;
+  background: transparent;
+  color: #4b4b4b;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sort-arrow {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-weight: 600;
 }
 
 .status {
