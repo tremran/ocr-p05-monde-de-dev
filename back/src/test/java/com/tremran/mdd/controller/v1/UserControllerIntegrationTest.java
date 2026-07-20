@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,9 +57,33 @@ class UserControllerIntegrationTest extends ControllerIntegrationTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(user.getId()))
                 .andExpect(jsonPath("$.email").value("after@test.com"))
-                .andExpect(jsonPath("$.pseudo").value("after"));
+            .andExpect(jsonPath("$.pseudo").value("after"))
+            .andExpect(jsonPath("$.token").isNotEmpty());
+    }
+
+    @Test
+    void updateCurrentUser_withoutPassword_shouldKeepExistingPassword() throws Exception {
+        UserEntity user = createUser("before2@test.com", "before2", "password");
+        String token = createToken(user);
+        String body = objectMapper.writeValueAsString(new UpdateMeWithoutPasswordPayload("after2@test.com", "after2"));
+
+        mockMvc.perform(put("/api/v1/me")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(user.getId()))
+                .andExpect(jsonPath("$.email").value("after2@test.com"))
+            .andExpect(jsonPath("$.pseudo").value("after2"))
+            .andExpect(jsonPath("$.token").isNotEmpty());
+
+        UserEntity updatedUser = userRepository.findById(user.getId()).orElseThrow();
+        assertEquals(user.getPassword(), updatedUser.getPassword());
     }
 
     private record UpdateMePayload(String email, String pseudo, String password) {
+    }
+
+    private record UpdateMeWithoutPasswordPayload(String email, String pseudo) {
     }
 }

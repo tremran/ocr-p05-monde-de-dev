@@ -12,21 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tremran.mdd.model.UserEntity;
+import com.tremran.mdd.service.JwtService;
 import com.tremran.mdd.service.UserService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/me")
@@ -39,11 +41,25 @@ public class UserController {
     public ResponseEntity<?> updateCurrentUser(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody UpdateMeRequest request) {
+        boolean emailChanged = !userDetails.getUsername().equals(request.email());
+
         UserEntity user = userService.updateCurrentUser(
                 userDetails.getUsername(),
                 request.email(),
                 request.pseudo(),
                 request.password());
+
+        if (emailChanged) {
+            return ResponseEntity.ok(Map.of(
+                "id", user.getId(),
+                "email", user.getEmail(),
+                "pseudo", user.getPseudo(),
+                "token", jwtService.generateToken(org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
+                    .password(user.getPassword())
+                    .roles("USER")
+                    .build())));
+        }
+
         return ResponseEntity.ok(toUserResponse(user));
     }
 
@@ -56,7 +72,7 @@ public class UserController {
 
     public record UpdateMeRequest(
             @NotBlank @Email String email,
-            @NotBlank @Size(min = 3, max = 100) String pseudo,
-            @NotBlank @Size(min = 8) String password) {
+            @NotBlank String pseudo,
+            String password) {
     }
 }
