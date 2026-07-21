@@ -125,35 +125,7 @@ La couche présentation étant le projet front, les autres couches sont dans le 
 
 ### Schema de l'architecture
 
-```plantuml
-@startuml
-
-component Front {
-    [View]
-    [ViewModel]
-    [Model] as FrontModel
-
-    View --> ViewModel
-    ViewModel --> FrontModel
-}
-
-component Back {
-    port API
-    [Model]
-    [Controller]
-
-    API -> Controller
-    API <- Controller : json
-    Controller <--> Model
-}
-
-[DB]
-
-Model <--> DB
-FrontModel <--> API : <<xhr>>
-@enduml
-```
-
+![architecture](architecture.png)
 
 ### Modelisation BDD
 
