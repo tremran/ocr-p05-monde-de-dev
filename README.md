@@ -1,18 +1,22 @@
 # MDD project
 
-This project contains 2 main folders :
+Réseau social pour développeurs
 
-- `front` : contains the angular front project
-- `back` : contains the java api
+Ce projet contient deux dossiers principaux :
 
-## Conception
+- `front` : projet angular
+- `back` : api java
 
-check the [conception file](./docs/conception.md) for detailed informations about the structure
+## Getting started
 
-## Back
+### Pré requis
+
+- java 21
+- angular 14
 
 ### Installation
 
+- Back
 ```bash
 # get in back folder
 cd back
@@ -26,10 +30,7 @@ mvn spring-boot:run
 # afficher le code coverage
 xdg-open target/site/jacoco/index.html
 ```
-
-## Front
-
-### Installation
+- Front
 
 ```bash
 # get in the front folder
@@ -48,3 +49,35 @@ npm run test
 ## Tests e2e
 
 Sur un environnement dédié il est possible de lancer les tests e2e depuis le front avec la commande `npm run test:e2e` après avoir lancé le front sur le port 4200 et le back sur le port 3001
+
+### Technologies
+
+- Angular 14
+- java 21
+- mysql
+
+## Conception
+
+Merci de lire 
+
+- le [fichier de conception](./docs/conception.md)
+- la [FAQ utilisateur](./docs/faq/faq.md)
+
+## Problèmes courants
+
+
+> je viens de merger une branche et des components existants ne sont plus trouvés
+
+- arrête tes instances en cours et relance ton projet
+
+```bash
+# fermer les terminaux ou l'app front a été lancée
+# aller dans le dossier front
+cd front
+# supprimer le dossier node_modules et le fichier package-lock.json
+rm -rf node_modules package-lock.json
+# relancer l'installation des dépendances
+npm install
+# relancer le front
+npm run start -- --host 127.0.0.1 --port 4200
+```

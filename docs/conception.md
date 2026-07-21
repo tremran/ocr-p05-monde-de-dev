@@ -194,6 +194,31 @@ Comment }o--|| User : comments
 
 ### Back
 
+#### Choix techniques
+
+- mono repo
+
+##### JAVA
+
+liste des dépendances installées
+
+| Techno | Type | Lien documentation | Objectif du choix | Justification |
+| --- | --- | --- | --- | --- |
+| java 21 | langage de programmation | [doc oracle](https://docs.oracle.com/en/java/javase/21/docs/api/index.html) |  | version LTS répandue dans l'entreprise |
+| maven | build tool | [doc maven](https://docs.spring.io/spring-boot/maven-plugin/index.html) | N/A | build tool standard |
+| lombok  | bibliothèque d'annotations | [doc lombok](https://projectlombok.org/features/) | intégration d'utilitaires pour le développements ( annotations, ...) | rapidité du développement |
+| springboot  | framework | [doc spring](https://spring.io/) | rapidité / fiabilité du code | les composants s'ajoutent en fonction des besoins |
+| spring web MVC | architecture MVC | [doc spring web](https://docs.spring.io/spring-framework/reference/web/webmvc.html) | ensemble d'utilitaires pour une application web | composant spring |
+| spring security | framework qui gère la sécurité de l'application (authent, author) | [doc spring security](https://docs.spring.io/spring-security/reference/index.html) | sécurisation de l'application | composant spring |
+| Java JWT | bibliothèque de gestion de tokens JWT | [doc jjwt](https://github.com/jwtk/jjwt) | sécurisation de l'application | projet actif et reconnu |
+| spring data | framework qui gère la connexion à une source de données | [doc spring data](https://docs.spring.io/spring-data/jpa/reference/index.html) | persistance des données | composant spring |
+| spring doc open API | framework qui gère la connexion à une source de données | [doc spring doc api](https://springdoc.org/) | documentation de l'API | composant spring |
+| Validation | intégration du validator hibernate | [doc hibernate validator](https://docs.hibernate.org/stable/validator/reference/en-US/html_single/) | validation des données | wrapper intégré à spring |
+| spring data | framework qui gère la connexion à une source de données | [doc spring data](https://docs.spring.io/spring-data/jpa/reference/index.html) | persistance des données | composant spring |
+| MySQL Driver | Pilote de connexion à une BDD MySQL | NA, utilisé par spring data | persistance des données | Système de BDD répandu dans l'entreprise |
+| H2 Database | Pilote de connexion à une BDD en mémoire H2 | NA, utilisé par spring data | persistance des données en tests | rapidité des tests unitaires |
+
+
 #### liste des routes API
 
 Toutes les routes sont préfixées par `/api/v1/`
@@ -215,6 +240,15 @@ Seules les routes login et register ne sont pas protégés
 | ✅ post/{post_id}/comment | POST | ajoute un commentaire sur l'article dont l'id est fourni. l'utilisateur du commentaire est l'utilisateur connecté | NA |
 
 ### Front
+
+#### Angular
+
+| Techno | Type | Lien documentation | Objectif du choix | Justification |
+| --- | --- | --- | --- | --- |
+| Angular 14 | langage de programmation | [doc angular 14](https://v14.angular.io/docs) |  | version disponible bootstrap |
+| Cypress | Qualité | [doc cypress](https://docs.cypress.io/app/get-started/why-cypress) | outils testing e2e | interface intuitive |
+| Karma | Qualité | [doc karma](https://karma-runner.github.io/latest/index.html) | runner de test | créé par l'équipe angular |
+| Jasmine | Qualité | [doc jasmine](https://jasmine.github.io/index.html) | framework de test | simplicité  |
 
 #### Liste des pages
 
@@ -250,8 +284,9 @@ Seules les routes login et register ne sont pas protégés
 ## TODO
 
 - permettre de se connecter avec l'email OU le pseudo
+    - vérifier que le pseudo a une contrainte d'unicité en BDD
 - ✅ filtrer les articles du feed par date croissante ou décroissante
 
-## Amélioration envisagées
+## Améliorations envisagées
 
 - pagination du fil d'actualité et de la liste des commentaires
