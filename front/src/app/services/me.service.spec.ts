@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { MeService } from './me.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MeService', () => {
   let service: MeService;
@@ -14,9 +15,9 @@ describe('MeService', () => {
     authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', ['getToken']);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [{ provide: AuthService, useValue: authServiceSpy }],
-    });
+    imports: [],
+    providers: [{ provide: AuthService, useValue: authServiceSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(MeService);
     httpMock = TestBed.inject(HttpTestingController);

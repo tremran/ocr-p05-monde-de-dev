@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,30 +18,23 @@ import { ButtonComponent } from './shared/components/button/button.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { PostComponent } from './shared/components/post/post.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ArticleComponent,
-    ArticleNewComponent,
-    FeedComponent,
-    LoginComponent,
-    MeComponent,
-    RegisterComponent,
-    ThemesComponent,
-    ButtonComponent,
-    NavbarComponent,
-    PostComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        ArticleComponent,
+        ArticleNewComponent,
+        FeedComponent,
+        LoginComponent,
+        MeComponent,
+        RegisterComponent,
+        ThemesComponent,
+        ButtonComponent,
+        NavbarComponent,
+        PostComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
