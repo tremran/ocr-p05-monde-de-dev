@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { PostArticle, PostComment, PostService } from '../../services/post.service';
 
 @Component({
-  selector: 'app-article',
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss'],
+    selector: 'app-article',
+    templateUrl: './article.component.html',
+    styleUrls: ['./article.component.scss'],
+    standalone: false
 })
 export class ArticleComponent implements OnInit {
   articleId = '';

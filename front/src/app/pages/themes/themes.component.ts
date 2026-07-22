@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Topic, TopicService } from '../../services/topic.service';
 
 @Component({
-  selector: 'app-themes',
-  templateUrl: './themes.component.html',
-  styleUrls: ['./themes.component.scss'],
+    selector: 'app-themes',
+    templateUrl: './themes.component.html',
+    styleUrls: ['./themes.component.scss'],
+    standalone: false
 })
 export class ThemesComponent implements OnInit {
   topics: Topic[] = [];

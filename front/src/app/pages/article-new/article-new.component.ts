@@ -5,9 +5,10 @@ import { PostService } from '../../services/post.service';
 import { Topic, TopicService } from '../../services/topic.service';
 
 @Component({
-  selector: 'app-article-new',
-  templateUrl: './article-new.component.html',
-  styleUrls: ['./article-new.component.scss'],
+    selector: 'app-article-new',
+    templateUrl: './article-new.component.html',
+    styleUrls: ['./article-new.component.scss'],
+    standalone: false
 })
 export class ArticleNewComponent implements OnInit {
   readonly articleForm = this.fb.nonNullable.group({

@@ -7,9 +7,10 @@ import { Topic, TopicService } from '../../services/topic.service';
 const OPTIONAL_PASSWORD_RULES = /^$|(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\-$#!?]).{9,}$/;
 
 @Component({
-  selector: 'app-me',
-  templateUrl: './me.component.html',
-  styleUrls: ['./me.component.scss'],
+    selector: 'app-me',
+    templateUrl: './me.component.html',
+    styleUrls: ['./me.component.scss'],
+    standalone: false
 })
 export class MeComponent implements OnInit {
   readonly meForm = this.fb.nonNullable.group({

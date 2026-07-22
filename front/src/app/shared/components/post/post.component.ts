@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { FeedArticle } from '../../../services/feed.service';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
+    selector: 'app-post',
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.scss'],
+    standalone: false
 })
 export class PostComponent {
   @Input() article: FeedArticle | null = null;

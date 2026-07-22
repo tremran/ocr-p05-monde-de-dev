@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { FeedArticle, FeedService, FeedSort } from '../../services/feed.service';
 
 @Component({
-  selector: 'app-feed',
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.scss'],
+    selector: 'app-feed',
+    templateUrl: './feed.component.html',
+    styleUrls: ['./feed.component.scss'],
+    standalone: false
 })
 export class FeedComponent implements OnInit {
   articles: FeedArticle[] = [];
