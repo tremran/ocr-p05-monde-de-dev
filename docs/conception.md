@@ -263,6 +263,8 @@ Seules les routes login et register ne sont pas protégés
 
 Changements majeurs à anticiper par version
 
+https://angular.dev/update-guide?v=14.0-20.0&l=2
+
 | Version | Points clés |
 | --- | --- |
 | 15 | Directive/Pipe standalone, suppression de CommonModule obligatoire |
