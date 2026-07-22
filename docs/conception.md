@@ -259,6 +259,22 @@ Seules les routes login et register ne sont pas protégés
     - vérifier que le pseudo a une contrainte d'unicité en BDD
 - ✅ filtrer les articles du feed par date croissante ou décroissante
 
+## Mise à jour vers angular 20
+
+Changements majeurs à anticiper par version
+
+| Version | Points clés |
+| --- | --- |
+| 15 | Directive/Pipe standalone, suppression de CommonModule obligatoire |
+| 16 | Signals (preview), inject() function, nouvelle syntaxe de contrôle de flux (preview) |
+| 17 | @if, @for, @switch (nouveau control flow stable), ng build génère ESM par défaut, esbuild builder |
+| 18 | Zoneless (expérimental), hydratation stable |
+| 19 | Standalone par défaut, linkedSignal, resource() API |
+| 20 | httpResource, Signals API stable, suppression de Zone.js (optionnel) |
+
 ## Améliorations envisagées
 
 - pagination du fil d'actualité et de la liste des commentaires
+- filtrer le feed par thèmes
+- ajouter une interface d'administration
+- Gestion des logs
