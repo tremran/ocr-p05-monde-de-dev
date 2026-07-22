@@ -38,11 +38,7 @@ export class FeedComponent implements OnInit {
       },
     });
   }
-
-  trackByArticle(index: number, article: FeedArticle): string | number {
-    return article.id ?? `${article.title ?? 'article'}-${index}`;
-  }
-
+  
   goToNewArticle(): void {
     this.router.navigate(['/article/nouveau']);
   }

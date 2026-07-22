@@ -4,69 +4,99 @@
       <span aria-hidden="true">&#8592;</span>
     </a>
 
-    <p class="status" *ngIf="loading">Chargement de l'article...</p>
-    <p class="status error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+    @if(loading) {
+      <p class="status">Chargement de l'article...</p>
+    }
+    @else if(errorMessage) {
+      <p class="status error">{{ errorMessage }}</p>
+    }
 
-    <section class="empty" *ngIf="!loading && !errorMessage && articles.length === 0">
-      <h1>Aucun article</h1>
-      <p>L'article demandé est vide ou introuvable.</p>
-    </section>
-
-    <div class="articles-list" *ngIf="!loading && !errorMessage && articles.length > 0">
-      <article class="article-card" *ngFor="let article of articles; trackBy: trackByArticle">
-        <h1>{{ article.title || 'Sans titre' }}</h1>
-        <p class="meta">
-          <span *ngIf="article.publishedAt">{{ article.publishedAt }}</span>
-          <span>{{ article.author?.pseudo || 'Auteur inconnu' }}</span>
-          <span *ngIf="article.topic as topic">{{ topic.name }}</span>
-        </p>
-        <p class="content">{{ article.content || 'Aucun contenu disponible.' }}</p>
-      </article>
-
-      <section class="comments-section">
-        <h2>Commentaires</h2>
-
-        <p class="status" *ngIf="commentsLoading">Chargement des commentaires...</p>
-        <p class="status error" *ngIf="!commentsLoading && commentsErrorMessage">{{ commentsErrorMessage }}</p>
-
-        <p class="empty-comments" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length === 0">
-          Aucun commentaire pour le moment.
-        </p>
-
-        <div class="comments-list" *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0">
-          <article class="comment-card" *ngFor="let comment of comments; trackBy: trackByComment">
-            <p class="comment-meta">
-              <strong>{{ comment.author?.pseudo || 'Auteur inconnu' }}</strong>
-            </p>
-            <p class="comment-content">{{ comment.content || 'Commentaire vide.' }}</p>
-          </article>
-        </div>
-
-
-
-        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
-          <label class="comment-label" for="comment-content">Ajouter un commentaire</label>
-          <textarea
-            id="comment-content"
-            class="comment-textarea"
-            formControlName="content"
-            rows="4"
-            placeholder="Écrivez votre commentaire..."
-          ></textarea>
-
-          <p class="status error" *ngIf="commentForm.controls.content.touched && commentForm.controls.content.invalid">
-            Le commentaire ne peut pas être vide.
-          </p>
-
-          <p class="status error" *ngIf="commentSubmitErrorMessage">{{ commentSubmitErrorMessage }}</p>
-
-          <app-button type="submit" [disabled]="commentSubmitting">{{ commentSubmitting ? 'Envoi...' : 'Commenter' }}</app-button>
-        </form>
+    @if(!loading && !errorMessage && articles.length === 0) {
+      <section class="empty">
+        <h1>Aucun article</h1>
+        <p>L'article demandé est vide ou introuvable.</p>
       </section>
-    </div>
+    }
 
-    <div class="retry" *ngIf="!loading && errorMessage">
-      <app-button (click)="reload()">Recharger</app-button>
-    </div>
+    @if(!loading && !errorMessage && articles.length > 0) {
+      <div class="articles-list">
+        @for (article of articles; track article.id) {
+          <article class="article-card">
+            <h1>{{ article.title || 'Sans titre' }}</h1>
+            <p class="meta">
+              @if (article.publishedAt) {
+                <span>{{ article.publishedAt }}</span>
+              }
+              <span>{{ article.author?.pseudo || 'Auteur inconnu' }}</span>
+              @if (article.topic) {
+              <span >{{ article.topic.name }}</span>
+              }
+            </p>
+            <p class="content">{{ article.content || 'Aucun contenu disponible.' }}</p>
+          </article>
+        }
+
+        <section class="comments-section">
+          <h2>Commentaires</h2>
+
+          @if(commentsLoading) {
+            <p class="status">Chargement des commentaires...</p>
+          }
+          @else if(commentsErrorMessage) {
+            <p class="status error">{{ commentsErrorMessage }}</p>
+          }
+
+          @if(!commentsLoading && !commentsErrorMessage && comments.length === 0) {
+            <p class="empty-comments">
+              Aucun commentaire pour le moment.
+            </p>
+          }
+
+          @if(!commentsLoading && !commentsErrorMessage && comments.length > 0) {
+            <div class="comments-list">
+              @for (comment of comments; track comment.id) {
+                <article class="comment-card">
+                  <p class="comment-meta">
+                    <strong>{{ comment.author?.pseudo || 'Auteur inconnu' }}</strong>
+                  </p>
+                  <p class="comment-content">{{ comment.content || 'Commentaire vide.' }}</p>
+                </article>
+              }
+            </div>
+          }
+
+
+
+          <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+            <label class="comment-label" for="comment-content">Ajouter un commentaire</label>
+            <textarea
+              id="comment-content"
+              class="comment-textarea"
+              formControlName="content"
+              rows="4"
+              placeholder="Écrivez votre commentaire..."
+            ></textarea>
+
+            @if(commentForm.controls.content.touched && commentForm.controls.content.invalid) {
+              <p class="status error">
+                Le commentaire ne peut pas être vide.
+              </p>
+            }
+
+            @if(commentSubmitErrorMessage) {
+              <p class="status error">{{ commentSubmitErrorMessage }}</p>
+            }
+
+            <app-button type="submit" [disabled]="commentSubmitting">{{ commentSubmitting ? 'Envoi...' : 'Commenter' }}</app-button>
+          </form>
+        </section>
+      </div>
+    }
+
+    @if(!loading && errorMessage) {
+      <div class="retry">
+        <app-button (click)="reload()">Recharger</app-button>
+      </div>
+    }
   </main>
 </div>

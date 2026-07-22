@@ -36,10 +36,6 @@ export class ThemesComponent implements OnInit {
     });
   }
 
-  trackByTopic(index: number, topic: Topic): string | number {
-    return topic.id ?? `${topic.name ?? 'topic'}-${index}`;
-  }
-
   isSubscribing(topic: Topic): boolean {
     if (topic.id === undefined || topic.id === null) {
       return false;

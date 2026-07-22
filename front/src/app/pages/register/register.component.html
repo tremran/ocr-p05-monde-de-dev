@@ -14,15 +14,19 @@
     <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
       <label for="name">Nom d'utilisateur</label>
       <input id="name" type="text" formControlName="name" />
-      <p class="error" *ngIf="registerForm.controls.name.touched && registerForm.controls.name.invalid">
-        Le nom est requis (3 caracteres minimum).
-      </p>
+      @if(registerForm.controls.name.touched && registerForm.controls.name.invalid) {
+        <p class="error">
+          Le nom est requis (3 caracteres minimum).
+        </p>
+      }
 
       <label for="email">Adresse e-mail</label>
       <input id="email" type="email" formControlName="email" />
-      <p class="error" *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
-        Une adresse e-mail valide est requise.
-      </p>
+      @if(registerForm.controls.email.touched && registerForm.controls.email.invalid) {
+        <p class="error">
+          Une adresse e-mail valide est requise.
+        </p>
+      }
 
       <label for="password">Mot de passe
         <details class="password-help">
@@ -37,16 +41,22 @@
         </details>
       </label>
       <input id="password" type="password" formControlName="password" />
-      <p class="error" *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
-        Le format du mot de passe est invalide.
-      </p>
+      @if(registerForm.controls.password.touched && registerForm.controls.password.invalid) {
+        <p class="error">
+          Le format du mot de passe est invalide.
+        </p>
+      }
 
       <app-button class="register-submit" type="submit" [disabled]="loading">
         {{ loading ? 'Inscription...' : "S'inscrire" }}
       </app-button>
     </form>
 
-    <p class="feedback success" *ngIf="successMessage">{{ successMessage }}</p>
-    <p class="feedback error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    @if(successMessage) {
+      <p class="feedback success">{{ successMessage }}</p>
+    }
+    @if(errorMessage) {
+      <p class="feedback error">{{ errorMessage }}</p>
+    }
   </div>
 </div>

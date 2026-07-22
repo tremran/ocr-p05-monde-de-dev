@@ -2,22 +2,31 @@
   <main class="me-content">
     <h1>Profil utilisateur</h1>
 
-    <p class="status" *ngIf="loadingProfile">Chargement de vos informations...</p>
-    <p class="status error" *ngIf="!loadingProfile && errorMessage">{{ errorMessage }}</p>
+    @if(loadingProfile) {
+      <p class="status">Chargement de vos informations...</p>
+    }
+    @if(!loadingProfile && errorMessage) {
+      <p class="status error">{{ errorMessage }}</p>
+    }
 
     <section class="profile-section">
-      <form [formGroup]="meForm" (ngSubmit)="submit()" novalidate *ngIf="!loadingProfile && !errorMessage">
+      @if(!loadingProfile && !errorMessage) {
+        <form [formGroup]="meForm" (ngSubmit)="submit()" novalidate>
         <label for="pseudo">Pseudo</label>
         <input id="pseudo" type="text" formControlName="pseudo" />
-        <p class="error" *ngIf="meForm.controls.pseudo.touched && meForm.controls.pseudo.invalid">
-          Le pseudo est requis (3 caracteres minimum).
-        </p>
+        @if(meForm.controls.pseudo.touched && meForm.controls.pseudo.invalid) {
+          <p class="error">
+            Le pseudo est requis (3 caracteres minimum).
+          </p>
+        }
 
         <label for="email">Adresse e-mail</label>
         <input id="email" type="email" formControlName="email" />
-        <p class="error" *ngIf="meForm.controls.email.touched && meForm.controls.email.invalid">
-          Une adresse e-mail valide est requise.
-        </p>
+        @if(meForm.controls.email.touched && meForm.controls.email.invalid) {
+          <p class="error">
+            Une adresse e-mail valide est requise.
+          </p>
+        }
 
         <label for="password">
           Mot de passe
@@ -33,9 +42,11 @@
           </details>
         </label>
         <input id="password" type="password" formControlName="password" />
-        <p class="error" *ngIf="meForm.controls.password.touched && meForm.controls.password.invalid">
-          Le format du mot de passe est invalide.
-        </p>
+        @if(meForm.controls.password.touched && meForm.controls.password.invalid) {
+          <p class="error">
+            Le format du mot de passe est invalide.
+          </p>
+        }
 
         <app-button
           class="me-submit"
@@ -44,48 +55,62 @@
         >
           {{ savingProfile ? 'Sauvegarde...' : 'Sauvegarder' }}
         </app-button>
-      </form>
+        </form>
+      }
     </section>
 
-    <p class="status success" *ngIf="successMessage">{{ successMessage }}</p>
+    @if(successMessage) {
+      <p class="status success">{{ successMessage }}</p>
+    }
 
     <section class="subscribed-topics">
       <h2>Abonnements</h2>
 
-      <p class="status" *ngIf="loadingSubscribedTopics">Chargement de vos themes...</p>
-      <p class="status error" *ngIf="!loadingSubscribedTopics && subscribedTopicsErrorMessage">
-        {{ subscribedTopicsErrorMessage }}
-      </p>
+      @if(loadingSubscribedTopics) {
+        <p class="status">Chargement de vos themes...</p>
+      }
+      @if(!loadingSubscribedTopics && subscribedTopicsErrorMessage) {
+        <p class="status error">
+          {{ subscribedTopicsErrorMessage }}
+        </p>
+      }
 
-      <ul
-        class="topics-list"
-        *ngIf="!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length > 0"
-      >
-        <li *ngFor="let topic of subscribedTopics; trackBy: trackByTopic" class="topic-item">
-          <h2>{{ topic.name || 'Thème sans titre' }}</h2>
-          <p>{{ topic.description || 'Aucune description disponible.' }}</p>
+      @if(!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length > 0) {
+        <ul class="topics-list">
+          @for (topic of subscribedTopics; track topic.id) {
+            <li class="topic-item">
+              <h2>{{ topic.name || 'Thème sans titre' }}</h2>
+              <p>{{ topic.description || 'Aucune description disponible.' }}</p>
 
-          <app-button
-            class="unsubscribe-button"
-            [disabled]="isUnsubscribing(topic)"
-            (click)="unsubscribe(topic)"
-          >
-            {{ isUnsubscribing(topic) ? 'Désabonnement...' : 'Se désabonner' }}
-          </app-button>
-        </li>
-      </ul>
+              <app-button
+                class="unsubscribe-button"
+                [disabled]="isUnsubscribing(topic)"
+                (click)="unsubscribe(topic)"
+              >
+                {{ isUnsubscribing(topic) ? 'Désabonnement...' : 'Se désabonner' }}
+              </app-button>
+            </li>
+          }
+        </ul>
+      }
 
-      <p class="status" *ngIf="!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length === 0">
-        Vous n'êtes abonné a aucun thème pour le moment.
-      </p>
+      @if(!loadingSubscribedTopics && !subscribedTopicsErrorMessage && subscribedTopics.length === 0) {
+        <p class="status">
+          Vous n'êtes abonné a aucun thème pour le moment.
+        </p>
+      }
 
-      <div class="retry" *ngIf="!loadingSubscribedTopics && subscribedTopicsErrorMessage">
+      @if(!loadingSubscribedTopics && subscribedTopicsErrorMessage) {
+        <div class="retry">
         <app-button (click)="loadSubscribedTopics()">Recharger les thèmes</app-button>
-      </div>
+        </div>
+      }
     </section>
 
-    <div class="retry" *ngIf="!loadingProfile && errorMessage">
+    @if(!loadingProfile && errorMessage) {
+      <div class="retry">
       <app-button (click)="loadMe()">Recharger</app-button>
-    </div>
+      </div>
+    }
   </main>
 </div>

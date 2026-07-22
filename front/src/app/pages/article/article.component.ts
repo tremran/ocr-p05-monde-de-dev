@@ -70,14 +70,6 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  trackByArticle(index: number, article: PostArticle): string | number {
-    return article.id ?? `${article.title ?? 'article'}-${index}`;
-  }
-
-  trackByComment(index: number, comment: PostComment): string | number {
-    return comment.id ?? `${comment.content ?? 'comment'}-${index}`;
-  }
-
   submitComment(): void {
     if (!this.articleId || this.commentSubmitting) {
       return;

@@ -51,10 +51,6 @@ export class ArticleNewComponent implements OnInit {
     });
   }
 
-  trackByTopic(index: number, topic: Topic): string | number {
-    return topic.id ?? `${topic.name ?? 'topic'}-${index}`;
-  }
-
   submit(): void {
     if (this.articleForm.invalid || this.savingArticle) {
       this.articleForm.markAllAsTouched();

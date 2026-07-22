@@ -2,39 +2,57 @@
   <main class="article-new-content">
     <h1>Créer un nouvel article</h1>
 
-    <p class="status" *ngIf="loadingTopics">Chargement des thèmes...</p>
-    <p class="status error" *ngIf="!loadingTopics && topicErrorMessage">{{ topicErrorMessage }}</p>
+    @if(loadingTopics) {
+      <p class="status">Chargement des thèmes...</p>
+    }
+    @if(!loadingTopics && topicErrorMessage) {
+      <p class="status error">{{ topicErrorMessage }}</p>
+    }
 
-    <form [formGroup]="articleForm" (ngSubmit)="submit()" *ngIf="!loadingTopics" novalidate>
-      <label for="topicId">Thème</label>
-      <select id="topicId" formControlName="topicId">
-        <option value="">Sélectionnez un thème</option>
-        <option *ngFor="let topic of topics; trackBy: trackByTopic" [value]="topic.id">
-          {{ topic.name }}
-        </option>
-      </select>
-      <p class="error" *ngIf="articleForm.controls.topicId.touched && articleForm.controls.topicId.invalid">
-        Le thème est requis.
-      </p>
+    @if(!loadingTopics) {
+      <form [formGroup]="articleForm" (ngSubmit)="submit()" novalidate>
+        <label for="topicId">Thème</label>
+        <select id="topicId" formControlName="topicId">
+          <option value="">Sélectionnez un thème</option>
+          @for (topic of topics; track topic.id) {
+            <option [value]="topic.id">
+              {{ topic.name }}
+            </option>
+          }
+        </select>
+        @if(articleForm.controls.topicId.touched && articleForm.controls.topicId.invalid) {
+          <p class="error">
+            Le thème est requis.
+          </p>
+        }
 
-      <label for="title">Titre</label>
-      <input id="title" type="text" formControlName="title" />
-      <p class="error" *ngIf="articleForm.controls.title.touched && articleForm.controls.title.invalid">
-        Le titre est requis (3 caractères minimum).
-      </p>
+        <label for="title">Titre</label>
+        <input id="title" type="text" formControlName="title" />
+        @if(articleForm.controls.title.touched && articleForm.controls.title.invalid) {
+          <p class="error">
+            Le titre est requis (3 caractères minimum).
+          </p>
+        }
 
-      <label for="content">Contenu</label>
-      <textarea id="content" rows="8" formControlName="content"></textarea>
-      <p class="error" *ngIf="articleForm.controls.content.touched && articleForm.controls.content.invalid">
-        Le contenu est requis.
-      </p>
+        <label for="content">Contenu</label>
+        <textarea id="content" rows="8" formControlName="content"></textarea>
+        @if(articleForm.controls.content.touched && articleForm.controls.content.invalid) {
+          <p class="error">
+            Le contenu est requis.
+          </p>
+        }
 
-      <app-button type="submit" [disabled]="savingArticle || articleForm.invalid">
-        {{ savingArticle ? 'Création...' : 'Créer' }}
-      </app-button>    
-    </form>
+        <app-button type="submit" [disabled]="savingArticle || articleForm.invalid">
+          {{ savingArticle ? 'Création...' : 'Créer' }}
+        </app-button>    
+      </form>
+    }
 
-    <p class="status success" *ngIf="successMessage">{{ successMessage }}</p>
-    <p class="status error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    @if(successMessage) {
+      <p class="status success">{{ successMessage }}</p>
+    }
+    @if(errorMessage) {
+      <p class="status error">{{ errorMessage }}</p>
+    }
   </main>
 </div>

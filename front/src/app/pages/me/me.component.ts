@@ -77,10 +77,6 @@ export class MeComponent implements OnInit {
     });
   }
 
-  trackByTopic(index: number, topic: Topic): string | number {
-    return topic.id ?? `${topic.name ?? 'topic'}-${index}`;
-  }
-
   isUnsubscribing(topic: Topic): boolean {
     if (topic.id === undefined || topic.id === null) {
       return false;
