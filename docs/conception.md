@@ -156,8 +156,7 @@ Comment {
     text content
 }
 
-User ||--o{ Subscription : subscribes
-Subscription }o--|| Topic : subscribed
+User }o--o{ Topic : subscribes
 User ||--o{ Post : writes
 Topic ||--o{ Post : concerns
 Comment }o--|| Post : commented
@@ -181,12 +180,11 @@ liste des dépendances installées
 | lombok  | bibliothèque d'annotations | [doc lombok](https://projectlombok.org/features/) | intégration d'utilitaires pour le développements ( annotations, ...) | rapidité du développement |
 | springboot  | framework | [doc spring](https://spring.io/) | rapidité / fiabilité du code | les composants s'ajoutent en fonction des besoins |
 | spring web MVC | architecture MVC | [doc spring web](https://docs.spring.io/spring-framework/reference/web/webmvc.html) | ensemble d'utilitaires pour une application web | composant spring |
-| spring security | framework qui gère la sécurité de l'application (authent, author) | [doc spring security](https://docs.spring.io/spring-security/reference/index.html) | sécurisation de l'application | composant spring |
+| spring security | composant spring qui gère la sécurité de l'application (authent, author) | [doc spring security](https://docs.spring.io/spring-security/reference/index.html) | sécurisation de l'application | composant spring |
 | Java JWT | bibliothèque de gestion de tokens JWT | [doc jjwt](https://github.com/jwtk/jjwt) | sécurisation de l'application | projet actif et reconnu |
-| spring data | framework qui gère la connexion à une source de données | [doc spring data](https://docs.spring.io/spring-data/jpa/reference/index.html) | persistance des données | composant spring |
-| spring doc open API | framework qui gère la connexion à une source de données | [doc spring doc api](https://springdoc.org/) | documentation de l'API | composant spring |
+| spring doc open API | composant spring qui permet de documenter l'API | [doc spring doc api](https://springdoc.org/) | documentation de l'API | composant spring |
 | Validation | intégration du validator hibernate | [doc hibernate validator](https://docs.hibernate.org/stable/validator/reference/en-US/html_single/) | validation des données | wrapper intégré à spring |
-| spring data | framework qui gère la connexion à une source de données | [doc spring data](https://docs.spring.io/spring-data/jpa/reference/index.html) | persistance des données | composant spring |
+| spring data | composant spring qui gère la connexion à une source de données | [doc spring data](https://docs.spring.io/spring-data/jpa/reference/index.html) | persistance des données | composant spring |
 | MySQL Driver | Pilote de connexion à une BDD MySQL | NA, utilisé par spring data | persistance des données | Système de BDD répandu dans l'entreprise |
 | H2 Database | Pilote de connexion à une BDD en mémoire H2 | NA, utilisé par spring data | persistance des données en tests | rapidité des tests unitaires |
 
@@ -198,8 +196,8 @@ Seules les routes login et register ne sont pas protégés
 
 | url | verbe http | description | remarques |
 | --- | --- | --- | --- |
-| ✅ auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
 | ✅ auth/register | POST | enregistre un utilisateur | NA |
+| ✅ auth/login | POST | log un utilisateur | un token d'authentification est renvoyé |
 | ✅ me | GET | récupère les informations de l'utilisateur connecté | NA |
 | ✅ me | PUT | modifie les informations de l'utilisateur connecté | NA |
 | ✅ topic | GET | récupère la liste des thèmes | chaque topic contient un champ registered qui vaut true si l'utilisateur connecté est inscrit à ce topic |
@@ -238,9 +236,13 @@ Seules les routes login et register ne sont pas protégés
 
 #### Liste des composants
 
-- ✅ Menu
-- ✅ Bouton
-- ✅ Article
+- ✅ Menu  
+![navigation mobile](composant-navbar-mobile.png)
+![navigation Desktop](composant-navbar-desktop.png)
+- ✅ Bouton ( 2 états )  
+![composant bouton](composant-bouton.png)
+- ✅ Article  
+![composant article](composant-article.png)
 
 ## Utilisations de l'IA
 
@@ -258,6 +260,7 @@ Seules les routes login et register ne sont pas protégés
 - permettre de se connecter avec l'email OU le pseudo
     - vérifier que le pseudo a une contrainte d'unicité en BDD
 - ✅ filtrer les articles du feed par date croissante ou décroissante
+- ? Utiliser le component post sur la page de détail ?
 
 ## Mise à jour vers angular 20
 
