@@ -188,7 +188,6 @@ liste des dépendances installées
 | MySQL Driver | Pilote de connexion à une BDD MySQL | NA, utilisé par spring data | persistance des données | Système de BDD répandu dans l'entreprise |
 | H2 Database | Pilote de connexion à une BDD en mémoire H2 | NA, utilisé par spring data | persistance des données en tests | rapidité des tests unitaires |
 
-
 #### liste des routes API
 
 Toutes les routes sont préfixées par `/api/v1/`
@@ -239,14 +238,17 @@ Seules les routes login et register ne sont pas protégés
 - ✅ Menu  
 ![navigation mobile](composant-navbar-mobile.png)
 ![navigation Desktop](composant-navbar-desktop.png)
+> Apparait sur toutes les pages
 - ✅ Bouton ( 2 états )  
 ![composant bouton](composant-bouton.png)
+> Apparait sur toutes les pages
 - ✅ Article  
 ![composant article](composant-article.png)
+> Du code HTML complexe et autonome
 
-## Utilisations de l'IA
+## Divers
 
-### Back
+### Utilisations de l'IA
 
 - génération de la configuration à mysql
     - `connect this app to the mysql database mdd_user:mdd_pwd@p05_mdd`
@@ -254,15 +256,10 @@ Seules les routes login et register ne sont pas protégés
 - génération du script du schema de BDD
     - `generate mysql script to match the mermaid diagram`
     - génération de `schema.sql`
+- aide au développement
+    - `Je dois migrer cette application angular 14 vers angular 20, quelles sont les étapes à suivre`
 
-## TODO
-
-- permettre de se connecter avec l'email OU le pseudo
-    - vérifier que le pseudo a une contrainte d'unicité en BDD
-- ✅ filtrer les articles du feed par date croissante ou décroissante
-- ? Utiliser le component post sur la page de détail ?
-
-## Mise à jour vers angular 20
+#### Mise à jour vers angular 20
 
 Changements majeurs à anticiper par version
 
@@ -277,7 +274,8 @@ https://angular.dev/update-guide?v=14.0-20.0&l=2
 | 19 | Standalone par défaut, linkedSignal, resource() API |
 | 20 | httpResource, Signals API stable, suppression de Zone.js (optionnel) |
 
-## Améliorations envisagées
+
+### Améliorations envisagées
 
 - pagination du fil d'actualité et de la liste des commentaires
 - filtrer le feed par thèmes

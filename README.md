@@ -30,6 +30,7 @@ mvn spring-boot:run
 # afficher le code coverage
 xdg-open target/site/jacoco/index.html
 ```
+![umé code coverage back](test-coverage-back.png)
 - Front
 
 ```bash
@@ -45,6 +46,7 @@ npm run start
 # run tests with code coverage
 npm run test
 ```
+![résumé code coverage front](test-coverage-front.png)
 
 ## Tests e2e
 
@@ -52,9 +54,9 @@ Sur un environnement dédié il est possible de lancer les tests e2e depuis le f
 
 ### Technologies
 
-- Angular 14
+- Angular 20
 - java 21
-- mysql
+- mysql 15
 
 ## Conception
 
@@ -64,7 +66,6 @@ Merci de lire
 - la [FAQ utilisateur](./docs/faq/faq.md)
 
 ## Problèmes courants
-
 
 > je viens de merger une branche et des components existants ne sont plus trouvés
 
