@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { map, Observable } from 'rxjs';
 
 export interface Topic {
   id?: number | string;
@@ -33,7 +33,7 @@ export class TopicService {
 
     return this.http
       .get<Topic[] | TopicApiResponse>(this.topicUrl, options)
-      .pipe(map((response) => this.normalizeResponse(response)));
+      .pipe(map((response : Topic[] | TopicApiResponse) => this.normalizeResponse(response)));
   }
 
   subscribeToTopic(topicId: number | string): Observable<unknown> {

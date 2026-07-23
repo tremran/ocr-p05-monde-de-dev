@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../services/auth.service';
-import { MeService } from '../../services/me.service';
+import { MeResponse, MeService } from '../../services/me.service';
 import { Topic, TopicService } from '../../services/topic.service';
+import { take, tap } from 'rxjs';
 
 const OPTIONAL_PASSWORD_RULES = /^$|(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\-$#!?]).{9,}$/;
 
@@ -33,6 +35,7 @@ export class MeComponent implements OnInit {
     private readonly meService: MeService,
     private readonly authService: AuthService,
     private readonly topicService: TopicService,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -45,36 +48,44 @@ export class MeComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    this.meService.getMe().subscribe({
-      next: (me) => {
-        this.loadingProfile = false;
-        this.meForm.patchValue({
-          pseudo: me.pseudo ?? '',
-          email: me.email ?? '',
-          password: '',
-        });
-      },
-      error: () => {
-        this.loadingProfile = false;
-        this.errorMessage = 'Impossible de charger vos informations pour le moment.';
-      },
-    });
+    this.meService.getMe()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (me: MeResponse) => {
+          this.loadingProfile = false;
+          this.meForm.patchValue({
+            pseudo: me.pseudo ?? '',
+            email: me.email ?? '',
+            password: '',
+          });
+        },
+        error: () => {
+          this.loadingProfile = false;
+          this.errorMessage = 'Impossible de charger vos informations pour le moment.';
+        },
+      });
   }
 
   loadSubscribedTopics(): void {
     this.loadingSubscribedTopics = true;
     this.subscribedTopicsErrorMessage = '';
 
-    this.topicService.getTopics().subscribe({
-      next: (topics) => {
-        this.loadingSubscribedTopics = false;
-        this.subscribedTopics = topics.filter((topic) => topic.registered === true);
-      },
-      error: () => {
-        this.loadingSubscribedTopics = false;
-        this.subscribedTopicsErrorMessage = 'Impossible de charger vos thèmes abonnés pour le moment.';
-      },
-    });
+    this.topicService.getTopics()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap((topics: Topic[]) => {
+          this.subscribedTopics = topics.filter((topic) => topic.registered === true);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.loadingSubscribedTopics = false;
+        },
+        error: () => {
+          this.loadingSubscribedTopics = false;
+          this.subscribedTopicsErrorMessage = 'Impossible de charger vos thèmes abonnés pour le moment.';
+        },
+      });
   }
 
   isUnsubscribing(topic: Topic): boolean {
@@ -97,16 +108,18 @@ export class MeComponent implements OnInit {
     this.subscribedTopicsErrorMessage = '';
     this.unsubscribingTopicIds.add(topic.id);
 
-    this.topicService.unsubscribeFromTopic(topic.id).subscribe({
-      next: () => {
-        this.unsubscribingTopicIds.delete(topic.id as string | number);
-        this.subscribedTopics = this.subscribedTopics.filter((existingTopic) => existingTopic.id !== topic.id);
-      },
-      error: () => {
-        this.unsubscribingTopicIds.delete(topic.id as string | number);
-        this.subscribedTopicsErrorMessage = 'Impossible de vous désabonner pour le moment.';
-      },
-    });
+    this.topicService.unsubscribeFromTopic(topic.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.unsubscribingTopicIds.delete(topic.id as string | number);
+          this.subscribedTopics = this.subscribedTopics.filter((existingTopic) => existingTopic.id !== topic.id);
+        },
+        error: () => {
+          this.unsubscribingTopicIds.delete(topic.id as string | number);
+          this.subscribedTopicsErrorMessage = 'Impossible de vous désabonner pour le moment.';
+        },
+      });
   }
 
   submit(): void {
@@ -126,8 +139,9 @@ export class MeComponent implements OnInit {
         email: formValue.email,
         password: formValue.password,
       })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (me) => {
+        next: (me: MeResponse) => {
           this.savingProfile = false;
           if (me.token) {
             this.authService.saveToken(me.token);

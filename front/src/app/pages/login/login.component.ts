@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService, LoginResponse } from '../../services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent {
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   submit(): void {
@@ -41,8 +43,9 @@ export class LoginComponent {
         email: formValue.email,
         password: formValue.password,
       })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (response) => {
+        next: (response: LoginResponse) => {
           const hasToken = this.authService.saveTokenFromLoginResponse(response);
           this.loading = false;
 

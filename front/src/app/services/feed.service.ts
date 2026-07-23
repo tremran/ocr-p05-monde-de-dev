@@ -48,7 +48,7 @@ export class FeedService {
 
     return this.http
       .get<FeedArticle[] | FeedApiResponse>(this.feedUrl, options)
-      .pipe(map((response) => this.normalizeResponse(response)));
+      .pipe(map((response: FeedArticle[] | FeedApiResponse) => this.normalizeResponse(response)));
   }
 
   private normalizeResponse(response: FeedArticle[] | FeedApiResponse): FeedArticle[] {

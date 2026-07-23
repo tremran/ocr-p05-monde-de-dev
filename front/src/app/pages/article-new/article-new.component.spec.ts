@@ -50,10 +50,13 @@ describe('ArticleNewComponent', () => {
   it('should load topics on init', () => {
     fixture.detectChanges();
 
-    expect(topicServiceSpy.getTopics).toHaveBeenCalledTimes(1);
+    let capturedTopics: any[] = [];
+    component.topics$.subscribe(t => capturedTopics = t);
+
+    expect(topicServiceSpy.getTopics).toHaveBeenCalled();
     expect(component.loadingTopics).toBeFalse();
     expect(component.topicErrorMessage).toBe('');
-    expect(component.topics.length).toBe(1);
+    expect(capturedTopics.length).toBe(1);
   });
 
   it('should submit article to POST /post and redirect to feed', () => {

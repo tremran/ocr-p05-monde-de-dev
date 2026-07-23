@@ -2,6 +2,8 @@
   <main class="themes-content">
     <h1>Thèmes</h1>
 
+    @let topics = topics$ | async;
+
     @if(loading) {
       <p class="status">Chargement des thèmes...</p>
     }
@@ -14,14 +16,14 @@
       </p>
     }
 
-    @if(!loading && !errorMessage && topics.length === 0) {
+    @if(!loading && !errorMessage && topics && topics.length === 0) {
       <section class="empty">
         <h2>Aucun theme</h2>
         <p>La liste des thèmes est vide pour le moment.</p>
       </section>
     }
 
-    @if(!loading && !errorMessage && topics.length > 0) {
+    @if(!loading && !errorMessage && topics && topics.length > 0) {
       <div class="topics-grid">
         @for (topic of topics; track topic.id) {
           <article class="topic-card">
@@ -51,7 +53,7 @@
 
     @if(!loading && errorMessage) {
       <div class="retry">
-      <app-button (click)="loadTopics()">Recharger</app-button>
+        <app-button (click)="loadTopics()">Recharger</app-button>
       </div>
     }
   </main>

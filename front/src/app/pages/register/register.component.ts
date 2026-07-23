@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../services/auth.service';
 
 const PASSWORD_RULES = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=+_\-$#!?]).{9,}$/;
@@ -24,6 +25,7 @@ export class RegisterComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   submit(): void {
@@ -43,17 +45,18 @@ export class RegisterComponent {
         email: formValue.email,
         password: formValue.password,
       })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-      next: () => {
-        this.loading = false;
-        this.successMessage = 'Registration successful.';
-        this.registerForm.reset();
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage =
-          'Registration failed. Please verify your data and try again.';
-      },
-    });
+        next: () => {
+          this.loading = false;
+          this.successMessage = 'Registration successful.';
+          this.registerForm.reset();
+        },
+        error: () => {
+          this.loading = false;
+          this.errorMessage =
+            'Registration failed. Please verify your data and try again.';
+        },
+      });
   }
 }

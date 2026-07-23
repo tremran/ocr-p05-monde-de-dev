@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PostArticle, PostComment, PostService } from '../../services/post.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class ArticleComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly postService: PostService,
     private readonly formBuilder: FormBuilder,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -47,27 +49,31 @@ export class ArticleComponent implements OnInit {
     this.commentsLoading = true;
     this.commentsErrorMessage = '';
 
-    this.postService.getPost(articleId).subscribe({
-      next: (articles) => {
-        this.loading = false;
-        this.articles = articles;
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Impossible de charger l\'article pour le moment.';
-      },
-    });
+    this.postService.getPost(articleId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (articles: PostArticle[]) => {
+          this.loading = false;
+          this.articles = articles;
+        },
+        error: () => {
+          this.loading = false;
+          this.errorMessage = 'Impossible de charger l\'article pour le moment.';
+        },
+      });
 
-    this.postService.getComments(articleId).subscribe({
-      next: (comments) => {
-        this.commentsLoading = false;
-        this.comments = comments;
-      },
-      error: () => {
-        this.commentsLoading = false;
-        this.commentsErrorMessage = 'Impossible de charger les commentaires pour le moment.';
-      },
-    });
+    this.postService.getComments(articleId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (comments: PostComment[]) => {
+          this.commentsLoading = false;
+          this.comments = comments;
+        },
+        error: () => {
+          this.commentsLoading = false;
+          this.commentsErrorMessage = 'Impossible de charger les commentaires pour le moment.';
+        },
+      });
   }
 
   submitComment(): void {
@@ -87,17 +93,19 @@ export class ArticleComponent implements OnInit {
     this.commentSubmitting = true;
     this.commentSubmitErrorMessage = '';
 
-    this.postService.addComment(this.articleId, content).subscribe({
-      next: (comment) => {
-        this.commentSubmitting = false;
-        this.comments = [...this.comments, comment];
-        this.commentForm.reset();
-      },
-      error: () => {
-        this.commentSubmitting = false;
-        this.commentSubmitErrorMessage = 'Impossible d\'ajouter le commentaire pour le moment.';
-      },
-    });
+    this.postService.addComment(this.articleId, content)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (comment: PostComment) => {
+          this.commentSubmitting = false;
+          this.comments = [...this.comments, comment];
+          this.commentForm.reset();
+        },
+        error: () => {
+          this.commentSubmitting = false;
+          this.commentSubmitErrorMessage = 'Impossible d\'ajouter le commentaire pour le moment.';
+        },
+      });
   }
 
   reload(): void {

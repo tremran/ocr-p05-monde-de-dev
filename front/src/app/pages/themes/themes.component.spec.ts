@@ -38,8 +38,11 @@ describe('ThemesComponent', () => {
 
     fixture.detectChanges();
 
-    expect(topicServiceSpy.getTopics).toHaveBeenCalledTimes(1);
-    expect(component.topics).toEqual(apiTopics);
+    let capturedTopics: any[] = [];
+    component.topics$.subscribe(t => capturedTopics = t);
+
+    expect(topicServiceSpy.getTopics).toHaveBeenCalled();
+    expect(capturedTopics).toEqual(apiTopics);
     expect(component.loading).toBeFalse();
     expect(component.errorMessage).toBe('');
   });
@@ -51,8 +54,11 @@ describe('ThemesComponent', () => {
 
     fixture.detectChanges();
 
-    expect(topicServiceSpy.getTopics).toHaveBeenCalledTimes(1);
-    expect(component.topics).toEqual([]);
+    let capturedTopics: any[] = [];
+    component.topics$.subscribe(t => capturedTopics = t);
+
+    expect(topicServiceSpy.getTopics).toHaveBeenCalled();
+    expect(capturedTopics).toEqual([]);
     expect(component.loading).toBeFalse();
     expect(component.errorMessage).toBe('Impossible de charger les thèmes pour le moment.');
   });

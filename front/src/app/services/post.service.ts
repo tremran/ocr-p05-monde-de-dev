@@ -63,7 +63,7 @@ export class PostService {
 
     return this.http
       .get<PostArticle | PostArticle[] | PostApiResponse>(`${this.postUrl}/${postId}`, options)
-      .pipe(map((response) => this.normalizeResponse(response)));
+      .pipe(map((response: PostArticle | PostArticle[] | PostApiResponse) => this.normalizeResponse(response)));
   }
 
   getComments(postId: number | string): Observable<PostComment[]> {

@@ -2,6 +2,8 @@
   <main class="article-new-content">
     <h1>Créer un nouvel article</h1>
 
+    @let topics = topics$ | async;
+
     @if(loadingTopics) {
       <p class="status">Chargement des thèmes...</p>
     }
@@ -9,7 +11,7 @@
       <p class="status error">{{ topicErrorMessage }}</p>
     }
 
-    @if(!loadingTopics) {
+    @if(!loadingTopics && topics) {
       <form [formGroup]="articleForm" (ngSubmit)="submit()" novalidate>
         <label for="topicId">Thème</label>
         <select id="topicId" formControlName="topicId">

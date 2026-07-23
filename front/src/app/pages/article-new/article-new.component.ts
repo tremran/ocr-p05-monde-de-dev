@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { PostService } from '../../services/post.service';
 import { Topic, TopicService } from '../../services/topic.service';
 
@@ -17,8 +19,8 @@ export class ArticleNewComponent implements OnInit {
     content: ['', [Validators.required]],
   });
 
-  topics: Topic[] = [];
-  loadingTopics = false;
+  topics$!: Observable<Topic[]>;
+  loadingTopics = true;
   savingArticle = false;
   errorMessage = '';
   topicErrorMessage = '';
@@ -29,26 +31,23 @@ export class ArticleNewComponent implements OnInit {
     private readonly postService: PostService,
     private readonly topicService: TopicService,
     private readonly router: Router,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
-    this.loadTopics();
-  }
-
-  loadTopics(): void {
-    this.loadingTopics = true;
-    this.topicErrorMessage = '';
-
-    this.topicService.getTopics().subscribe({
-      next: (topics) => {
-        this.loadingTopics = false;
-        this.topics = topics;
-      },
-      error: () => {
-        this.loadingTopics = false;
-        this.topicErrorMessage = 'Impossible de charger les thèmes pour le moment.';
-      },
-    });
+    this.topics$ = this.topicService.getTopics()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap((topics: Topic[]) => {
+          this.loadingTopics = false;
+          this.topicErrorMessage = '';
+        }),
+        catchError((err: any) => {
+          this.loadingTopics = false;
+          this.topicErrorMessage = 'Impossible de charger les thèmes pour le moment.';
+          return of([] as Topic[]);
+        })
+      );
   }
 
   submit(): void {
@@ -72,6 +71,7 @@ export class ArticleNewComponent implements OnInit {
         content: formValue.content,
         publishedAt: this.getTodayDateString(),
       })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.savingArticle = false;

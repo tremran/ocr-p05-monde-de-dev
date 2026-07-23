@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FeedArticle, FeedService, FeedSort } from '../../services/feed.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class FeedComponent implements OnInit {
   constructor(
     private readonly feedService: FeedService,
     private readonly router: Router,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -27,16 +29,18 @@ export class FeedComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.feedService.getFeed(this.selectedSort).subscribe({
-      next: (articles) => {
-        this.loading = false;
-        this.articles = articles;
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = "Impossible de charger le feed pour le moment.";
-      },
-    });
+    this.feedService.getFeed(this.selectedSort)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (articles: FeedArticle[]) => {
+          this.loading = false;
+          this.articles = articles;
+        },
+        error: () => {
+          this.loading = false;
+          this.errorMessage = "Impossible de charger le feed pour le moment.";
+        },
+      });
   }
   
   goToNewArticle(): void {
