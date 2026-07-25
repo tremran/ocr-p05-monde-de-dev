@@ -29,6 +29,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Gère la consultation et la création des posts.
+ */
 @RestController
 @RequestMapping("/api/v1/post")
 @Tag(name = "Post", description = "Gestion des articles")
@@ -40,6 +43,13 @@ public class PostController {
         this.postService = postService;
     }
 
+    /**
+     * Crée un nouvel article pour l'utilisateur authentifié.
+     *
+     * @param userDetails principal Spring Security de l'auteur
+     * @param request données de création du post validées
+     * @return réponse contenant le post créé et ses métadonnées
+     */
     @PostMapping
     @Operation(
         summary = "Créer un article",
@@ -117,6 +127,12 @@ public class PostController {
         return ResponseEntity.ok(responseBody);
     }
 
+    /**
+     * Retourne le détail complet d'un article identifié par son id.
+     *
+     * @param postId identifiant du post recherché
+     * @return réponse contenant le post, son auteur et son thème
+     */
     @GetMapping("/{postId}")
     @Operation(summary = "Récupérer le détail d'un article")
     @ApiResponses({

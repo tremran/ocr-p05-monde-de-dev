@@ -15,6 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Représente un article publié dans un thème.
+ */
 @Entity
 @Table(name = "posts")
 public class PostEntity {

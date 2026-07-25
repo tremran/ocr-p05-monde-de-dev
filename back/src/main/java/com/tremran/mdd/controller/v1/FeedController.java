@@ -16,6 +16,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * Expose le fil d'actualité des posts accessibles à l'utilisateur.
+ */
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "Feed", description = "Fil d'actualité")
@@ -28,8 +31,15 @@ public class FeedController {
         this.postService = postService;
     }
 
+    /**
+     * Retourne le fil d'actualité des thèmes suivis par l'utilisateur.
+     *
+     * @param userDetails principal Spring Security de l'utilisateur courant
+     * @param sort sens de tri demandé sur la date de publication
+     * @return réponse contenant la liste des posts du fil
+     */
     @GetMapping("/feed")
-        @Operation(summary = "Récupérer le fil d'actualité")
+    @Operation(summary = "Récupérer le fil d'actualité")
     public ResponseEntity<?> getFeed(
             @AuthenticationPrincipal UserDetails userDetails,
             @Parameter(description = "Ordre de tri par date: DESC (défaut) ou ASC")

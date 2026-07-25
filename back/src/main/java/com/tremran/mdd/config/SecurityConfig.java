@@ -22,6 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.tremran.mdd.service.UserService;
 
+/**
+ * Configuration de la sécurité HTTP et du filtrage JWT.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -45,6 +48,13 @@ public class SecurityConfig {
                 .toArray(String[]::new);
     }
 
+    /**
+     * Construit la chaîne de filtres Spring Security utilisée par l'API.
+     *
+     * @param http objet de configuration HTTP Spring Security
+     * @return chaîne de filtres configurée pour les endpoints REST
+     * @throws Exception si la configuration de sécurité échoue
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -66,6 +76,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Déclare la configuration CORS autorisée pour les clients front.
+     *
+     * @return source de configuration CORS appliquée à l'application
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -79,6 +94,11 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Crée le provider d'authentification basé sur les utilisateurs persistés.
+     *
+     * @return provider DAO configuré avec l'encodeur de mots de passe du projet
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userService);
@@ -86,6 +106,13 @@ public class SecurityConfig {
         return authProvider;
     }
 
+    /**
+     * Expose l'AuthenticationManager Spring utilisé par le contrôleur d'authentification.
+     *
+     * @param config configuration d'authentification Spring
+     * @return gestionnaire d'authentification résolu par Spring
+     * @throws Exception si Spring ne peut pas fournir le gestionnaire
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

@@ -28,6 +28,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Expose les endpoints d'authentification et d'inscription.
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 @Tag(name = "Auth", description = "Endpoints d'authentification")
@@ -46,6 +49,12 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
+    /**
+    * Crée un compte puis retourne un JWT immédiatement exploitable par le client.
+    *
+    * @param request données d'inscription validées
+    * @return réponse contenant le token et le profil minimal créé
+    */
     @PostMapping("/register")
     @Operation(
         summary = "Créer un compte utilisateur",
@@ -79,8 +88,8 @@ public class AuthController {
                         {
                             "token": "eyJhbGciOiJIUzI1NiJ9...",
                             "user": {
-                        "email": "john.doe@example.com",
-                        "pseudo": "johndoe"
+                                "email": "john.doe@example.com",
+                                "pseudo": "johndoe"
                             }
                         }
                         """
@@ -114,6 +123,12 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("token", token, "user", Map.of("email", entity.getEmail(), "pseudo", entity.getPseudo())));
     }
 
+    /**
+     * Authentifie un utilisateur et renvoie un nouveau JWT.
+     *
+     * @param request identifiants de connexion validés
+     * @return réponse contenant le token JWT de session
+     */
     @PostMapping("/login")
     @Operation(
         summary = "Se connecter et obtenir un JWT",

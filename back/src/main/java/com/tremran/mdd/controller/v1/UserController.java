@@ -28,6 +28,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * Expose le profil et la mise à jour de l'utilisateur connecté.
+ */
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "User", description = "Gestion du profil utilisateur")
@@ -45,6 +48,12 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
+    /**
+     * Retourne le profil de l'utilisateur authentifié.
+     *
+     * @param userDetails principal Spring Security injecté par le filtre JWT
+     * @return réponse contenant l'identité exposée au front
+     */
     @GetMapping("/me")
     @Operation(summary = "Récupérer le profil de l'utilisateur connecté")
     @ApiResponse(
@@ -69,6 +78,13 @@ public class UserController {
         return ResponseEntity.ok(toUserResponse(user));
     }
 
+    /**
+     * Met à jour le profil courant et renvoie un nouveau JWT si l'email change.
+     *
+     * @param userDetails principal Spring Security de l'utilisateur courant
+     * @param request nouvelles données de profil validées
+     * @return réponse contenant le profil mis à jour, avec éventuel token renouvelé
+     */
     @PutMapping("/me")
     @Operation(
         summary = "Mettre à jour le profil de l'utilisateur connecté",

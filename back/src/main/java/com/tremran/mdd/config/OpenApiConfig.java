@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * Configuration OpenAPI commune à toute l'API.
+ */
 @OpenAPIDefinition(
         info = @Info(
                 title = "MDD API",

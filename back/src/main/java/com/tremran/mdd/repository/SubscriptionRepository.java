@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.tremran.mdd.model.SubscriptionEntity;
 
+/**
+ * Accès aux abonnements des utilisateurs aux thèmes.
+ */
 public interface SubscriptionRepository extends JpaRepository<SubscriptionEntity, Long> {
     boolean existsByUserIdAndTopicId(Long userId, Long topicId);
 

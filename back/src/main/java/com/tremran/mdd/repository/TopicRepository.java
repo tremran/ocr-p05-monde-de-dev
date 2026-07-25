@@ -4,5 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tremran.mdd.model.TopicEntity;
 
+/**
+ * Accès aux thèmes disponibles.
+ */
 public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
 }

@@ -17,6 +17,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * Gère les abonnements et désabonnements aux thèmes.
+ */
 @RestController
 @RequestMapping("/api/v1/subscription")
 @Tag(name = "Subscription", description = "Abonnements aux thèmes")
@@ -29,6 +32,13 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
     }
 
+    /**
+     * Abonne l'utilisateur authentifié au thème demandé.
+     *
+     * @param userDetails principal Spring Security de l'utilisateur courant
+     * @param topicId identifiant du thème à suivre
+     * @return réponse confirmant l'abonnement créé
+     */
     @PostMapping({"/{topicId}", "/{topicId}/"})
     @Operation(summary = "S'abonner à un thème")
     public ResponseEntity<?> subscribe(
@@ -40,6 +50,13 @@ public class SubscriptionController {
                 "subscribed", true));
     }
 
+    /**
+     * Désabonne l'utilisateur authentifié du thème demandé.
+     *
+     * @param userDetails principal Spring Security de l'utilisateur courant
+     * @param topicId identifiant du thème à quitter
+     * @return réponse confirmant la suppression de l'abonnement
+     */
     @DeleteMapping({"/{topicId}", "/{topicId}/"})
     @Operation(summary = "Se désabonner d'un thème")
     public ResponseEntity<?> unsubscribe(

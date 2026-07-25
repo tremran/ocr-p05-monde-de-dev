@@ -10,6 +10,9 @@ import com.tremran.mdd.model.UserEntity;
 import com.tremran.mdd.repository.SubscriptionRepository;
 import com.tremran.mdd.repository.TopicRepository;
 
+/**
+ * Gère les abonnements et désabonnements aux thèmes.
+ */
 @Service
 public class SubscriptionService {
 
@@ -26,6 +29,13 @@ public class SubscriptionService {
         this.userService = userService;
     }
 
+    /**
+     * Crée un abonnement entre l'utilisateur courant et un thème existant.
+     *
+     * @param userEmail email de l'utilisateur courant
+     * @param topicId identifiant du thème à suivre
+     * @return abonnement créé et persisté
+     */
     public SubscriptionEntity subscribe(String userEmail, Long topicId) {
         UserEntity user = userService.getCurrentUser(userEmail);
         TopicEntity topic = topicRepository.findById(topicId)
@@ -41,6 +51,12 @@ public class SubscriptionService {
         return subscriptionRepository.save(subscription);
     }
 
+    /**
+     * Supprime l'abonnement entre l'utilisateur courant et un thème existant.
+     *
+     * @param userEmail email de l'utilisateur courant
+     * @param topicId identifiant du thème à quitter
+     */
     public void unsubscribe(String userEmail, Long topicId) {
         UserEntity user = userService.getCurrentUser(userEmail);
         topicRepository.findById(topicId)

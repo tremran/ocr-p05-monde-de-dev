@@ -2,6 +2,8 @@ package com.tremran.mdd.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +17,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Représente un utilisateur de l'application.
+ */
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -35,6 +40,7 @@ public class UserEntity {
 
     @NotBlank
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @CreationTimestamp

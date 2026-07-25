@@ -14,6 +14,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+/**
+ * Service utilitaire pour générer et valider les JWT.
+ */
 @Service
 public class JwtService {
 
@@ -23,14 +26,33 @@ public class JwtService {
     @Value("${security.jwt.expiration-time:36000000}")
     private long jwtExpiration;
 
+    /**
+     * Génère un JWT signé pour l'utilisateur authentifié.
+     *
+     * @param userDetails identité Spring Security de l'utilisateur
+     * @return token JWT contenant le nom d'utilisateur comme sujet
+     */
     public String generateToken(UserDetails userDetails) {
         return buildToken(userDetails.getUsername(), jwtExpiration);
     }
 
+    /**
+     * Extrait le nom d'utilisateur porté par un JWT.
+     *
+     * @param token jeton JWT à analyser
+     * @return identifiant utilisateur stocké dans le sujet du token
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Vérifie qu'un JWT correspond bien à l'utilisateur fourni et qu'il n'est pas expiré.
+     *
+     * @param token jeton JWT à valider
+     * @param userDetails identité attendue de l'utilisateur
+     * @return true si le token est encore valide pour cet utilisateur
+     */
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);

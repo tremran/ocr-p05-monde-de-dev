@@ -18,6 +18,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Filtre qui extrait et valide le JWT présent dans l'en-tête Authorization.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

@@ -15,6 +15,9 @@ import com.tremran.mdd.exception.ResourceNotFoundException;
 import com.tremran.mdd.model.UserEntity;
 import com.tremran.mdd.repository.UserRepository;
 
+/**
+ * Gère l'inscription, la lecture et la mise à jour des utilisateurs.
+ */
 @Service
 public class UserService implements UserDetailsService {
 
@@ -26,6 +29,14 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Inscrit un nouvel utilisateur après contrôle d'unicité de l'email et du pseudo.
+     *
+     * @param email adresse email du nouvel utilisateur
+     * @param pseudo pseudo public du nouvel utilisateur
+     * @param password mot de passe en clair à encoder avant persistance
+     * @return utilisateur créé et persisté
+     */
     public UserEntity register(String email, String pseudo, String password) {
         if (userRepository.findByEmail(email).isPresent() || userRepository.findByPseudo(pseudo).isPresent()) {
             throw new ConflictException("Email or pseudo already exists");
@@ -38,11 +49,26 @@ public class UserService implements UserDetailsService {
         return userRepository.save(entity);
     }
 
+    /**
+     * Charge l'utilisateur courant à partir de son email.
+     *
+     * @param email email de l'utilisateur recherché
+     * @return utilisateur correspondant à l'email fourni
+     */
     public UserEntity getCurrentUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    /**
+     * Met à jour le profil de l'utilisateur courant en conservant les contraintes d'unicité.
+     *
+     * @param currentEmail email actuellement authentifié
+     * @param email nouvel email demandé
+     * @param pseudo nouveau pseudo demandé
+     * @param password nouveau mot de passe éventuel, vide ou null pour ne pas le changer
+     * @return utilisateur mis à jour et persisté
+     */
     public UserEntity updateCurrentUser(String currentEmail, String email, String pseudo, String password) {
         UserEntity user = getCurrentUser(currentEmail);
 
@@ -70,6 +96,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    /**
+     * Adapte un utilisateur métier en UserDetails pour Spring Security.
+     *
+     * @param username email utilisé comme identifiant de connexion
+     * @return représentation Spring Security de l'utilisateur
+     * @throws UsernameNotFoundException si aucun utilisateur ne correspond à cet email
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> userOpt = userRepository.findByEmail(username);

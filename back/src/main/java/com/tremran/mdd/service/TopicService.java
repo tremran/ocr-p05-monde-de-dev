@@ -10,6 +10,9 @@ import com.tremran.mdd.model.UserEntity;
 import com.tremran.mdd.repository.SubscriptionRepository;
 import com.tremran.mdd.repository.TopicRepository;
 
+/**
+ * Prépare les thèmes avec l'état d'abonnement de l'utilisateur courant.
+ */
 @Service
 public class TopicService {
 
@@ -26,6 +29,12 @@ public class TopicService {
         this.userService = userService;
     }
 
+    /**
+     * Retourne tous les thèmes enrichis avec l'état d'abonnement de l'utilisateur.
+     *
+     * @param userEmail email de l'utilisateur courant
+     * @return liste des thèmes exposés à l'API avec le booléen registered
+     */
     public List<TopicResponse> findAllTopicsForUser(String userEmail) {
         UserEntity user = userService.getCurrentUser(userEmail);
         Set<Long> subscribedTopicIds = subscriptionRepository.findTopicIdsByUserId(user.getId()).stream()

@@ -28,6 +28,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Permet de consulter et publier des commentaires sur les posts.
+ */
 @RestController
 @RequestMapping("/api/v1/post/{postId}/comment")
 @Tag(name = "Comment", description = "Gestion des commentaires")
@@ -40,6 +43,12 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    /**
+     * Retourne les commentaires d'un article dans l'ordre chronologique.
+     *
+     * @param postId identifiant du post ciblé
+     * @return réponse contenant les commentaires formatés pour l'API
+     */
     @GetMapping
     @Operation(summary = "Lister les commentaires d'un article")
     @ApiResponses({
@@ -76,6 +85,14 @@ public class CommentController {
                 .toList());
     }
 
+    /**
+     * Ajoute un commentaire au post ciblé au nom de l'utilisateur authentifié.
+     *
+     * @param userDetails principal Spring Security de l'utilisateur courant
+     * @param postId identifiant du post commenté
+     * @param request contenu du commentaire validé
+     * @return réponse contenant le commentaire créé
+     */
     @PostMapping
     @Operation(
         summary = "Ajouter un commentaire à un article",

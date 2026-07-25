@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.tremran.mdd.model.PostEntity;
 
+/**
+ * Accès aux posts et au fil d'actualité.
+ */
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Query("""
             select p from PostEntity p

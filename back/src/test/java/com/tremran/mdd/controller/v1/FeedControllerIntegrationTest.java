@@ -46,7 +46,9 @@ class FeedControllerIntegrationTest extends ControllerIntegrationTestSupport {
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Recent"))
-                .andExpect(jsonPath("$[1].title").value("Ancien"));
+            .andExpect(jsonPath("$[1].title").value("Ancien"))
+            .andExpect(jsonPath("$[0].author.password").doesNotExist())
+            .andExpect(jsonPath("$[1].author.password").doesNotExist());
     }
 
     @Test

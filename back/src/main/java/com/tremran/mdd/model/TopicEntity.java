@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Représente un thème disponible dans l'application.
+ */
 @Entity
 @Table(name = "topics")
 public class TopicEntity {

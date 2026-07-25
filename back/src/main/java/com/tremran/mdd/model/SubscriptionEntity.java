@@ -14,6 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Représente l'abonnement d'un utilisateur à un thème.
+ */
 @Entity
 @Table(name = "subscriptions")
 public class SubscriptionEntity {
