@@ -167,4 +167,8 @@ input {
   .me-content {
     padding: 1.5rem 2rem 2.5rem;
   }
+
+  .topics-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
