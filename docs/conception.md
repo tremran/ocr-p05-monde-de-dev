@@ -18,26 +18,26 @@ Nous commencerons par la réalisation d'un MVP déployé en interne.
 
 ### Diagramme UC
 
-- ✅ fonctionnels
-    - ✅ s'enregistrer
-    - ✅ se connecter
-    - ✅ se déconnecter
-- gestion du profil
-    - ✅ consulter son profil
-    - ✅ modifier son profil
-- gestion des thèmes
-    - ✅ consulter les thèmes
-    - ✅ s'abonner à un thème
-    - ✅ se désabonner d'un thème ( sur la page de profil)
-- fil d'actualité
-    - ✅ consulter son fil d'actualité ( page d'accueil )
-    - ✅ trier le fil d'actualité
-- articles
-    - ✅ ajouter un article
-    - ✅ consulter un article
-    - ✅ commenter un article
+1. ✅ fonctionnels
+    1. ✅ s'enregistrer
+    1. ✅ se connecter
+    1. ✅ se déconnecter
+1. gestion du profil
+    1. ✅ consulter son profil
+    1. ✅ modifier son profil
+1. gestion des thèmes
+    1. ✅ consulter les thèmes
+    1. ✅ s'abonner à un thème
+    1. ✅ se désabonner d'un thème ( sur la page de profil)
+1. fil d'actualité
+    1. ✅ consulter son fil d'actualité ( page d'accueil )
+    1. ✅ trier le fil d'actualité
+1. articles
+    1. ✅ ajouter un article
+    1. ✅ consulter un article
+    1. ✅ commenter un article
 
-## Règles de gestions
+### Règles de gestions
 
 Ajouter des tests automatisés pour valider ces points
 
@@ -58,9 +58,9 @@ Ajouter des tests automatisés pour valider ces points
     - ✅ pas de réponses à un commentaire
 - ✅ après le clic sur le bouton `S'abonner` le bouton devient inactif et le texte devient `Déjà abonné`
 
-## Choix d'Architecture
+### Choix d'Architecture
 
-### Git 
+#### Git 
 
 Une branche 
 
@@ -132,8 +132,6 @@ La couche présentation étant le projet front, les autres couches sont dans le 
 ```mermaid
 erDiagram
 
-Subscription
-
 User {
     string email
     string pseudo
@@ -177,7 +175,6 @@ liste des dépendances installées
 | --- | --- | --- | --- | --- |
 | java 21 | langage de programmation | [doc oracle](https://docs.oracle.com/en/java/javase/21/docs/api/index.html) |  | version LTS répandue dans l'entreprise |
 | maven | build tool | [doc maven](https://docs.spring.io/spring-boot/maven-plugin/index.html) | N/A | build tool standard |
-| lombok  | bibliothèque d'annotations | [doc lombok](https://projectlombok.org/features/) | intégration d'utilitaires pour le développements ( annotations, ...) | rapidité du développement |
 | springboot  | framework | [doc spring](https://spring.io/) | rapidité / fiabilité du code | les composants s'ajoutent en fonction des besoins |
 | spring web MVC | architecture MVC | [doc spring web](https://docs.spring.io/spring-framework/reference/web/webmvc.html) | ensemble d'utilitaires pour une application web | composant spring |
 | spring security | composant spring qui gère la sécurité de l'application (authent, author) | [doc spring security](https://docs.spring.io/spring-security/reference/index.html) | sécurisation de l'application | composant spring |
@@ -221,43 +218,71 @@ Seules les routes login et register ne sont pas protégés
 
 #### Liste des pages
 
-| url | description | données affichées | endpoints utilisées | remarques |
-| --- | --- | --- | --- | --- |
-| ✅ / | page d'accueil | affiche des boutons `se connecter` et `s'inscrire` | NA | Si l'utilisateur est connecté, redirige vers `/feed` |
-| ✅ /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | --- |
-| ✅ /login | page de connexion | affiche le formulaire | les données sont envoyées sur `login` | --- |
-| ✅ /logout | bouton de déconnexion | NA | NA | l'utilisateur est redirigé sur la page de `home` |
-| ✅ /feed | page d'accueil | affiche le fil d'actualité | `feed` | l'utilisateur peut trier le fil par date |
-| ✅ /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | l'utilisateur peut s'abonner  à un thème depuis cette page |
-| ✅ /me | infos utilisateurs | affiche les infos de l'utilisateur connecté dans un formulaire ainsi que les thèmes auxquels il est abonné | `me` | l'utilisateur peut modifier son profil les données sont envoyées en POST sur le endpoint `me`, il peut également se désabonner aux thèmes |
-| ✅ /article/{id_article} | details d'un article | affiche les infos de l'article dont l'id est fourni dans l'url, affiche également le formulaire d'ajout de commentaires | `post/{post_id}`, `post/{post_id}/comment` le formulaire est envoyé en POST sur `post/{post_id}/comment` |  |
-| ✅ /article/nouveau | page de création d'un article | affiche un formulaire de création d'article | le formulaire est envoyé en POST sur `/post` |  |
+| url | description | données affichées | endpoints utilisées | UC concerné | remarques |
+| --- | --- | --- | --- | --- | --- |
+| ✅ / | page d'accueil | affiche des boutons `se connecter` et `s'inscrire` | NA | `1.1`, `1.2` | Si l'utilisateur est connecté, redirige vers `/feed` |
+| ✅ /register | page de création de compte | affiche le formulaire | les données sont envoyées sur `register` | `1.1` | --- |
+| ✅ /login | page de connexion | affiche le formulaire | les données sont envoyées sur `login`| `1.2` | --- |
+| ✅ /feed | page d'accueil | affiche le fil d'actualité | `feed` | `4.1`, `4.2`, `5.1` | l'utilisateur peut trier le fil par date |
+| ✅ /themes | liste des thèmes | affiche tous les thèmes disponibles sur le site | `topic` | `3.1`, `3.2` | l'utilisateur peut s'abonner  à un thème depuis cette page |
+| ✅ /me | infos utilisateurs | affiche les infos de l'utilisateur connecté dans un formulaire ainsi que les thèmes auxquels il est abonné | `me` | `2.1`, `2.2`, `3.3` | l'utilisateur peut modifier son profil les données sont envoyées en POST sur le endpoint `me`, il peut également se désabonner aux thèmes |
+| ✅ /article/{id_article} | details d'un article | affiche les infos de l'article dont l'id est fourni dans l'url, affiche également le formulaire d'ajout de commentaires | `post/{post_id}`, `post/{post_id}/comment` le formulaire est envoyé en POST sur `post/{post_id}/comment` | `5.2`, `5.3` |  |
+| ✅ /article/nouveau | page de création d'un article | affiche un formulaire de création d'article | le formulaire est envoyé en POST sur `/post` | `5.1`|  |
 
 #### Liste des composants
 
-- ✅ Menu  
+- ✅ Menu
+    - il apparait sur toutes les pages sécurisées
+    - il est responsable du UC `1.3 - se déconnecter`  
 ![navigation mobile](composant-navbar-mobile.png)
 ![navigation Desktop](composant-navbar-desktop.png)
-> Apparait sur toutes les pages
 - ✅ Bouton ( 2 états )  
 ![composant bouton](composant-bouton.png)
-> Apparait sur toutes les pages
 - ✅ Article  
+    - Du code HTML complexe et autonome  
 ![composant article](composant-article.png)
-> Du code HTML complexe et autonome
 
-## Divers
+### Tests, performance et qualité
 
-### Utilisations de l'IA
+#### Tests
 
-- génération de la configuration à mysql
-    - `connect this app to the mysql database mdd_user:mdd_pwd@p05_mdd`
-    - màj de `application.properties`
-- génération du script du schema de BDD
-    - `generate mysql script to match the mermaid diagram`
-    - génération de `schema.sql`
+| Type de test | Outils | Portée | Résultats |
+| --- | --- | --- | --- |
+| Tests unitaires Front | Jasmine + Karma | pages, services et components | ![karma report](coverage-front.png) |
+| Tests unitaires Back | SpringBootTest + Junit + Mockito | pages, services et components | ![jacoco report](coverage-back.png) |
+| Tests E2E | Cypress | Use Cases | ![resultats cypress](resultats-e2e.png) |
+
+#### Performance
+
+- lighthouse 
+![Rapport lighthouse](resultats-lighthouse.png)
+- PMD `pmd check -d ./src/main -R rulesets/java/quickstart.xml -f text` : pas de warning
+
+#### Revue technique
+
+- points forts :
+    - structure MVC => modularité, extensibilité
+- à améliorer :
+    - pagination sur la liste des articles et liste des commentaires
+    - intégrer l'analyse de code avec PMD dans les commandes ( pre commit par exemple )
+
+
+#### Utilisations de l'IA
+
+- gain de temps
+    - génération de la configuration à mysql
+        - `connect this app to the mysql database mdd_user:mdd_pwd@p05_mdd`
+        - màj de `application.properties`
+    - génération du script du schema de BDD
+        - `generate mysql script to match the mermaid diagram`
+        - génération de `schema.sql`
+    - génération des entités 
+        - `Génère les entités correspondant au script sql suivant`
 - aide au développement
     - `Je dois migrer cette application angular 14 vers angular 20, quelles sont les étapes à suivre`
+    - `j'ai une erreur de compilation peux tu vérifier`
+
+## Divers
 
 #### Mise à jour vers angular 20
 
@@ -274,10 +299,11 @@ https://angular.dev/update-guide?v=14.0-20.0&l=2
 | 19 | Standalone par défaut, linkedSignal, resource() API |
 | 20 | httpResource, Signals API stable, suppression de Zone.js (optionnel) |
 
-
 ### Améliorations envisagées
 
 - pagination du fil d'actualité et de la liste des commentaires
 - filtrer le feed par thèmes
 - ajouter une interface d'administration
 - Gestion des logs
+- tests montée en charge
+    - évaluation de la performance et sécurité
