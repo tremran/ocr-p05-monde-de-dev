@@ -35,6 +35,7 @@ import jakarta.validation.constraints.Size;
 @RestController
 @RequestMapping("/api/v1/post")
 @Tag(name = "Post", description = "Gestion des articles")
+@SecurityRequirement(name = "bearerAuth")
 public class PostController {
 
     private final PostService postService;
@@ -100,7 +101,6 @@ public class PostController {
         @ApiResponse(responseCode = "400", description = "Payload invalide"),
         @ApiResponse(responseCode = "401", description = "JWT requis")
     })
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> createPost(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody CreatePostRequest request) {
@@ -168,7 +168,6 @@ public class PostController {
         @ApiResponse(responseCode = "401", description = "JWT requis"),
         @ApiResponse(responseCode = "404", description = "Article introuvable")
     })
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> getPost(@PathVariable Long postId) {
         PostEntity post = postService.getPostById(postId);
 
