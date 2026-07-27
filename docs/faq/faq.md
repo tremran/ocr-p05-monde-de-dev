@@ -51,9 +51,9 @@
 ## S'inscrire à un thème
 
 1. Se connecter
-1. Dans le menu cliquer sur `Thèmes` pour accéder à la liste des thèmes
+1. Dans le menu cliquer sur `Thèmes` pour accéder à la liste des thèmes  
 ![Menu](menu.png)
-1. Cliquer sur `S'abonner` pour s'abonner à un thème
+1. Cliquer sur `S'abonner` pour s'abonner à un thème  
 ![Page thèmes](themes.png)
 
 ## Se désinscrire d'un thème
@@ -77,7 +77,7 @@
 
 ## Créer un article
 
-1. Consulter votre feed
+1. Consulter votre feed  
 ![Page feed](feed.png)
 1. Cliquer sur `Créer un article`
 1. Remplir le formulaire et cliquer sur `Créer`  
