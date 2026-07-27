@@ -112,9 +112,9 @@ references :
 - [Monolithique vs n-tiers vs microservice](https://www.youtube.com/watch?v=qbDkBPpmjJM)
 - [types d'architectures](./architecture-styles-worksheet.pdf)
 
-les besoins étant : 
+les besoins pour un MVP sont : 
 
-- cout
+- cout peu élevé
 - simplicité
 - mise en place rapide
 
@@ -211,7 +211,7 @@ Seules les routes login et register ne sont pas protégés
 
 | Techno | Type | Lien documentation | Objectif du choix | Justification |
 | --- | --- | --- | --- | --- |
-| Angular 14 | langage de programmation | [doc angular 14](https://v14.angular.io/docs) |  | version disponible bootstrap |
+| Angular 20 | langage de programmation | [doc angular 20](https://v20.angular.dev/overview) |  | version avec update de sécurité |
 | Cypress | Qualité | [doc cypress](https://docs.cypress.io/app/get-started/why-cypress) | outils testing e2e | interface intuitive |
 | Karma | Qualité | [doc karma](https://karma-runner.github.io/latest/index.html) | runner de test | créé par l'équipe angular |
 | Jasmine | Qualité | [doc jasmine](https://jasmine.github.io/index.html) | framework de test | simplicité  |

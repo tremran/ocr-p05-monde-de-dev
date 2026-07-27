@@ -64,7 +64,7 @@ liste des dépendances installées
 
 | Techno | Type | Lien documentation | Objectif du choix | Justification |
 | --- | --- | --- | --- | --- |
-| Angular 14 | langage de programmation | [doc angular 14](https://v14.angular.io/docs) |  | version disponible bootstrap |
+| Angular 20 | langage de programmation | [doc angular 20](https://v20.angular.dev/overview) |  | version avec update de sécurité |
 | Cypress | Qualité | [doc cypress](https://docs.cypress.io/app/get-started/why-cypress) | outils testing e2e | interface intuitive |
 | Karma | Qualité | [doc karma](https://karma-runner.github.io/latest/index.html) | runner de test | créé par l'équipe angular |
 | Jasmine | Qualité | [doc jasmine](https://jasmine.github.io/index.html) | framework de test | simplicité  |
@@ -149,6 +149,7 @@ Comment }o--|| User : comments
 - à améliorer :
     - pagination sur la liste des articles et liste des commentaires
     - intégrer l'analyse de code avec PMD dans les commandes ( pre commit par exemple )
+    - baser les tests sur des data-test-id
 
 ## Documentation utilisateur et supervision
 
@@ -172,7 +173,7 @@ exemple de demandes :
 - `generate mysql script to match the mermaid diagram`
 - `Génère les entités correspondant au script sql suivant`
 - `Je dois migrer cette application angular 14 vers angular 20, quelles sont les étapes à suivre`
-- `j'ai une erreur de compilation peux tu vérifier`
+- `j'ai une erreur de compilation peux tu lancer une compilation et vérifier le message d'erreur`
 
 ## Annexes
 

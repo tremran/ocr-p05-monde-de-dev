@@ -17,6 +17,11 @@ Ce projet contient deux dossiers principaux :
 ### Installation
 
 - Back
+- create a user and a database
+- apply script `back/schema.sql`
+- copy and complete the file `back/src/main/resources/application.properties.example` to `back/src/main/resources/application.properties`
+- copy and complete the file `back/src/test/resources/application-test.properties.example` to `back/src/test/resources/application-test.properties`
+- compile, run tests and launch dev server
 ```bash
 # get in back folder
 cd back
@@ -30,9 +35,8 @@ mvn spring-boot:run
 # afficher le code coverage
 xdg-open target/site/jacoco/index.html
 ```
-![umé code coverage back](test-coverage-back.png)
+![code coverage back](test-coverage-back.png)
 - Front
-
 ```bash
 # get in the front folder
 cd front
