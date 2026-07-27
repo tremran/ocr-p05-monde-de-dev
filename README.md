@@ -66,7 +66,7 @@ Sur un environnement dédié il est possible de lancer les tests e2e depuis le f
 
 Merci de lire 
 
-- le [fichier de conception](./docs/conception.md)
+- le [fichier de conception](./docs/conception/conception.md)
 - la [FAQ utilisateur](./docs/faq/faq.md)
 
 ## Problèmes courants

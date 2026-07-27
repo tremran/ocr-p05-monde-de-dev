@@ -249,12 +249,12 @@ Seules les routes login et register ne sont pas protégés
 | Type de test | Outils | Portée | Résultats |
 | --- | --- | --- | --- |
 | Tests unitaires Front | Jasmine + Karma | pages, services et components | ![karma report](coverage-front.png) |
-| Tests unitaires Back | SpringBootTest + Junit + Mockito | pages, services et components | ![jacoco report](coverage-back.png) |
+| Tests unitaires Back | SpringBootTest + Junit + Mockito | Controller | ![jacoco report](coverage-back.png) |
 | Tests E2E | Cypress | Use Cases | ![resultats cypress](resultats-e2e.png) |
 
 #### Performance
 
-- lighthouse 
+- lighthouse  
 ![Rapport lighthouse](resultats-lighthouse.png)
 - PMD `pmd check -d ./src/main -R rulesets/java/quickstart.xml -f text` : pas de warning
 
@@ -306,4 +306,3 @@ https://angular.dev/update-guide?v=14.0-20.0&l=2
 - ajouter une interface d'administration
 - Gestion des logs
 - tests montée en charge
-    - évaluation de la performance et sécurité
