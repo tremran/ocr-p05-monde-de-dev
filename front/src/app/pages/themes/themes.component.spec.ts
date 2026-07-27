@@ -67,9 +67,11 @@ describe('ThemesComponent', () => {
     const topic = { id: 12, name: 'Docker', description: 'Docker', registered: false };
 
     component.subscribe(topic);
+    const subscribeButtonLabel = topic.registered ? 'Déjà abonné' : "S'abonner";
 
     expect(topicServiceSpy.subscribeToTopic).toHaveBeenCalledOnceWith(12);
     expect(topic.registered).toBeTrue();
+    expect(subscribeButtonLabel).toBe('Déjà abonné');
     expect(component.isSubscribing(topic)).toBeFalse();
     expect(component.subscribeErrorMessage).toBe('');
   });

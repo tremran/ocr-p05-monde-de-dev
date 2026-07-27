@@ -39,8 +39,7 @@
                   {{ isSubscribing(topic) ? 'Abonnement...' : "S'abonner" }}
                 </app-button>
               }
-
-              @if(topic.registered) {
+              @else {
                 <app-button [disabled]="true" variant="secondary">
                   Déjà abonné
                 </app-button>
