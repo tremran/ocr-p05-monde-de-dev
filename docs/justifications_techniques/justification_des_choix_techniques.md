@@ -75,7 +75,7 @@ Toutes les routes sont préfixées par `/api/v1/`.
 
 Seules les routes login et register ne sont pas protégées
 
-> voir la [doc swagger](http://localhost:3001/swagger-ui.html) pour les exemples de requetes
+> pour les exemples de requêtes voir la doc swagger ( sur http://localhost:3001/swagger-ui.html une fois les projets lancés ) 
 
 | url | verbe http | description | remarques |
 | --- | --- | --- | --- |
